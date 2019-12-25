@@ -162,9 +162,35 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Shadowsocks"><a href="#Shadowsocks" class="headerlink" title="Shadowsocks"></a>Shadowsocks</h1><h2 id="1-购买VPS"><a href="#1-购买VPS" class="headerlink" title="1. 购买VPS"></a>1. 购买VPS</h2><h3 id="从vultr上购买"><a href="#从vultr上购买" class="headerlink" title="从vultr上购买"></a>从vultr上购买</h3><p>国外：链接：<a href="https://www.vultr.com/" target="_blank" rel="noopener">vultr</a>，最便宜的2.5$一个月，但是一般没货，一般购买3.5$一个月，新用户会有充值10$送50$的活动。但是国内目前封帐号比较厉害，一般只能换数据中心解决。</p>
-<p>国内：链接：</p>
-<p><img src="/2019/12/24/Shadowsocks/icon.jpg" alt="SSR"></p>
+        <h1 id="Shadowsocks搭建教程"><a href="#Shadowsocks搭建教程" class="headerlink" title="Shadowsocks搭建教程"></a>Shadowsocks搭建教程</h1><h2 id="1-购买VPS"><a href="#1-购买VPS" class="headerlink" title="1. 购买VPS"></a>1. 购买VPS</h2><p>国外：链接：<a href="https://www.vultr.com/" target="_blank" rel="noopener">vultr</a>，最便宜的2.5$一个月，但是一般没货，一般购买3.5$一个月，新用户会有充值10$送50$的活动。但是国内目前封帐号比较厉害，一般只能换数据中心解决。</p>
+<p>国内：链接：<a href="https://www.ucloud.cn/" target="_blank" rel="noopener">ucloud</a>，通过优惠卷等活动，香港服务器一年费用110元，主要是稳定，目前还没有封过ip，有需要的朋友可以去去看看。</p>
+<h2 id="2-搭建vps"><a href="#2-搭建vps" class="headerlink" title="2. 搭建vps"></a>2. 搭建vps</h2><ul>
+<li><p>利用xshell或者MremoteNG等工具连接到你的国外vps服务器。</p>
+</li>
+<li><p>在shell命令行内输入如下命令（注：本脚本适用于centos7.x版本）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ yum -y install wget</span><br><span class="line">$ wget -N --no-check-certificate https://raw.githubusercontent.com/CecilWu/SSR-Chinese/master/ssr.sh &amp;&amp; chmod +x ssr.sh &amp;&amp; bash ssr.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>主要步骤如下</p>
+<p><img src="/2019/12/24/Shadowsocks/1.jpg" alt></p>
+<p><img src="/2019/12/24/Shadowsocks/2.jpg" alt></p>
+<p><img src="/2019/12/24/Shadowsocks/3.jpg" alt></p>
+<p><img src="/2019/12/24/Shadowsocks/4.jpg" alt></p>
+</li>
+<li><p>上面四个步骤完成后，后面一路默认即可，安装完成。出现如图所示画面表示安装成功：</p>
+<p><img src="/2019/12/24/Shadowsocks/5.jpg" alt></p>
+</li>
+<li><p>最后用命令检查下运行状态和监听的端口号：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/ssr status</span><br><span class="line">[信息] ShadowsocksR (PID 32515) 正在运行...</span><br><span class="line">$ lsof -i :2433</span><br><span class="line">COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">python  32515 root    3u  IPv6 906933      0t0  TCP *:codasrv-se (LISTEN)</span><br><span class="line">python  32515 root    4u  IPv6 906934      0t0  UDP *:codasrv-se</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载windows下的<a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="noopener">Shadowsocks</a>客户端，解压后双击Shadowsocks.exe，出现如下配置画面：</p>
+<p><img src="/2019/12/24/Shadowsocks/6.jpg" alt></p>
+</li>
+<li><p>由于安装bbr加速后，会出现一些问题，这里选择不安装，有需要的朋友可以运行如下命令进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$yum</span> -y install wget</span><br><span class="line">$ wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh</span><br><span class="line">$ chmod +x bbr.sh</span><br><span class="line">$ ./bbr.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装完重启即可。</p>
+</li>
+</ul>
 
       
 
@@ -173,6 +199,21 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vps</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">shadowsocks</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -299,6 +340,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vps</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
