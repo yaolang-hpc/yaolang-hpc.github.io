@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/25/Linux%E4%B8%8A%E7%9A%84%E7%9C%9F%E5%AE%9E%E7%BD%91%E7%BB%9C%E5%92%8C%E8%99%9A%E6%8B%9F%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84/17.jpg">
 <meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/25/Linux%E4%B8%8A%E7%9A%84%E7%9C%9F%E5%AE%9E%E7%BD%91%E7%BB%9C%E5%92%8C%E8%99%9A%E6%8B%9F%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84/18.jpg">
 <meta property="article:published_time" content="2019-12-25T06:40:06.000Z">
-<meta property="article:modified_time" content="2019-12-26T02:14:56.370Z">
+<meta property="article:modified_time" content="2019-12-26T02:18:49.032Z">
 <meta property="article:author" content="Yao L">
 <meta property="article:tag" content="网络虚拟化">
 <meta name="twitter:card" content="summary">
@@ -189,10 +189,12 @@
 </ul>
 <p><img src="/2019/12/25/Linux%E4%B8%8A%E7%9A%84%E7%9C%9F%E5%AE%9E%E7%BD%91%E7%BB%9C%E5%92%8C%E8%99%9A%E6%8B%9F%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84/1.jpg" alt="图 1.物理网络映射问题例子"></p>
 <ul>
-<li><p>图 1 为一个网络映射问题的例子。图中左边是现实世界中一个常见的网络环境：四台 PC 通过各自的物理网卡组成了两个子网，两个子网中的 PC 默认情况下是不能通讯的，也就是说他们被物理隔离了。图 1 的右边显示了虚拟化环境下的情景，四个虚拟机同时运行在一个物理主机上，并且需要象图 1 左边的真实环境一样划分出两个子网并隔离。如何才能做到这一点，或者说如何简单方便的创建出和图 1 左边部分类似的网络环境，成为虚拟化里必须要解决的一个问题。</p>
-</li>
-<li><p>虚拟化环境中模拟网络的主要方法<br>为方便理解，本文把虚拟化环境中模拟现实网络的方法分为两种：使用传统网络技术，或使用虚拟化网络扩展技术。传统网络技术主要指在虚拟化技术流行以前，现实世界中已经存在的以太网络，包括传统 IP 网络、802.1Q VLAN 网络，对它们 Linux 已经有良好支持，用户可以配置这些 Linux 设备以完成对现实网络的模拟。虚拟化网络扩展技术主要指为应对云计算与虚拟化环境带来的挑战而新出现的网络技术，包括 802.1Qbg 和 802.1Qbh 网络。</p>
-</li>
+<li>图 1 为一个网络映射问题的例子。图中左边是现实世界中一个常见的网络环境：四台 PC 通过各自的物理网卡组成了两个子网，两个子网中的 PC 默认情况下是不能通讯的，也就是说他们被物理隔离了。图 1 的右边显示了虚拟化环境下的情景，四个虚拟机同时运行在一个物理主机上，并且需要象图 1 左边的真实环境一样划分出两个子网并隔离。如何才能做到这一点，或者说如何简单方便的创建出和图 1 左边部分类似的网络环境，成为虚拟化里必须要解决的一个问题。</li>
+</ul>
+<a id="more"></a>
+
+<ul>
+<li>虚拟化环境中模拟网络的主要方法<br>为方便理解，本文把虚拟化环境中模拟现实网络的方法分为两种：使用传统网络技术，或使用虚拟化网络扩展技术。传统网络技术主要指在虚拟化技术流行以前，现实世界中已经存在的以太网络，包括传统 IP 网络、802.1Q VLAN 网络，对它们 Linux 已经有良好支持，用户可以配置这些 Linux 设备以完成对现实网络的模拟。虚拟化网络扩展技术主要指为应对云计算与虚拟化环境带来的挑战而新出现的网络技术，包括 802.1Qbg 和 802.1Qbh 网络。</li>
 </ul>
 <p><img src="/2019/12/25/Linux%E4%B8%8A%E7%9A%84%E7%9C%9F%E5%AE%9E%E7%BD%91%E7%BB%9C%E5%92%8C%E8%99%9A%E6%8B%9F%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84/2.jpg" alt="图 2.本文使用的网络模型说明"></p>
 <ul>
@@ -500,15 +502,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">网络虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">vps</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">网络虚拟化</a>
               </li>
             
             <div class="clearfix"></div>
