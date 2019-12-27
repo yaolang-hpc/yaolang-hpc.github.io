@@ -6,15 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://yaolang-hpc.github.io">
-  <title>Tag: shadowsocks | YaoL的博客</title>
+  <title>搭建一个高性能存储系统Lustre篇 | YaoL的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="YaoL的博客">
-<meta property="og:url" content="https://yaolang-hpc.github.io/tags/shadowsocks/index.html">
+  <meta name="description" content="引言 设计一个大规模，高性能存储系统是一项有意义的挑战。本篇文章将一步步介绍搭建此系统所用到的迭代设计方法包括组件级和系统级。后面也会给出一个Lustre存储系统的详细的案例，以支撑此方法论。  介绍 一个好的存储系统在各方面的性能都有一个很好的均衡：每一个组件都能发挥其功能，所有的组件协同工作达到一个良好的性能。设计这样一个系统并不是一蹴而就的。一个典型的存储系统包含丰富的组件，例如，磁盘、存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建一个高性能存储系统Lustre篇">
+<meta property="og:url" content="https://yaolang-hpc.github.io/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/index.html">
 <meta property="og:site_name" content="YaoL的博客">
+<meta property="og:description" content="引言 设计一个大规模，高性能存储系统是一项有意义的挑战。本篇文章将一步步介绍搭建此系统所用到的迭代设计方法包括组件级和系统级。后面也会给出一个Lustre存储系统的详细的案例，以支撑此方法论。  介绍 一个好的存储系统在各方面的性能都有一个很好的均衡：每一个组件都能发挥其功能，所有的组件协同工作达到一个良好的性能。设计这样一个系统并不是一蹴而就的。一个典型的存储系统包含丰富的组件，例如，磁盘、存">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/1.jpg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/2.jpg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/3.jpg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/4.jpg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/5.jpg">
+<meta property="article:published_time" content="2019-12-27T01:10:19.000Z">
+<meta property="article:modified_time" content="2019-12-27T09:57:38.963Z">
 <meta property="article:author" content="Yao L">
+<meta property="article:tag" content="Lustre">
+<meta property="article:tag" content="architecture">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yaolang-hpc.github.io/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YaoL的博客" type="application/atom+xml">
   
@@ -140,64 +152,383 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-搭建一个高性能存储系统Lustre篇" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/24/Shadowsocks/" class="archive-article-date">
-  	<time datetime="2019-12-24T09:34:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-24</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/24/Shadowsocks/">Shadowsocks梯子搭建教程</a>
+    <h1 class="article-title" itemprop="name">
+      搭建一个高性能存储系统Lustre篇
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/" class="archive-article-date">
+  	<time datetime="2019-12-27T01:10:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>引言</p>
+<p>设计一个大规模，高性能存储系统是一项有意义的挑战。本篇文章将一步步介绍搭建此系统所用到的迭代设计方法包括组件级和系统级。后面也会给出一个Lustre存储系统的详细的案例，以支撑此方法论。</p>
+</li>
+<li><p>介绍</p>
+<p>一个好的存储系统在各方面的性能都有一个很好的均衡：每一个组件都能发挥其功能，所有的组件协同工作达到一个良好的性能。设计这样一个系统并不是一蹴而就的。一个典型的存储系统包含丰富的组件，例如，磁盘、存储控制器、IO网卡、存储服务器、存储区域网络交换机以及相关的管理软件。所有这些组件组合在一起进行调优以使他们达到优越的性能是一个巨大的挑战。</p>
+<p>一个经验丰富存储设计者可能会使用一组实用的准则和指南来设计一个存储系统。这些准则通常是基于各自的经验而来。但是，由于存储技术的进步，这些准则可能并不普遍实用，有些甚至已经过时了。例如，有些设计者认为在一个raid组中混合不同厂商的制造的硬盘，并且现在仍然是这样。另一个通用准则说只需要填充硬盘空间的80%，因为控制器可能没有足够的带宽去支持这些添加的容量，因此这些额外的空间可以不需要。但是第二条准则仅仅在特定情况下才实用。</p>
+<p>一般来说满足所有需求的存储系统是不存在的。但是，如果我们一开始设计就从一个方面进行着手，再逐渐的融合更多的方面，也许能找到一个在性能，可用性和成本之间的一个平衡点。</p>
+<p>在设计初期进行自顶向下需求分析，创建一个完整的视图系统。一旦了解了设计约束，就可以在组件级别确定性能需求。然后就可以一次一个组件的进行构建设计。</p>
+</li>
+<li><p>存储系统设计的系统级方法</p>
+<p>高性能存储系统是大型计算资源的一部分。这样的计算资源通常是由高速网络(HSN)连接到一组磁盘(为数据提供长期存储)的计算机集群(计算节点- CNs)。运行在CNs上的应用程序要么消费数据(输入)，要么生成数据(输出)。存储这些数据的磁盘通常是分组的，由一个或多个服务器提供服务。各种体系结构以不同的方式连接硬件组件，并通过不同的的软件机制来管理和访问数据。</p>
+<p>为这些计算资源设计存储系统的设计人员需要确定存储系统的通用架构，定义该通用存储架构需要的组件，决定这些组件怎样与计算组件和网络组件进行交互。</p>
+<p>存储系统初期设计需要列出满足系统需求的列表。该列表可能包好几个多样化的需求，例如：</p>
+<ul>
+<li>一个固定预算，对需求和性能进行优先排序</li>
+<li>对能耗或者空间进行限制</li>
+<li>最低可接受性能（聚合带宽速率）</li>
+<li>最低的聚合存储容量</li>
+<li>容错</li>
+<li>支持特定应用负载的能力</li>
+</ul>
+<p>这将是一个固定的和更加灵活的需求列表，可能还有许多其他的需求。一个固定需求可能设计设置满足需求的最小带宽。然后，更灵活的需求可以根据固定需求灵活调整，满足整体性能和成本目标。</p>
+<p>整个存储系统设计将指定要使用的组件的类型以及它们的连接方式。创建这个设计可能是一个具有挑战性的任务。设计选择由于需要尊重客户或供应商合作伙伴的需求而被限制限制。</p>
+<p>本文首先选择了一个总体设计结构，虽然其他结构也是可行的。如何选择这些基本的设计结构超出了本文的范围，但这里有一些方法可以做到:</p>
+<ul>
+<li>一个有经验的设计师可能会有关于满足基本需求的最佳结构的指导。</li>
+<li>一个参考系统可能已经被部署并被发现满足一组类似的需求。</li>
+<li>对本文后半部分的案例研究进行回顾，可以为新设计师提供指导。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/1.jpg" alt="A General Storage Architecture"></p>
+<p>​        在设计完成之前，需要指定每个组件的数量和类型，并确定设计在多大程度上满足        需求。当做出设计选择时，一个选择可能会导致一个不满足需求和/或影响其他选择        的设计。在这种情况下，需要迭代选择以改进设计。下面的设计方法使用逐步的“管        道”方法来检查和选择每个组件。</p>
+<ul>
+<li><p>评估组件-管道方法</p>
+<p>我们的设计方法使用“管道”方法来检查每个组件。这种方法按顺序计算组件，方法是在数据从磁盘通过中间的组件流向应用程序时，跟踪数据字节的路径。其他的顺序也是可能的，但是本文仅限于此读取管道</p>
+<p>整个管道的性能由其各个组件的性能决定，而系统性能则受到最慢组件的限制，我们需要单独考虑每个组件。</p>
+<p>首先，我们检查存储媒介。接下来，将存储控制器与磁盘作为整体一起检查。这两个组件的性能加在一起不会比单独的组件的性能更好，而且由于它们的操作不可避免的效率低下，通常情况下性能会更差。</p>
+<p>我们继续这个过程，一次向组合中添加一个组件，直到管道完成。</p>
+<p><img src="/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/2.jpg" alt="A Storage Pipeline"></p>
+<p>图2根据图1中的顺序把这些组件有序组合起来.从左到右，追踪读管道流。从左至右，该性能曲线代表了每个连续的组件添加到管道后的性能。例如,当添加存储控制器，一些低效率的组件可能会导致两个组件(磁盘和控制器)执行效率略低于单独磁盘的值。曲线显示性能下降(或理想情况下整个曲线保持大致相同)，随着额外新的组件被添加。</p>
+<p>这种方法需要注意的一点是,引入一个新的组件可能会让我们反思之前的组件的设计。例如,如果磁盘的数量刚好满足性能和容量需求,但同时控制器的性能低于要求,我们可能需要回溯磁盘和重新设计的部分。进一步,如果我们知道控制器可以很容易地处理更多的磁盘,这可能促使我们考虑部署的磁盘,预计可能发生的性能瓶颈后的设计</p>
+<p>对于刚接触此类任务的设计人员来说，这可能会产生有意义的回溯，从而使端到端设计恰到好处。一个有经验的设计者可能会因为这样的回溯而修改设计，本文后半部分的案例研究给出了一个这样的例子。</p>
+<p>本文不涉及性能基准测试。可能的基准测试目标和相关的应用程序被提及。有些单独的组件不能单独测试，但是一种系统的基准测试方法可以允许设计人员推断单个组件的能力。组件的性能可以通过测试获得，也可以通过查找其他人记录的结果获得。</p>
+</li>
+<li><p>使用迭代设计过程</p>
+<p>存储系统中有许多组件。因此，设计过程需要有条理。将流程分解为多个步骤使得迭代一个简单的过程成为一项简单的活动，该过程依次组合了更多的组件，以满足最佳地需求。</p>
+<p>该设计过程引入一个组件，选择其属性，将其与之前设计的组件管道相结合，评估新管道满足系统要求的程度。在设计完成之前，需要几个周期的选择、组合和评估(S-C-E)。</p>
+</li>
+</ul>
+<p><img src="/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/3.jpg" alt="The iterative design approach"></p>
+<p>​        图3描述了S-C-E循环。在添加下一个组件的步骤中，我们将引入管道中的下一个组        件。接下来，我们选择可能满足需求的组件属性。组件的第三步是将其添加到管道        中(结合管道设计)。最后，我们评估需求，看看到目前为止的设计是否满足需求。</p>
+<p>​        可能是先前迭代中的选择将管道锁定到无法满足需求的设计中。在这种情况下，错        误的选择通常很明显，因此流程可以回溯以选择满足系统需求的更好的组件。这将        在接下来的案例研究中出现。</p>
+<ul>
+<li><p>使用Lustre文件系统的案例研究</p>
+<p>在接下来的案例中，我们将设计一个满足高性能计算集群的存储系统。</p>
+</li>
+<li><p>分析需求</p>
+<p>分析这个假设的存储系统，确定了如下需求：</p>
+<ul>
+<li>一个单独的命名空间</li>
+<li>10PB(10X10245bytes)的可用空间</li>
+<li>100GB/s(100X10243bytes per second)聚合带宽</li>
+<li>支持2000个客户端的并发访问</li>
+<li>没有单点故障</li>
+</ul>
+<p>这些要求完全符合Lustre的能力，因此Lustre文件系统是一个很好的选择。</p>
+<p>表格1：适用于Lustre的案例</p>
+<table>
+<thead>
+<tr>
+<th>Storage System Requirements</th>
+<th align="left">Lustre File System Capabilities</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Large file system</td>
+<td align="left">Up to 512PB for one file system</td>
+</tr>
+<tr>
+<td>Large files</td>
+<td align="left">Up to 32PB for one file</td>
+</tr>
+<tr>
+<td>Global name space</td>
+<td align="left">A consistent abstraction of all files allows users to access file system information heterogeneously</td>
+</tr>
+<tr>
+<td>Many files</td>
+<td align="left">Up to 10 million files in one directory and 2 billion files in the file system. Virtually unlimited with Distributed Name Space.</td>
+</tr>
+<tr>
+<td>Large number of clients accessing the file system in parallel</td>
+<td align="left">Up to 25,000+ clients in a production system</td>
+</tr>
+<tr>
+<td>High Availability</td>
+<td align="left">Works with a variety of high availability (HA) managers to support automated failover to meet no-single-point-of-failure (NSPF) requirements.</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>设计和构建管道</p>
+<p>从图2所示的管道的存储端开始，磁盘和磁盘附件的设计满足系统需求。然后，将存储控制器添加到设计中并进行调整，以确保这两个组件组合在一起满足需求。然后添加下一个组件，再次进行调整，等等，直到整个管道搭建完成。</p>
+</li>
+<li><p>磁盘和磁盘附件</p>
+<p>我们的示例存储系统需要提供一个10PB可用存储和100GB/s的聚合带宽。可用存储是指客户端在挂载文件系统时看到的存储。磁盘的可用存储容量小于它的物理容量，是由于存在RAID、热备盘等因素造成的。在Lustre文件系统中，IO操作可以访问元数据存储或对象存储。每种存储类型都有其特有的工作负载，在设计该存储时必须考虑这些工作负载。</p>
+<p>元数据存储，存储有关数据文件的信息，如文件名、目录、权限和文件目录树。元数据操作通常是随机发生的小型IOs。元数据所需的容量的相对较小，通常仅为文件系统的1% - 2%。</p>
+<p>对象存储存储实际数据。对象存储操作通常是是连续的大型IOs。</p>
+<p>设计元数据存储或对象存储的合理起点是考虑可用存储设备的容量和性能特征。对于本例，我们考虑表2中所示的Seagate*硬盘驱动器。</p>
+<p>表格2：硬盘参数对比</p>
+<table>
+<thead>
+<tr>
+<th>Specifications</th>
+<th>Seagate 15K.7 HDD (600 GB, 15,000 RPM)</th>
+<th>Seagate ES.2 HDD (3 TB, 7200 RPM)</th>
+<th>Seagate ES HDD (1 TB, 7200 RPM )</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Average IO/s</td>
+<td>178</td>
+<td>76</td>
+<td>76</td>
+</tr>
+<tr>
+<td>Sustained data transfer rate (MB/s)</td>
+<td>208</td>
+<td>155</td>
+<td>147</td>
+</tr>
+</tbody></table>
+<p>如图所示，转速对磁盘性能有显著影响。15000转/分钟的硬盘提供了两倍于每秒输入/输出操作(IO/s)和大约30%的带宽比7200转/分钟的硬盘。7200转/分钟3 TB的硬盘和7200转/分钟1 TB的硬盘具有大致相似的性能特征。</p>
+<p>主轴的数量也会影响性能。例如，虽然三个1-TB磁盘和一个3-TB磁盘提供相同的容量，但是三个1-TB磁盘的带宽是一个3-TB磁盘的三倍，支持的IO/s是一个3-TB磁盘的三倍。</p>
+<p>在本文的例子中，我们考虑了两种类型的磁盘柜:12盘位的磁盘柜和60盘位的磁盘柜。两个磁盘外壳使用相同类型的SAS-2接口连接到存储控制器。由于元数据存储需要更小的空间，但IO/s更高，因此元数据存储将考虑使用12盘位盘柜。如果需要提供足够的带宽，则60盘位盘柜似乎更适合对象存储。</p>
+<p>为了解决容错需求，元数据存储和对象存储都将配置成合适的raid组，容量和性能将是选择raid组级别的决定因素。</p>
+<p>在本例中，将对象存储设计为提供可用的数据存储空间，然后将元数据存储设计为支持对象存储。</p>
+</li>
+<li><p>配置对象数据存储</p>
+<p>对于对象存储，容量是最重要的，因为对象存储的容量决定了存储数据的可用空间。然而，性能也是一个重要的考虑因素，因为IO吞吐量直接影响文件系统的性能。本研究将能力置于绩效之上;然而，在其他情况下，性能可能是驱动因素。</p>
+<p>对于对象存储，容量是最重要的，因为对象存储的容量决定了存储数据的可用空间。然而，性能也是一个重要的考虑因素，因为IO吞吐量直接影响文件系统的性能。本研究将容量置于性能之上；然而，在其他情况下，性能可能是驱动因素。</p>
+<p>对于对象数据存储，我们将考虑使用HDD硬盘(4-TB, 7200 rpm)，它将位于能够容纳60个磁盘驱动器的盘柜中(见表2)。配置必须首先针对高磁盘利用率进行设计，然后针对性能进行优化。10个磁盘组成RAID-6组(8个数据磁盘+ 2个奇偶校验磁盘)允许80%的磁盘利用率，同时容纳两个磁盘故障。</p>
+<p>当数据大小与条带大小不匹配时，RAID-6配置可能导致写性能损失。在这种情况下，控制器必须从磁盘读取旧的奇偶校验码和旧数据，然后将这些信息与新数据结合来计算新的奇偶校验。这种操作称为“读-修改-写”。</p>
+<p>为了减轻这种性能损失，通常使用“全条带写入”，其中数据大小与条带大小匹配，这样就可以直接计算奇偶校验，而不必首先从磁盘读取信息。因为Lustre在1 MB的段中读写数据，所以RAID段大小被设置为128 KB，这样1 MB的数据就在所有的数据磁盘上条带化。</p>
+<p>每个60盘位的磁盘柜中的磁盘可以配置为6个RAID-6组，每个RAID组包含10块磁盘。每个RAID-6组提供大约32 TB的存储，因此每个盘柜提供大约192 TB的存储。</p>
+<p>注意，磁盘容量以十进制GB(其中1 GB = 1000,000,000bytes)表示，而文件系统容量以二进制GB(其中1 GiB = 1,073,741,824bytes)表示。在这些计算中需要考虑到这一点。<br>$$<br>TB/TB=  (10^{12}B)/(2^{40}B)≅0.91<br>$$<br>另外，根文件系统将保留5%。因此，每个外壳可以提供164tb的可用空间。<br>$$<br>192×0.9×0.95≅164TB<br>$$<br>10PB可用空间所需的盘柜数量的数量为:<br>$$<br>(10×1024TB)/(164TB⁄enclosure)= 62.43<br>$$<br>为了满足10PB可用空间的要求，本设计将使用63个磁盘柜。</p>
+<p>接下来我们将考虑性能需求在开始初始设计时。为了达到100GB/s的聚合带宽，每隔磁盘柜需要贡献的带宽是：<br>$$<br>(100GB⁄sec)/(63 enclosures)≅(1.6 GB)⁄sec<br>$$<br>由于每个盘柜有6个RAID-6组，每个RAID-6组包含8个数据磁盘，并且磁盘柜中希捷 ES.2中的磁盘支持理论的持续数据传输速率为155 MB/s，因此48个数据磁盘的理论总带宽为:<br>$$<br>(155 MB)⁄s×48=  (7.4 GB)⁄s<br>$$<br>然而，在实际使用中，理论带宽很难实现，因为RAID控制器的效率和磁盘控制器的带宽也必须考虑在内。RAID-6存储盘柜的实际吞吐量可能低于每个磁盘的理论吞吐量的一半。例如，如果SAS扩展器是限制因素，则每个磁盘柜3 GB/s，这足以超过1.6 GB/s的最低要求。</p>
+<p>由于大多数磁盘柜通过存储控制器的4通道串行SCSI-2 (SAS-2)电缆连接到存储控制器，每个通道的性能为6.0 Gb/s，因此单个磁盘柜的最大带宽计算如下:<br>$$<br>(6 GB)⁄s  ×4 lanes×(1 B)/(8 b)=3GB⁄s<br>$$<br>因此，磁盘柜和存储控制器之间的连接决定了在本设计中可以实现的聚合带宽。此带宽超过了100 GB/s的总聚合带宽下每个磁盘柜的平均带宽1.6GB/s。</p>
+<p>磁盘本身的带宽是到存储控制器的附件连接的带宽的两倍，因此在本设计中磁盘性能不是一个限制因素。同时磁盘柜的数量也不是限制因素。</p>
+<p>但是，请注意，如果系统带宽要求增加两倍，达到300 GB/s，那么63个磁盘柜中的每一个盘柜都需要提供4.76 GB/s的带宽，这比本设计中使用的3GB /s磁盘柜所能支持的带宽要高。在这种情况下，需要重新设计磁盘布局以添加更多的磁盘柜。例如，2-TB、7200转/分钟的磁盘可以代替本设计中使用的4-TB磁盘，以获得更好的性能。这样做可以将相同的存储容量分散到更多的磁盘柜上。</p>
+</li>
+<li><p>配置元数据存储</p>
+<p>对于元数据存储，性能是最重要的。这是因为对于每个IO操作，必须在元数据存储中从inode获取文件属性，然后才能在对象存储中访问该文件。因此，元数据访问时间影响每个IO操作。然而，元数据存储容量需求通常相对于对象存储的容量需求较小，因此容量不太可能成为一个需要特别关注的点。、</p>
+<p>由于大多数元数据操作都是查询(读取)，所以RAID-10配置最适合元数据存储。RAID-10结合了RAID-1和RAID-0的特性。RAID-1通过成对配置磁盘来相互镜像，从而提供数据镜像。RAID-0通过跨两个RAID-1对分段数据来提高性能。因为RAID-10集中的两个磁盘包含相同的内容，所以可以交替地从两个磁盘读取数据，从而有效地提高了读取性能，这对整体系统性能有很大的帮助。与RAID-5或RAID-6不同，RAID-10没有奇偶校验驱动器，因此没有“读-修改-写”性能损失。元数据存储的段大小可以设置为4 KB，这与元数据IO大小相匹配。</p>
+<p>要正确地确定元数据存储的大小，理解平均文件大小是很重要的。在本例中，假设平均文件大小为5 MB。通过将所需的对象存储容量除以平均文件大小，可以计算出将要存储的最小inode数:<br>$$<br>10PB⁄(5 {MB} {per} {inode})=2×10^9  inodes<br>$$<br>为了将来的扩展，应该为最小的inode数量预留两倍的空间。由于在Lustre 2.1或更新版本中每个文件的元数据可能需要多达2 KB的空间，元数据存储必须至少:<br>$$<br>(2 KiB)/inode=  (2×10^9  inodes)/2^{80} ×2≅7.5 TB<br>$$<br>对于本设计，将使用希捷15000 rpm、600 GB磁盘作为元数据存储。见表2。所需的磁盘数量可以通过将所需的元数据存储除以磁盘容量并乘以2来确定(因为磁盘将配置为RAID-10镜像对):<br>$$<br>(2×7.5TB)/(600GB×10^9/2^{30} ×0.95)= 29 disks<br>$$<br>回想一下，磁盘容量以十进制GB(109字节)度量，而文件系统容量以二进制GB(230字节)度量。</p>
+<p>由于40亿个inode是基于假定的平均文件大小估算的(20亿个inode x 2)，为了架构的简单性，本文剩下的部分将使用30个磁盘。如果存在准确的文件计数要求，则应用相同的计算。</p>
+<p>3个12盘位的盘柜将需要使用30个磁盘用于inode存储，剩下的6个磁盘插槽用于热备盘(每个盘柜两个)。</p>
+<p><img src="/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/4.jpg" alt="shows the storage configuration for the metadata storage"></p>
+</li>
+<li><p>存储控制器</p>
+<p>存储控制器管理磁盘和磁盘柜。它的基本功能是将磁盘空间作为块设备提供给存储区域网络(SAN)。存储控制器充当网关，通过SAS-2电缆连接到磁盘柜。</p>
+<p>控制器为SAN提供一种或多种类型的存储网络接口，如光纤通道(FC)、10GbE或InfiniBand (IB)。作为网关，存储控制器在后端磁盘和存储服务器之间传递数据时，聚合后端磁盘/磁盘柜的带宽。因此，了解要使用的存储控制器的性能特征非常重要。</p>
+<p>对于本例，使用的是通用存储控制器。控制器有8个SAS-2端口来连接后端磁盘柜。它还具有8个8-Gbps光纤通道端口和4个SAS-2端口，这两种端口类型中的一个或另一个可以同时用于连接存储服务器。</p>
+<p>要计算支持后端磁盘柜所需的存储控制器数量，请使用以下因素:</p>
+<ul>
+<li>所有63个盘柜，每隔盘柜至少提供1.6GB/s的带宽</li>
+<li>一个4通道，SAS-2线缆能支持3GB/s</li>
+</ul>
+<p>控制器硬件或软件可能由于外部或内部原因而失败。因此，控制器通常由两个作为彼此备份的子控制器模块组成，如图所示。</p>
+<p><img src="/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/5.jpg" alt="Cache mirroring between sub-controller modules"></p>
+<p>为了优化性能，两个子控制器模块通常处于Active-Active配置中。许多控制器都有内置的缓存机制来提高性能。缓存必须在子控制器模块之间保持一致，以便任何子控制器模块都可以透明地从其他子控制器模块接管I/O。为此，在子控制器之间经常存在缓存镜像链接。</p>
+<p>这个缓存镜像链接可能是一个限制因素，因为在第一个子控制器返回一个表示IO操作成功的确认之前，必须将数据镜像到第二个子控制器模块的缓存中。</p>
+<p>缓存镜像链接是通过多种方式实现的，从千兆以太网电缆到专用的PCIe总线。因为缓存镜像导致的性能下降已经变得越来越普遍。许多供应商已经增强了缓存镜像链接，以达到Infiniband电缆四分之一的带宽。然而，作为设计过程的一部分，检查存储控制器体系结构是很重要的。</p>
+<p>请注意，在控制器之间没有缓存镜像链接的情况下，必须完全禁用控制器上的缓存，以确保在发生控制器故障时文件系统不会损坏。</p>
+<p>我们的示例假设所选存储控制器中的子控制器之间的缓存镜像链接将存储控制器的总带宽限制为6GB /s。</p>
+<p>每个盘柜可以支持1.6 GB/s带宽。三个盘柜将提供4.8 GB/s带宽，而盘柜将提供6.4 GB/s带宽，超过了6 GB/s的限制。因此，在这种情况下，三个盘柜提供的带宽将最好地匹配每个存储控制器的带宽。需要的存储控制器数量为21个。</p>
+</li>
+<li><p>存储服务器</p>
+<p>存储服务器为客户端访问文件提供服务。存储服务器与存储控制器的不同之处在于存储服务器提供文件系统空间，而不是块设备。存储服务器上共享文件系统空间中的内容对所有客户端都是可见的，存储服务器协调不同客户端对文件的并行、并发访问。相反，由于块设备协议的限制，存储控制器不能协调多个客户机对它提供的块设备进行访问。潜在的冲突必须在客户端级别进行管理，这使得客户端并行访问存储数据变得更加复杂。</p>
+<p>许多存储服务器将存储服务器和存储控制器的功能合并到一台物理机器中。本节讨论存储服务器可能带来的限制，不管它们是否是在独立的物理硬件上。</p>
+</li>
+<li><p>设计Lustre元数据服务器</p>
+<p>一个Lustre文件系统包括两种类型的服务器，一个元数据服务器(MDS)和一个或多个对象存储服务器(OSSs)。元数据服务器必须能够快速处理许多远程过程调用(remote procedure call, rpc)，因为MDS是所有POSIX文件系统操作(如打开、关闭、读取、写入和断开链接)的起点。任何时候当一个Lustre客户端需要访问一个文件从一个Lustre文件系统，它将查询元数据的目标(MDT)通过MDS获取POSIX属性文件(例如,所有者、文件类型、访问权限)和文件数据结构(例如:有多少OSTs文件是条带分布和组成这个文件的一些特定对象)。</p>
+<p>因此，MDS需要强大的cpu来处理并发查询，需要大量的RAM来缓存工作文件集并避免高延迟的磁盘操作。</p>
+<p>由于MDT上的IO操作大多很小并且具有随机性，所以缓存到内存中的数据越多，MDS对客户机查询的响应就越快。因此，客户机的数量和客户机在其工作集中访问的文件的数量决定了MDS[5]所需的内存量。</p>
+<p>除了操作系统所需的1GB和文件系统日志所需的4GB之外，MDT文件系统的元数据缓存大约需要MDT大小的0.1%。剩余的内存可供用户/应用程序缓存文件数据文件工作集。缓存在内存中的工作集，并不总是一直被客户端所访问，但应该保持其为“热”文件以减少文件访问延迟，避免对MDT增加额外的 read IO/s负载。</p>
+<p>在MDS上，内核数据结构大约需要2 KB的RAM，以便在没有锁的情况下将文件保存在缓存中。每个访问文件的客户端还需要大约1kb的RAM用于Lustre分布式锁管理器(LDLM)锁，从而导致缓存中的每个文件需要大约3kb的RAM。典型的HPC工作集可能是每个CPU内核100个文件。</p>
+<p>表3显示了如何在本例中计算Lustre文件系统所需的MDS内存。这个文件系统有:</p>
+<ul>
+<li>一个MDT在一个活动的MDS上</li>
+<li>20008个核心的计算节点</li>
+<li>64个用户交互客户机(具有相当大的工作集)</li>
+<li>支持150万文件的额外工作集的热缓存</li>
+</ul>
+<p>表3：MDS RAM Calculation</p>
+<table>
+<thead>
+<tr>
+<th>Memory Consumer</th>
+<th>Required Memory</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Operating system overhead</td>
+<td>1,024 MB</td>
+</tr>
+<tr>
+<td>File system journal</td>
+<td>4,096 MB</td>
+</tr>
+<tr>
+<td>MDT file system metadata (0.1% of 8192 GB)</td>
+<td>8,192 MB</td>
+</tr>
+<tr>
+<td>2000, 8-core clients X 100 files per core X 3 KB/file</td>
+<td>4,687 MB</td>
+</tr>
+<tr>
+<td>64 interactive clients X 10,000 files X 3 KB/file</td>
+<td>1,875 MB</td>
+</tr>
+<tr>
+<td>2-million-file working set X 1.5 KB/file</td>
+<td>2,929 MB</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>22,803 MB</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vps</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Lustre</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">shadowsocks</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">architecture</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://yaolang-hpc.github.io/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/12/26/GPFS-4-2-%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">GPFS_4.2 安装教程</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -221,9 +552,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
