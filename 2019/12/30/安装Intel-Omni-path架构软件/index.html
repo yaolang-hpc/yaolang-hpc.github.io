@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/30/%E5%AE%89%E8%A3%85Intel-Omni-path%E6%9E%B6%E6%9E%84%E8%BD%AF%E4%BB%B6/3.png">
 <meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/30/%E5%AE%89%E8%A3%85Intel-Omni-path%E6%9E%B6%E6%9E%84%E8%BD%AF%E4%BB%B6/4.png">
 <meta property="article:published_time" content="2019-12-30T01:11:07.000Z">
-<meta property="article:modified_time" content="2019-12-30T06:03:30.572Z">
+<meta property="article:modified_time" content="2019-12-30T07:47:19.060Z">
 <meta property="article:author" content="Yao L">
 <meta property="article:tag" content="infiniband">
 <meta property="article:tag" content="OPA">
@@ -266,6 +266,23 @@
 </li>
 <li><p><strong>总结</strong></p>
 <p>本文档展示了如何在两个系统上安装Intel OP HFI卡，并使用Intel OPA线缆背对背地连接主机。然后在主机上安装Intel Omni-Path Fabric 主机软件。详细描述了所有配置和验证步骤并启动必要的服务。最后，运行了一个简单的Intel MPI基准测试，以说明使用Intel OPA的好处。</p>
+</li>
+<li><p><strong>配置管理节点优先级</strong></p>
+<p>编辑/etc/opa-fm/opafm.xml文件</p>
+<p>选择<Priority>0</Priority>的值，将0改为你需要的数字(数字越大优先级越高)</p>
+<p>保存文件</p>
+<p>重启服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl restart opafm</span></span><br></pre></td></tr></table></figure>
+
+<p>当主服务器出现故障，备用服务器接管，主服务恢复，重新接管。</p>
+<p>编辑/etc/opa-fm/opafm.xml文件</p>
+<p>选择<Elevated priority>0&lt;/Elevated Priority&gt;的值，将0改为你需要的数字(数字越大优先级越高)</Elevated></p>
+<p>保存文件</p>
+<p>重启服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl restart opafm</span></span><br></pre></td></tr></table></figure>
+
+<p>一般elevated priority（一般配置比所有管理节点的普通优先级都要高）配合sticky failover一起使用，当主服务器宕机，备用服务器接管后，即使主服务器恢复，也不会再重新接管，以减少对网络造成的扰动。</p>
+<p>例如：两台管理节点，一台管理节点的普通priority配置为8，另一台管理节点的普通priority配置为1，两台管理节点的elevated priority都配置为15，开启sticky failover，当备用节点接管主节点后，即使主节点恢复，也不会接管备用节点。</p>
 </li>
 </ul>
 
