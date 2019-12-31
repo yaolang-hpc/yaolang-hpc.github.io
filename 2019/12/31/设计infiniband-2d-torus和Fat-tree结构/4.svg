@@ -15,7 +15,7 @@
    id="svg2985"
    version="1.1"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="1.svg"
+   sodipodi:docname="4.svg"
    inkscape:export-filename="C:\Work\aspirantura\text\torus\torus_cable_routing_s_12_p_36_60.png"
    inkscape:export-xdpi="99.986855"
    inkscape:export-ydpi="99.986855">
@@ -458,7 +458,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.78629862"
      inkscape:cx="456.55579"
-     inkscape:cy="275.9016"
+     inkscape:cy="233.17431"
      inkscape:current-layer="layer1"
      id="namedview2989"
      showgrid="false"
@@ -501,7 +501,7 @@
            style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:ISOCPEUR;-inkscape-font-specification:ISOCPEUR" /></flowRegion><flowPara
          id="flowPara6483" /></flowRoot>    <g
        id="g4720"
-       transform="translate(-223.31575,-100.98358)">
+       transform="matrix(1.5511409,0,0,1.6788089,-581.73103,-600.22029)">
       <path
          inkscape:connector-curvature="0"
          id="path3761-2"
@@ -636,7 +636,7 @@
     </g>
     <g
        id="g4720-4"
-       transform="translate(-48.719249,-100.98358)">
+       transform="matrix(1.5511409,0,0,1.6788089,-310.90727,-600.22029)">
       <path
          inkscape:connector-curvature="0"
          id="path3761-2-0"
@@ -771,7 +771,7 @@
     </g>
     <g
        id="g4720-1"
-       transform="translate(125.87724,-100.98358)">
+       transform="matrix(1.5511409,0,0,1.6788089,-40.08353,-600.22029)">
       <path
          inkscape:connector-curvature="0"
          id="path3761-2-4"
@@ -906,7 +906,7 @@
     </g>
     <g
        id="g6542"
-       transform="translate(-181.15429,-8.9835803)">
+       transform="matrix(1.5511409,0,0,1.6788089,-516.33267,-445.76986)">
       <flowRoot
          transform="translate(155.81485,575.80091)"
          style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:ISOCPEUR;-inkscape-font-specification:'ISOCPEUR Oblique';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none"
@@ -1008,7 +1008,7 @@
        xml:space="preserve"
        id="flowRoot6631-7-3-8-82"
        style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:ISOCPEUR;-inkscape-font-specification:'ISOCPEUR Oblique';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none"
-       transform="translate(271.4501,492.6103)"><flowRegion
+       transform="matrix(1.5511409,0,0,1.6788089,185.72048,396.31044)"><flowRegion
          id="flowRegion6633-8-3-8-8"><rect
            id="rect6635-3-3-0-90"
            width="27.309509"
@@ -1020,7 +1020,7 @@
        xml:space="preserve"
        id="flowRoot6631-7-3-8-82-8"
        style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:ISOCPEUR;-inkscape-font-specification:'ISOCPEUR Oblique';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none"
-       transform="translate(310.39712,492.6103)"><flowRegion
+       transform="matrix(1.5511409,0,0,1.6788089,246.13279,396.31044)"><flowRegion
          id="flowRegion6633-8-3-8-8-1"><rect
            id="rect6635-3-3-0-90-5"
            width="27.309509"
@@ -1032,7 +1032,7 @@
        xml:space="preserve"
        id="flowRoot6631-7-3-8-82-6"
        style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:ISOCPEUR;-inkscape-font-specification:'ISOCPEUR Oblique';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none"
-       transform="translate(386.89712,492.6103)"><flowRegion
+       transform="matrix(1.5511409,0,0,1.6788089,364.79506,396.31044)"><flowRegion
          id="flowRegion6633-8-3-8-8-12"><rect
            id="rect6635-3-3-0-90-4"
            width="27.309509"
@@ -1044,7 +1044,7 @@
        xml:space="preserve"
        id="flowRoot6631-7-3-8-82-5"
        style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:ISOCPEUR;-inkscape-font-specification:'ISOCPEUR Oblique';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none"
-       transform="translate(348.39712,492.6103)"><flowRegion
+       transform="matrix(1.5511409,0,0,1.6788089,305.07614,396.31044)"><flowRegion
          id="flowRegion6633-8-3-8-8-8"><rect
            id="rect6635-3-3-0-90-6"
            width="27.309509"
@@ -1084,7 +1084,7 @@
            y="650.75641" /></flowRegion><flowPara
          id="flowPara6649" /></flowRoot>    <g
        id="g12902"
-       transform="translate(0.71908736,91.7271)">
+       transform="matrix(1.5511409,0,0,1.6788089,-234.22145,-276.69587)">
       <path
          inkscape:connector-curvature="0"
          id="path6678"
@@ -1142,66 +1142,66 @@
            height="89.024704"
            x="21.620285"
            y="475.75543" /></flowRegion><flowPara
-         id="flowPara253"></flowPara></flowRoot>    <text
+         id="flowPara253" /></flowRoot>    <text
        xml:space="preserve"
-       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.96800041px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.6337806"
-       x="318.35788"
-       y="668.40369"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.38147926px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.63645291"
+       x="281.7337"
+       y="641.7373"
        id="text257"
-       transform="scale(1.0552821,0.94761392)"><tspan
+       transform="scale(1.0143633,0.98584005)"><tspan
          sodipodi:role="line"
          id="tspan255"
-         x="318.35788"
-         y="668.40369"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.96800041px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:1.6337806">switch_11</tspan></text>
+         x="281.7337"
+         y="641.7373"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.38147926px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:2.63645291">switch_11</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.96800041px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.6337806"
-       x="484.79321"
-       y="668.30981"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.38147926px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.63645291"
+       x="550.31256"
+       y="641.58588"
        id="text257-2"
-       transform="scale(1.0552821,0.94761392)"><tspan
+       transform="scale(1.0143633,0.98584005)"><tspan
          sodipodi:role="line"
          id="tspan255-9"
-         x="484.79321"
-         y="668.30981"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.96800041px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:1.6337806">switch_12</tspan></text>
+         x="550.31256"
+         y="641.58588"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.38147926px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:2.63645291">switch_12</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.96800041px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.6337806"
-       x="649.89984"
-       y="665.62567"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.38147926px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.63645291"
+       x="816.74725"
+       y="637.25439"
        id="text257-6"
-       transform="scale(1.0552821,0.94761392)"><tspan
+       transform="scale(1.0143633,0.98584005)"><tspan
          sodipodi:role="line"
          id="tspan255-2"
-         x="649.89984"
-         y="665.62567"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.96800041px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:1.6337806">switch_13</tspan></text>
+         x="816.74725"
+         y="637.25439"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.38147926px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:2.63645291">switch_13</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.96800041px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.6337806"
-       x="647.4895"
-       y="574.36371"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.38147926px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.63645291"
+       x="812.85767"
+       y="489.98386"
        id="text257-7"
-       transform="scale(1.0552821,0.94761392)"><tspan
+       transform="scale(1.0143633,0.98584005)"><tspan
          sodipodi:role="line"
          id="tspan255-7"
-         x="647.4895"
-         y="574.36371"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.96800041px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:1.6337806">switch_23</tspan></text>
+         x="812.85767"
+         y="489.98386"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.38147926px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:2.63645291">switch_23</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.96800041px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.6337806"
-       x="649.89984"
-       y="481.75958"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.38147926px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.63645291"
+       x="816.74725"
+       y="340.54739"
        id="text257-1"
-       transform="scale(1.0552821,0.94761392)"><tspan
+       transform="scale(1.0143633,0.98584005)"><tspan
          sodipodi:role="line"
          id="tspan255-8"
-         x="649.89984"
-         y="481.75958"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.96800041px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:1.6337806">switch_33</tspan></text>
+         x="816.74725"
+         y="340.54739"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.38147926px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:2.63645291">switch_33</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
