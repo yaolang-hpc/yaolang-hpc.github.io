@@ -142,6 +142,122 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-设计infiniband-2d-torus和Fat-tree结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/">设计infiniband 2d/3d torus结构</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2019-12-31T01:51:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="搭建一个3D-torus网络"><a href="#搭建一个3D-torus网络" class="headerlink" title="搭建一个3D torus网络"></a><strong>搭建一个3D torus网络</strong></h1><ul>
+<li><p>在两个维度上(x,y)有多少个计算节点？假设在水平方向分布N个计算节点，同理在垂直方向也分布N个计算节点。记住，一个理想的torus网络结构，在每个维度上分布相同数量的节点，否则网络会不均衡。你的2D torus网络需要连接NxN个计算节点。</p>
+<p>一个3D torus网络，在三个维度各连接NxNxN个节点，假设N=10，那么连接的节点数量将是 10x10x10=1000 节点。这个集群规模不算小。</p>
+<p>下面是3D torus拓扑结构图：</p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/1.jpg" alt></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/2.png" alt></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/3.png" alt></p>
+<p>可以看到，3D torus的每个计算节点连接相邻的六个计算节点，位于torus网络边缘的节点同样连接六个相邻的节点，只是它们使用了较长的环绕连接。</p>
+<p>在torus上增加维度的的原因在于当连接大量节点时降低延迟。例如，如果你想利用2D torus网络连接N=1000个节点，你需要一个32x32的网格。如果计算机以一种随机的方式交换数据，那么数据包在这样的网格中到达目的地的平均距离要比10×10×10的立方体所能达到的距离大。从网格的左上角开始，最遥远的目的地位于网格的中心。在一个32×32的网格中，你需要向右走大约16步，然后向底部走16步，到达网格的中心——总共32步。</p>
+<p>10×10×10立方,达到顶点的中心,您需要沿一个方向走5步到达边缘中心，垂直方向5步，到达一个立方体的中心方面,最后5步到达立方体的中心——这是只有15个步骤，比前面的32步少。更多的步骤意味着更大的延迟，这对并行计算非常有害。这就是大型超级计算机使用5D(如IBM Sequoia)或6D torus的原因。</p>
+</li>
+<li><p><strong>是否选择使用交换机</strong></p>
+<p>在计算机行业有两种方法来构建torus网络。第一种方法是将计算节点放入环面“晶格”中。计算节点的网络适配器内部的电路负责转发流经网络的数据包。不需要专用交换机(这是因为每个网络适配器本身就是一个小交换机)。这样的网络被称为“直接网络”，因为计算节点彼此直接连接，中间没有任何开关。</p>
+<p>对于2D(二维)环面网络，您需要一个具有四个端口的网络适配器，将您的节点连接到四个邻居。对于更大的3D网络，有六个邻居，所以你需要一个有六个端口的网络适配器。这种技术的例子有(1)Dolphin公司生产的SCI适配器(这是一种过时的技术)和(2)由Ulrich Bruning教授的课题组设计并由EXTOLL GmbH公司销售的EXTOLL适配器(一种非常新的技术)。</p>
+<p>这种方法的一个相当大的好处是，网络的交换元素可以尽可能地靠近要传输数据的来源——CPU。使用EXTOLL技术，网络适配器通过主板上的HTX插槽插入到超传输总线。</p>
+<p>但也有缺点。如果您有一个具有6个端口的网络适配器，这意味着6条电缆将连接到每个计算节点。电缆连接器确实占用空间(而且很难让它们更小)，所以随着微型化的趋势，六根电缆可能是目前商用硬件的技术极限。</p>
+<p>即使是将一根infiniband铜缆连接到每一台普通的机架服务器上，也会产生阻碍气流的布线结构。六根电线太多了。令人欣慰的是，这六根线缆中有两根的传输距离非常短，也就是连接到相邻的计算节点上，就在问题节点的上面和下面，因此它们可以比剩下的四根稍微细一些。或者你可以使用细而昂贵的光缆。</p>
+<p>幸运的是，还有另一种构建torus网络的方法，它不需要您将厚厚的线束路由到计算节点。你可以把网络交换机放在环面上，而不是把计算节点放在环面上的“格子”里。普通网络交换机，如带36个端口的InfiniBand交换机。然后，计算节点需要有普通的网络适配器，而包转发将由交换机完成。这种网络被称为“间接”网络，因为计算节点之间不是直接连接，而是通过交换机连接的。</p>
+<p>这会产生一定的延迟影响,因为为了得到torus网络,数据包将通过网络适配器和交换机,而在前一个场景中网络适配器也充当了交换机的功能。这同样适用于接收方。因此，如果延迟对您的应用程序很重要，那么您可能希望参考基准测试并选择能够为您提供延迟和成本之间平衡的方法。(如果必须不惜一切代价实现最低的延迟，可以选择胖树结构)</p>
+<p>从一个计算节点到一个交换机只需要一条电缆——如果您的计算节点需要更多的带宽，您可以使用更多的线缆。通过这种方式，您可以将18个节点连接到一个36端口交换机。该交换机的其余18个端口将被连接到它的相邻节点——在一个3D环形网络中，连接到其中的6个相邻节点——每一个相邻的交换机上都有一束3根线缆组成的汇聚线缆。</p>
+</li>
+<li><p><strong>线缆布线图实例</strong></p>
+<p>让我们考虑一个由sugon TC4600E-G30服务器组成的计算机集群，并为它设计一个torus网络。计算集群包含96个刀片服务器，每个机箱可以放入8个刀片服务器，刀箱数为96/8=12个刀箱。</p>
+<p>在机箱的背面有一个infiniband交换模块，一端连接到infiniband交换机，另一端</p>
+<p>在机箱的背面有一个可以插入infiniband交换机的互连插槽。它有32个端口。其中，一端插入交换机，16个端口就会被电连接到刀片服务器中的网络适配器。这种类型的连接比在机架服务器上使用电缆要可靠得多。该开关的其余16个端口对用户可见，您可以像连接任何其他开关一样将电缆连接到它们。我们有12个机箱，也就是12个开关。我们将建立一个尺寸为3×4的二维环面网络(因为6×2环面是不平衡的，更因为12×1环面是退化环面)。</p>
+</li>
+</ul>
+<p>  在2D网络中，每个交换机有四个邻居。因此，一个交换机的16个端口将被平均分配——4个端口分别分配给4个相邻端口——而相邻端口的电缆将以4个端口为一组运行。</p>
+<p>  一个底盘需要10U，所以在一个标准的42U机架我们可以放置四个底盘。我们在这里非常幸运，因为我们的环面是3×4(或者4×3，没关系)，我们可以使用一个机架中的四个底盘作为环面的一个维度(我们称之为“y”维度，因为机架中的底盘是垂直堆叠的)。这三个机架提供了另一个维度，我们将其称为“x”，因为机架沿着水平轴彼此邻接。因此，我们将拓扑称为“3×4”。</p>
+<p>  我们将使用Todd的演示中给出的建议，并选择开关名称和端口的模式(演示幻灯片13)。我只选择从’ 1 ‘开始计数开关，而不是从’ 0 ‘，因为我们做的端口和机架。将有两个维度——x和y——每个交换机的16个端口将被分为4组:</p>
+<p>  +y: 1 2 3 4</p>
+<p>  5 6 7 8</p>
+<p>  +x: 9 10 11 12</p>
+<p>  -x: 13 14 15 16</p>
+<p>  下面是我们三个机架的图形表示(从后面看)。每个机架容纳4个底盘。每个机箱都有一个开关。每个交换机的16个端口被分成4组(详细信息见Switch_31)。绘图不按比例(实际42U机架高于显示)</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">infiniband</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">2d torus</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">fat tree</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-安装Intel-Omni-path架构软件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -853,6 +969,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">architecture</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">2d torus</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">fat tree</a>
               </li>
             
             <div class="clearfix"></div>
