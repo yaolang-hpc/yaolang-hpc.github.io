@@ -15,7 +15,7 @@
    id="svg2985"
    version="1.1"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="torus_cable_routing_s_12_p_36.svg"
+   sodipodi:docname="9.svg"
    inkscape:export-filename="C:\Work\aspirantura\text\torus\torus_cable_routing_s_12_p_36_60.png"
    inkscape:export-xdpi="99.986855"
    inkscape:export-ydpi="99.986855">
@@ -458,7 +458,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.78629862"
      inkscape:cx="632.79297"
-     inkscape:cy="326.77286"
+     inkscape:cy="479.38663"
      inkscape:current-layer="layer2"
      id="namedview2989"
      showgrid="false"
@@ -1182,38 +1182,6 @@
          d="m 537,433.09448 h -25 v 288 h 61 v -20 0"
          style="fill:none;stroke:#ff0000;stroke-width:1.77165353;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
-    <path
-       style="opacity:0.98000004;fill:none;stroke:#dc1d29;stroke-width:1.77199996;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 357.5044,598.79167 c 0,56.69287 0.93646,57.36778 0.93646,57.36778 h 162.00918 56.18816 v -58.04269"
-       id="path284"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:none;stroke:#de35a9;stroke-width:1.6397773;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 398.66674,596.96351 c 0,95.76626 0,97.57316 0,97.57316 h 318.88359 v -95.76626"
-       id="path4974"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;stroke:#2de50a;stroke-width:1.77199996;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 359.71412,511.32521 v 62.94997 h 219.42561 v -68.34569"
-       id="path4978"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;stroke:#19f8ea;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 537.7726,511.32521 v 71.94282 h 212.23133 v -73.74139"
-       id="path4982"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;stroke:#f1e61d;stroke-width:1.772;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 398.0676,510.09352 v 30.52276 h 323.03249 v -33.06632"
-       id="path5012"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;stroke:#222135;stroke-width:1.772;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 537.96355,600.39001 v 80.12223 h 206.0286 11.44603 v -82.6658"
-       id="path268"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
   </g>
   <g
      inkscape:groupmode="layer"
