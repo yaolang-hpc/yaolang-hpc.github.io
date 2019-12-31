@@ -458,7 +458,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.78629862"
      inkscape:cx="632.79297"
-     inkscape:cy="479.38663"
+     inkscape:cy="324.93244"
      inkscape:current-layer="layer2"
      id="namedview2989"
      showgrid="false"
@@ -501,7 +501,7 @@
            style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:ISOCPEUR;-inkscape-font-specification:ISOCPEUR" /></flowRegion><flowPara
          id="flowPara6483" /></flowRoot>    <g
        id="g4720"
-       transform="translate(-223.31575,-100.98358)">
+       transform="matrix(1.3893314,0,0,1.2844024,-604.26971,-244.80186)">
       <path
          inkscape:connector-curvature="0"
          id="path3761-2"
@@ -636,7 +636,7 @@
     </g>
     <g
        id="g4720-4"
-       transform="translate(-48.719249,-100.98358)">
+       transform="matrix(1.3893314,0,0,1.2844024,-361.69731,-244.80186)">
       <path
          inkscape:connector-curvature="0"
          id="path3761-2-0"
@@ -771,7 +771,7 @@
     </g>
     <g
        id="g4720-1"
-       transform="translate(125.87724,-100.98358)">
+       transform="matrix(1.3893314,0,0,1.2844024,-119.12493,-244.80186)">
       <path
          inkscape:connector-curvature="0"
          id="path3761-2-4"
@@ -906,7 +906,7 @@
     </g>
     <g
        id="g6542"
-       transform="translate(-181.15429,-8.9835803)">
+       transform="matrix(1.3893314,0,0,1.2844024,-545.69347,-126.63684)">
       <flowRoot
          transform="translate(155.81485,575.80091)"
          style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:ISOCPEUR;-inkscape-font-specification:'ISOCPEUR Oblique';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none"
@@ -1008,7 +1008,7 @@
        xml:space="preserve"
        id="flowRoot6631-7-3-8-82"
        style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:ISOCPEUR;-inkscape-font-specification:'ISOCPEUR Oblique';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none"
-       transform="translate(271.4501,492.6103)"><flowRegion
+       transform="matrix(1.3893314,0,0,1.2844024,83.124016,517.61158)"><flowRegion
          id="flowRegion6633-8-3-8-8"><rect
            id="rect6635-3-3-0-90"
            width="27.309509"
@@ -1020,7 +1020,7 @@
        xml:space="preserve"
        id="flowRoot6631-7-3-8-82-8"
        style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:ISOCPEUR;-inkscape-font-specification:'ISOCPEUR Oblique';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none"
-       transform="translate(310.39712,492.6103)"><flowRegion
+       transform="matrix(1.3893314,0,0,1.2844024,137.23433,517.61158)"><flowRegion
          id="flowRegion6633-8-3-8-8-1"><rect
            id="rect6635-3-3-0-90-5"
            width="27.309509"
@@ -1032,7 +1032,7 @@
        xml:space="preserve"
        id="flowRoot6631-7-3-8-82-6"
        style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:ISOCPEUR;-inkscape-font-specification:'ISOCPEUR Oblique';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none"
-       transform="translate(386.89712,492.6103)"><flowRegion
+       transform="matrix(1.3893314,0,0,1.2844024,243.51819,517.61158)"><flowRegion
          id="flowRegion6633-8-3-8-8-12"><rect
            id="rect6635-3-3-0-90-4"
            width="27.309509"
@@ -1044,7 +1044,7 @@
        xml:space="preserve"
        id="flowRoot6631-7-3-8-82-5"
        style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:ISOCPEUR;-inkscape-font-specification:'ISOCPEUR Oblique';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none"
-       transform="translate(348.39712,492.6103)"><flowRegion
+       transform="matrix(1.3893314,0,0,1.2844024,190.02892,517.61158)"><flowRegion
          id="flowRegion6633-8-3-8-8-8"><rect
            id="rect6635-3-3-0-90-6"
            width="27.309509"
@@ -1084,7 +1084,7 @@
            y="650.75641" /></flowRegion><flowPara
          id="flowPara6649" /></flowRoot>    <g
        id="g12902"
-       transform="translate(0.71908736,91.7271)">
+       transform="matrix(1.3893314,0,0,1.2844024,-293.01107,2.7162123)">
       <path
          inkscape:connector-curvature="0"
          id="path6678"
@@ -1132,7 +1132,7 @@
        xml:space="preserve"
        id="flowRoot12914"
        style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:125%;font-family:ISOCPEUR;-inkscape-font-specification:'ISOCPEUR Oblique';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:none"
-       transform="translate(1.4142136,383.05509)"><flowRegion
+       transform="matrix(1.3893314,0,0,1.2844024,-292.04531,376.8986)"><flowRegion
          id="flowRegion12916"><rect
            id="rect12918"
            width="179.59293"
@@ -1160,7 +1160,7 @@
      style="display:inline">
     <g
        id="g6164"
-       transform="translate(-250.3158,-100.98358)">
+       transform="matrix(1.3893314,0,0,1.2844024,-641.78173,-244.80186)">
       <path
          inkscape:connector-curvature="0"
          id="path6081"
@@ -1190,7 +1190,7 @@
      style="display:inline">
     <g
        id="g6262"
-       transform="translate(-250.3158,-100.98358)">
+       transform="matrix(1.3893314,0,0,1.2844024,-641.78173,-244.80186)">
       <g
          id="g6164-34"
          transform="translate(175)">
@@ -1248,7 +1248,7 @@
      style="display:inline">
     <g
        id="g6316"
-       transform="translate(-244.3158,-100.98358)">
+       transform="matrix(1.3893314,0,0,1.2844024,-633.44574,-244.80186)">
       <path
          inkscape:connector-curvature="0"
          id="path6288"
@@ -1272,18 +1272,18 @@
      inkscape:label="X wiring, second row of switches"
      style="display:inline">
     <path
-       style="fill:none;stroke:#00ffff;stroke-width:1.77165353;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 353.6842,422.61086 V 125.61088 h 216 l -1,296.99998"
+       style="fill:none;stroke:#00ffff;stroke-width:2.36664057;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 197.37443,427.70412 V 46.236622 h 300.09559 l -1.38934,381.467498"
        id="path6288-2"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#ff6600;stroke-width:1.77165377;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 531.6842,421.61093 V 118.61091 h 212 l -0.9815,303.00002"
+       style="fill:none;stroke:#ff6600;stroke-width:2.36664081;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 444.67542,426.41981 V 37.245844 h 294.53826 l -1.36364,389.173966"
        id="path6288-4-5"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#ff00ff;stroke-width:1.77165353;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 393.68423,422.6109 V 110.61089 H 706.6842 l -1.449,312.00001"
+       style="fill:none;stroke:#ff00ff;stroke-width:2.36664057;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 252.94773,427.70418 V 26.970598 h 434.86068 l -2.01314,400.733582"
        id="path6288-9-5"
        inkscape:connector-curvature="0" />
   </g>
