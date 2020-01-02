@@ -11,26 +11,26 @@
   <meta name="description" content="搭建一个3D torus网络 在两个维度上(x,y)有多少个计算节点？假设在水平方向分布N个计算节点，同理在垂直方向也分布N个计算节点。记住，一个理想的torus网络结构，在每个维度上分布相同数量的节点，否则网络会不均衡。你的2D torus网络需要连接NxN个计算节点。 一个3D torus网络，在三个维度各连接NxNxN个节点，假设N&#x3D;10，那么连接的节点数量将是 10x10x10&#x3D;1000">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计infiniband 2d&#x2F;3d torus结构">
-<meta property="og:url" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:url" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="YaoL的博客">
 <meta property="og:description" content="搭建一个3D torus网络 在两个维度上(x,y)有多少个计算节点？假设在水平方向分布N个计算节点，同理在垂直方向也分布N个计算节点。记住，一个理想的torus网络结构，在每个维度上分布相同数量的节点，否则网络会不均衡。你的2D torus网络需要连接NxN个计算节点。 一个3D torus网络，在三个维度各连接NxNxN个节点，假设N&#x3D;10，那么连接的节点数量将是 10x10x10&#x3D;1000">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/1.jpg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/2.png">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/3.png">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/4.svg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/5.svg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/6.svg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/7.svg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/8.svg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/9.svg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/10.svg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/11.jpg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/12.jpg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/13.jpg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/14.jpg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/15.jpg">
-<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/16.jpg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/1.jpg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/2.png">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/3.png">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/4.svg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/5.svg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/6.svg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/7.svg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/8.svg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/9.svg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/10.svg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/11.jpg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/12.jpg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/13.jpg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/14.jpg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/15.jpg">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/16.jpg">
 <meta property="article:published_time" content="2019-12-31T01:51:52.000Z">
 <meta property="article:modified_time" content="2020-01-02T03:19:34.595Z">
 <meta property="article:author" content="Yao L">
@@ -38,7 +38,7 @@
 <meta property="article:tag" content="2d torus">
 <meta property="article:tag" content="3d torus">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/1.jpg">
+<meta name="twitter:image" content="https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YaoL的博客" type="application/atom+xml">
   
@@ -164,7 +164,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-设计infiniband-2d-torus和Fat-tree结构" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-设计infiniband-2d-3d-torus结构" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -176,7 +176,7 @@
   
 
         
-        <a href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/" class="archive-article-date">
+        <a href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/" class="archive-article-date">
   	<time datetime="2019-12-31T01:51:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-31</time>
 </a>
         
@@ -188,9 +188,9 @@
 <li><p>在两个维度上(x,y)有多少个计算节点？假设在水平方向分布N个计算节点，同理在垂直方向也分布N个计算节点。记住，一个理想的torus网络结构，在每个维度上分布相同数量的节点，否则网络会不均衡。你的2D torus网络需要连接NxN个计算节点。</p>
 <p>一个3D torus网络，在三个维度各连接NxNxN个节点，假设N=10，那么连接的节点数量将是 10x10x10=1000 节点。这个集群规模不算小。</p>
 <p>下面是3D torus拓扑结构图：</p>
-<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/1.jpg" alt></p>
-<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/2.png" alt></p>
-<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/3.png" alt></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/1.jpg" alt></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/2.png" alt></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/3.png" alt></p>
 <a id="more"></a>
 
 <p>可以看到，3D torus的每个计算节点连接相邻的六个计算节点，位于torus网络边缘的节点同样连接六个相邻的节点，只是它们使用了较长的环绕连接。</p>
@@ -220,20 +220,20 @@
 </li>
 </ul>
 <p>  下面是我们三个机架的图形表示(从后面看)。每个机架容纳4个机箱。每个机箱都有一个交换机。每个交换机的16个端口被分成4组(详细信息见Switch_31)。绘图不按比例(实际42U机架高于显示)</p>
-<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/4.svg" alt></p>
+<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/4.svg" alt></p>
 <p>  我们从y方向开始，因为它更简单。当我们前进(y增加)时，我们使用来自组“+y”的交换端口。线缆按顺序从组“+y”到下一个开关，再到组“-y”。这是第一个环形:</p>
-<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/5.svg" alt></p>
+<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/5.svg" alt></p>
 <p>  验证线缆是否按“+y”→“-y”模式运行，例如，从Switch_11上的组“+y”到Switch_12上的组“-y”。特别好的是，这种线缆是完全在机架内。它不会放到头顶的托盘或其他架子上。它在三个机架中都是独立的。我们在其他机柜中上也做了类似的事情:</p>
-<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/6.svg" alt></p>
+<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/6.svg" alt></p>
 <p>  现在，我们已经完成了y方向布线。让我们从“x”方向开始。困难在于这一次电缆必须从一个机柜连接到另一个机柜，如果你只是从Switch_11拉到Switch_21，机架的门没法关闭，因此我们需要使用头顶的托盘。这需要更长的线缆，特别是位于机柜底部的刀箱。让我们从最上面的交换机开始。</p>
-<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/7.svg" alt></p>
+<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/7.svg" alt></p>
 <p>  电缆的顺序是黄色、绿色、蓝色。验证布线是否遵循“+x”→“-x”模式(即，黄色线缆从一个交换机上的“+x”到下一个交换机上的“-x”)。</p>
 <p>  还要注意的是，线缆的示意图显示是垂直向上的，而在真正的气冷装置中，你会选择将线缆与机柜的一侧对齐，这样它们就不会阻碍气流。为此，您可能会选择机柜的右侧，因为左侧可能会被我们的“y”维布线使用(未显示，但仍然在那里)。</p>
 <p>  下一排交换机的布线类似(之前的布线没有显示，以免使图看起来混乱):</p>
-<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/8.svg" alt></p>
+<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/8.svg" alt></p>
 <p>  现在您必须以类似的方式连接下面两行交换机，这样就完成了。如果我们试图描述所有的线缆，它将是这样的:</p>
-<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/9.svg" alt></p>
-<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/10.svg" alt></p>
+<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/9.svg" alt></p>
+<p>  <img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/10.svg" alt></p>
 <p>  恭喜你!您已经成功地设计了一个包含180个节点的2D环面网络。(如果您希望试验绘图，<a href="https://clusterdesign.org/wp-content/uploads/2012/09/torus_cable_routing_s_12_p_36.svg" target="_blank" rel="noopener">请下载SVG文件</a>，最好使用<a href="https://inkscape.org/download/" target="_blank" rel="noopener">Inkscape</a>打开)。</p>
 <p>  torus网络天生就比胖树便宜。实际上，如果我们试图为12个刀片服务器机架设计一个fat-tree，那么刀箱中的中的交换机将充当边缘交换机，我们将需要为这个fat-tree的第二级单独设置一组核心交换机。因此，胖树结构会更贵。但是，它将提供低延迟和非阻塞带宽。(事实上，如果将计算节点的成本考虑在内，那么fat-tree看起来并没有那么昂贵)。</p>
 <ul>
@@ -255,21 +255,21 @@
 </li>
 <li><p><strong>设计一个3D torus网络架构</strong></p>
 <p>立体环形Torus架构系统整体计算网络分为三层。第一层为全交换网络，计算模块通过全交换网络芯片高速连接，形成一个超节点；第二层为12个超节点按照2x2x3的三维立方体结构进行互联，形成一个硅元；第三层是硅元之间按照X/Y/Z三个方向连接成三维立方体结构，最终形成整个系统，如图所示：</p>
-<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/11.jpg" alt="立方体环形Torus高速网络层次化结构图"></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/11.jpg" alt="立方体环形Torus高速网络层次化结构图"></p>
 <ol>
 <li><p><strong>立体环形Torus网络</strong></p>
 <p>系统整体计算网络分为三层。第一层为全交换网络，计算节点（Node）通过全交换网络高速连接，形成一个超节点（SuperNode）。如下图所示：</p>
-<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/12.jpg" alt="超节点网络结构"></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/12.jpg" alt="超节点网络结构"></p>
 <p>每一个超节点对外有A、B、C+、C-、X+、X-、Y+、Y-、Z+、Z-方向连接其它超节点。12个超节点分别通过A、B、C+、C-网络链路连接起来，每个超节点通过A、B、C+、C-方向连接到4个超节点，形成一个2×2×3的三维立方体结构，即硅元（Si-Node），如下图所示。</p>
-<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/13.jpg" alt="硅元网络结构"></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/13.jpg" alt="硅元网络结构"></p>
 <p>每一个硅元中的超节点都通过X+、X-、Y+、Y-、Z+、Z-六个连接其前、后、左、右、上、下六个硅元中的对应的超级节点，如下图所示，最终形成了整个系统，即硅立方（Si-Cube）。</p>
-<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/14.jpg" alt="高速网络立体结构图"></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/14.jpg" alt="高速网络立体结构图"></p>
 <p>SuperNode内的全互联可保证局部通信的高带宽和低延迟特性；另一个层面是全系统的多维Torus直接互连结构，保证邻近通信的并发性。</p>
 </li>
 <li><p><strong>交换机</strong></p>
 <p>由于项目规模较大，连线数量多且复杂，对布线、信号稳定性等提出了非常严峻的挑战。为了应对此难点，本项目将采用液冷高性能模块化交换机用于对硅元内部12个超节点之间的连接，通过交换机背板实现3个局部维度构成的双列交叉结构（A、B、C+、C-）的连接，提升系统集成度和信号传输的可靠性。同时，每台硅元交换机对外提供最大192个高速端口用于连接计算节点、最大48个高速端口用于该硅元与其他硅元之间全局维度的3D-Torus连接。</p>
-<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/15.jpg" alt="100G 高速交换机内部连接图"></p>
-<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/16.jpg" alt="高速交换机交换板"></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/15.jpg" alt="100G 高速交换机内部连接图"></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/16.jpg" alt="高速交换机交换板"></p>
 </li>
 </ol>
 </li>
@@ -351,7 +351,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://yaolang-hpc.github.io/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/" alt="微信分享二维码">
     </div>
 </div>
 
