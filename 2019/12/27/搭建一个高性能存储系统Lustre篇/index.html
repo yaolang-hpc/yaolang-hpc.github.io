@@ -25,7 +25,7 @@
 <meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/8.jpg">
 <meta property="og:image" content="https://yaolang-hpc.github.io/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/9.jpg">
 <meta property="article:published_time" content="2019-12-27T01:10:19.000Z">
-<meta property="article:modified_time" content="2020-01-16T09:30:54.240Z">
+<meta property="article:modified_time" content="2020-01-16T09:33:46.485Z">
 <meta property="article:author" content="Yao L">
 <meta property="article:tag" content="Lustre">
 <meta property="article:tag" content="architecture">
@@ -219,6 +219,7 @@
 <p><img src="/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/2.jpg" alt="A Storage Pipeline"></p>
 <p>图2根据图1中的顺序把这些组件有序组合起来.从左到右，追踪读管道流。从左至右，该性能曲线代表了每个连续的组件添加到管道后的性能。例如,当添加存储控制器，一些低效率的组件可能会导致两个组件(磁盘和控制器)执行效率略低于单独磁盘的值。曲线显示性能下降(或理想情况下整个曲线保持大致相同)，随着额外新的组件被添加。</p>
 <a id="more"></a>
+
 <p>这种方法需要注意的一点是,引入一个新的组件可能会让我们反思之前的组件的设计。例如,如果磁盘的数量刚好满足性能和容量需求,但同时控制器的性能低于要求,我们可能需要回溯磁盘和重新设计的部分。进一步,如果我们知道控制器可以很容易地处理更多的磁盘,这可能促使我们考虑部署的磁盘,预计可能发生的性能瓶颈后的设计</p>
 <p>对于刚接触此类任务的设计人员来说，这可能会产生有意义的回溯，从而使端到端设计恰到好处。一个有经验的设计者可能会因为这样的回溯而修改设计，本文后半部分的案例研究给出了一个这样的例子。</p>
 <p>本文不涉及性能基准测试。可能的基准测试目标和相关的应用程序被提及。有些单独的组件不能单独测试，但是一种系统的基准测试方法可以允许设计人员推断单个组件的能力。组件的性能可以通过测试获得，也可以通过查找其他人记录的结果获得。</p>
@@ -246,7 +247,38 @@
 </ul>
 <p>这些要求完全符合Lustre的能力，因此Lustre文件系统是一个很好的选择。</p>
 <p>表格1：适用于Lustre的案例</p>
-<p>| Storage System Requirements                                  | Lustre File System Capabilities                              |<br>| —————————————————————————————— | :—————————————————————————————- |<br>| Large file system                                            | Up to 512PB for one file system                              |<br>| Large files                                                  | Up to 32PB for one file                                      |<br>| Global name space                                            | A consistent abstraction of all files allows users to access file system information heterogeneously |<br>| Many files                                                   | Up to 10 million files in one directory and 2 billion files in the file system. Virtually unlimited with Distributed Name Space. |<br>| Large number of clients accessing the file system in parallel | Up to 25,000+ clients in a production system                 |<br>| High Availability                                            | Works with a variety of high availability (HA) managers to support automated failover to meet no-single-point-of-failure (NSPF) requirements. |</p>
+<table>
+<thead>
+<tr>
+<th>Storage System Requirements</th>
+<th align="left">Lustre File System Capabilities</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Large file system</td>
+<td align="left">Up to 512PB for one file system</td>
+</tr>
+<tr>
+<td>Large files</td>
+<td align="left">Up to 32PB for one file</td>
+</tr>
+<tr>
+<td>Global name space</td>
+<td align="left">A consistent abstraction of all files allows users to access file system information heterogeneously</td>
+</tr>
+<tr>
+<td>Many files</td>
+<td align="left">Up to 10 million files in one directory and 2 billion files in the file system. Virtually unlimited with Distributed Name Space.</td>
+</tr>
+<tr>
+<td>Large number of clients accessing the file system in parallel</td>
+<td align="left">Up to 25,000+ clients in a production system</td>
+</tr>
+<tr>
+<td>High Availability</td>
+<td align="left">Works with a variety of high availability (HA) managers to support automated failover to meet no-single-point-of-failure (NSPF) requirements.</td>
+</tr>
+</tbody></table>
 </li>
 <li><p><strong>设计和构建存储管道</strong></p>
 <p>从图2所示的管道的存储端开始，磁盘和磁盘柜的设计满足系统需求。然后，将存储控制器添加到设计中并进行调整，以确保这两个组件组合在一起满足需求。然后添加下一个组件，再次进行调整，等等，直到整个管道搭建完成。</p>
@@ -257,7 +289,28 @@
 <p>对象存储存储实际数据。对象存储操作通常是是连续的大型IOs。</p>
 <p>设计元数据存储或对象存储的合理起点是考虑可用存储设备的容量和性能特征。对于本例，我们考虑表2中所示的Seagate*硬盘驱动器。</p>
 <p>表格2：硬盘参数对比</p>
-<p>| Specifications                      | Seagate 15K.7 HDD (600 GB, 15,000 RPM) | Seagate ES.2 HDD (3 TB, 7200 RPM) | Seagate ES HDD (1 TB, 7200 RPM ) |<br>| —————————————————- | ——————————————————— | ————————————————- | ———————————————— |<br>| Average IO/s                        | 178                                    | 76                                | 76                               |<br>| Sustained data transfer rate (MB/s) | 208                                    | 155                               | 147                              |</p>
+<table>
+<thead>
+<tr>
+<th>Specifications</th>
+<th>Seagate 15K.7 HDD (600 GB, 15,000 RPM)</th>
+<th>Seagate ES.2 HDD (3 TB, 7200 RPM)</th>
+<th>Seagate ES HDD (1 TB, 7200 RPM )</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Average IO/s</td>
+<td>178</td>
+<td>76</td>
+<td>76</td>
+</tr>
+<tr>
+<td>Sustained data transfer rate (MB/s)</td>
+<td>208</td>
+<td>155</td>
+<td>147</td>
+</tr>
+</tbody></table>
 <p>如图所示，转速对磁盘性能有显著影响。15000转/分钟的硬盘提供了两倍于每秒输入/输出操作(IO/s)和大约30%的带宽比7200转/分钟的硬盘。7200转/分钟3 TB的硬盘和7200转/分钟1 TB的硬盘具有大致相似的性能特征。</p>
 <p>主轴的数量也会影响性能。例如，虽然三个1-TB磁盘和一个3-TB磁盘提供相同的容量，但是三个1-TB磁盘的带宽是一个3-TB磁盘的三倍，支持的IO/s是一个3-TB磁盘的三倍。</p>
 <p>在本文的例子中，我们考虑了两种类型的磁盘柜:12盘位的磁盘柜和60盘位的磁盘柜。两个磁盘外壳使用相同类型的SAS-2接口连接到存储控制器。由于元数据存储需要更小的空间，但IO/s更高，因此元数据存储将考虑使用12盘位盘柜。如果需要提供足够的带宽，则60盘位盘柜似乎更适合对象存储。</p>
@@ -271,34 +324,16 @@
 <p>当数据大小与条带大小不匹配时，RAID-6配置可能导致写性能损失。在这种情况下，控制器必须从磁盘读取旧的奇偶校验码和旧数据，然后将这些信息与新数据结合来计算新的奇偶校验。这种操作称为“读-修改-写”。</p>
 <p>为了减轻这种性能损失，通常使用“全条带写入”，其中数据大小与条带大小匹配，这样就可以直接计算奇偶校验，而不必首先从磁盘读取信息。因为Lustre在1 MB的段中读写数据，所以RAID段大小被设置为128 KB，这样1 MB的数据就在所有的数据磁盘上条带化。</p>
 <p>每个60盘位的磁盘柜中的磁盘可以配置为6个RAID-6组，每个RAID组包含10块磁盘。每个RAID-6组提供大约32 TB的存储，因此每个盘柜提供大约192 TB的存储。</p>
-<p>注意，磁盘容量以十进制GB(其中1 GB = 1000,000,000bytes)表示，而文件系统容量以二进制GB(其中1 GiB = 1,073,741,824bytes)表示。在这些计算中需要考虑到这一点。</p>
-<script type="math/tex; mode=display">
-TB/TB=  (10^{12}\,B)/(2^{40}\,B)≅0.91</script><p>另外，根文件系统将保留5%。因此，每个磁盘柜可以提供164TB的可用空间。</p>
-<script type="math/tex; mode=display">
-192×0.9×0.95≅164TB</script><p>10PB可用空间所需的盘柜数量的数量为:</p>
-<script type="math/tex; mode=display">
-(10×1024\,TB)/(164\,TB⁄\,enclosure)= 62.43</script><p>为了满足10PB可用空间的要求，本设计将使用63个磁盘柜。</p>
-<p>接下来我们将考虑性能需求在开始初始设计时。为了达到100GB/s的聚合带宽，每隔磁盘柜需要贡献的带宽是：</p>
-<script type="math/tex; mode=display">
-(100\,GB⁄sec)/(63\,enclosures)≅(1.6\,GB)⁄sec</script><p>由于每个盘柜有6个RAID-6组，每个RAID-6组包含8个数据磁盘，并且磁盘柜中希捷 ES.2中的磁盘支持理论的持续数据传输速率为155 MB/s，因此48个数据磁盘的理论 总带宽为:</p>
-<script type="math/tex; mode=display">
-(155\,MB)\,⁄\,s×48=(7.4\,GB)⁄s</script><p>然而，在实际使用中，理论带宽很难实现，因为RAID控制器的效率和磁盘控制器的带宽也必须考虑在内。RAID-6存储盘柜的实际吞吐量可能低于每个磁盘的理论吞吐量的一半。例如，如果SAS扩展器是限制因素，则每个磁盘柜3 GB/s，这足以超过1.6 GB/s的最低要求。</p>
-<p>由于大多数磁盘柜通过存储控制器的4通道串行SCSI-2 (SAS-2)电缆连接到存储控制器，每个通道的性能为6.0 Gb/s，因此单个磁盘柜的最大带宽计算如下:</p>
-<script type="math/tex; mode=display">
-(6\ Gb)⁄\ s×4\ lanes×(1\ B)/(8\ b)=3\ GB⁄\ s</script><p>因此，磁盘柜和存储控制器之间的连接决定了在本设计中可以实现的聚合带宽。此带宽超过了100 GB/s的总聚合带宽下每个磁盘柜的平均带宽1.6GB/s。</p>
+<p>注意，磁盘容量以十进制GB(其中1 GB = 1000,000,000bytes)表示，而文件系统容量以二进制GB(其中1 GiB = 1,073,741,824bytes)表示。在这些计算中需要考虑到这一点。<br>$$<br>TB/TB=  (10^{12},B)/(2^{40},B)≅0.91<br>$$<br>另外，根文件系统将保留5%。因此，每个磁盘柜可以提供164TB的可用空间。<br>$$<br>192×0.9×0.95≅164TB<br>$$<br>10PB可用空间所需的盘柜数量的数量为:<br>$$<br>(10×1024,TB)/(164,TB⁄,enclosure)= 62.43<br>$$<br>为了满足10PB可用空间的要求，本设计将使用63个磁盘柜。</p>
+<p>接下来我们将考虑性能需求在开始初始设计时。为了达到100GB/s的聚合带宽，每隔磁盘柜需要贡献的带宽是：<br>$$<br>(100,GB⁄sec)/(63,enclosures)≅(1.6,GB)⁄sec<br>$$<br>由于每个盘柜有6个RAID-6组，每个RAID-6组包含8个数据磁盘，并且磁盘柜中希捷 ES.2中的磁盘支持理论的持续数据传输速率为155 MB/s，因此48个数据磁盘的理论 总带宽为:<br>$$<br>(155,MB),⁄,s×48=(7.4,GB)⁄s<br>$$<br>然而，在实际使用中，理论带宽很难实现，因为RAID控制器的效率和磁盘控制器的带宽也必须考虑在内。RAID-6存储盘柜的实际吞吐量可能低于每个磁盘的理论吞吐量的一半。例如，如果SAS扩展器是限制因素，则每个磁盘柜3 GB/s，这足以超过1.6 GB/s的最低要求。</p>
+<p>由于大多数磁盘柜通过存储控制器的4通道串行SCSI-2 (SAS-2)电缆连接到存储控制器，每个通道的性能为6.0 Gb/s，因此单个磁盘柜的最大带宽计算如下:<br>$$<br>(6\ Gb)⁄\ s×4\ lanes×(1\ B)/(8\ b)=3\ GB⁄\ s<br>$$<br>因此，磁盘柜和存储控制器之间的连接决定了在本设计中可以实现的聚合带宽。此带宽超过了100 GB/s的总聚合带宽下每个磁盘柜的平均带宽1.6GB/s。</p>
 <p>磁盘本身的带宽是到存储控制器连接的带宽的两倍，因此在本设计中磁盘性能不是一个限制因素。同时磁盘柜的数量也不是限制因素。</p>
 <p>但是，请注意，如果系统带宽要求增加两倍，达到300 GB/s，那么63个磁盘柜中的每一个盘柜都需要提供4.76 GB/s的带宽，这比本设计中使用的3GB /s磁盘柜所能支持的带宽要高。在这种情况下，需要重新设计磁盘布局以添加更多的磁盘柜。例如，2-TB、7200转/分钟的磁盘可以代替本设计中使用的4-TB磁盘，以获得更好的性能。这样做可以将相同的存储容量分散到更多的磁盘柜上。</p>
 </li>
 <li><p><strong>配置元数据存储</strong></p>
 <p>对于元数据存储，性能是最重要的。这是因为对于每个IO操作，必须在元数据存储中从inode获取文件属性，然后才能在对象存储中访问该文件。因此，元数据访问时间影响每个IO操作。然而，元数据存储容量需求通常相对于对象存储的容量需求较小，因此容量不太可能成为一个需要特别关注的点。、</p>
 <p>由于大多数元数据操作都是查询(读取)，所以RAID-10配置最适合元数据存储。RAID-10结合了RAID-1和RAID-0的特性。RAID-1通过成对配置磁盘来相互镜像，从而提供数据镜像。RAID-0通过跨两个RAID-1对分段数据来提高性能。因为RAID-10集中的两个磁盘包含相同的内容，所以可以交替地从两个磁盘读取数据，从而有效地提高了读取性能，这对整体系统性能有很大的帮助。与RAID-5或RAID-6不同，RAID-10没有奇偶校验驱动器，因此没有“读-修改-写”性能损失。元数据存储的段大小可以设置为4 KB，这与元数据IO大小相匹配。</p>
-<p>要正确地确定元数据存储的大小，理解平均文件大小是很重要的。在本例中，假设平均文件大小为5 MB。通过将所需的对象存储容量除以平均文件大小，可以计算出将要存储的最小inode数:</p>
-<script type="math/tex; mode=display">
-10\,PB⁄(5\,MB\,per\,inode)=2×10^9\,inodes</script><p>为了将来的扩展，应该为最小的inode数量预留两倍的空间。由于在Lustre 2.1或更新版本中每个文件的元数据可能需要多达2 KB的空间，元数据存储必须至少:</p>
-<script type="math/tex; mode=display">
-(2\ KiB)/\,inode=  (2×10^9\ inodes)/2^{80} ×2≅7.5\,TB</script><p>对于本设计，将使用希捷15000 rpm、600 GB磁盘作为元数据存储。见表2。所需的磁盘数量可以通过将所需的元数据存储除以磁盘容量并乘以2来确定(因为磁盘将配置为RAID-10镜像对):</p>
-<script type="math/tex; mode=display">
-(2×7.5\,TB)/(600\,GB×10^9/2^{30} ×0.95)= 29\,disks</script><p>回想一下，磁盘容量以十进制GB(109字节)度量，而文件系统容量以二进制GB(230字节)度量。</p>
+<p>要正确地确定元数据存储的大小，理解平均文件大小是很重要的。在本例中，假设平均文件大小为5 MB。通过将所需的对象存储容量除以平均文件大小，可以计算出将要存储的最小inode数:<br>$$<br>10,PB⁄(5,MB,per,inode)=2×10^9,inodes<br>$$<br>为了将来的扩展，应该为最小的inode数量预留两倍的空间。由于在Lustre 2.1或更新版本中每个文件的元数据可能需要多达2 KB的空间，元数据存储必须至少:<br>$$<br>(2\ KiB)/,inode=  (2×10^9\ inodes)/2^{80} ×2≅7.5,TB<br>$$<br>对于本设计，将使用希捷15000 rpm、600 GB磁盘作为元数据存储。见表2。所需的磁盘数量可以通过将所需的元数据存储除以磁盘容量并乘以2来确定(因为磁盘将配置为RAID-10镜像对):<br>$$<br>(2×7.5,TB)/(600,GB×10^9/2^{30} ×0.95)= 29,disks<br>$$<br>回想一下，磁盘容量以十进制GB(109字节)度量，而文件系统容量以二进制GB(230字节)度量。</p>
 <p>由于40亿个inode是基于假定的平均文件大小估算的(20亿个inode x 2)，为了架构的简单性，本文剩下的部分将使用30个磁盘。如果存在准确的文件计数要求，则应用相同的计算。</p>
 <p>3个12盘位的盘柜将需要使用30个磁盘用于inode存储，剩下的6个磁盘插槽用于热备盘(每个盘柜两个)。</p>
 <p><img src="/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/4.jpg" alt="shows the storage configuration for the metadata storage"></p>
@@ -339,7 +374,42 @@ TB/TB=  (10^{12}\,B)/(2^{40}\,B)≅0.91</script><p>另外，根文件系统将�
 <li>支持150万文件的额外工作集的热缓存</li>
 </ul>
 <p>表3：MDS RAM Calculation</p>
-<p>| Memory Consumer                                       | Required Memory |<br>| ——————————————————————————- | ———————- |<br>| Operating system overhead                             | 1,024 MB        |<br>| File system journal                                   | 4,096 MB        |<br>| MDT file system metadata (0.1% of 8192 GB)            | 8,192 MB        |<br>| 2000, 8-core clients X 100 files per core X 3 KB/file | 4,687 MB        |<br>| 64 interactive clients X 10,000 files X 3 KB/file     | 1,875 MB        |<br>| 2-million-file working set X 1.5 KB/file              | 2,929 MB        |<br>| Total                                                 | 22,803 MB       |</p>
+<table>
+<thead>
+<tr>
+<th>Memory Consumer</th>
+<th>Required Memory</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Operating system overhead</td>
+<td>1,024 MB</td>
+</tr>
+<tr>
+<td>File system journal</td>
+<td>4,096 MB</td>
+</tr>
+<tr>
+<td>MDT file system metadata (0.1% of 8192 GB)</td>
+<td>8,192 MB</td>
+</tr>
+<tr>
+<td>2000, 8-core clients X 100 files per core X 3 KB/file</td>
+<td>4,687 MB</td>
+</tr>
+<tr>
+<td>64 interactive clients X 10,000 files X 3 KB/file</td>
+<td>1,875 MB</td>
+</tr>
+<tr>
+<td>2-million-file working set X 1.5 KB/file</td>
+<td>2,929 MB</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>22,803 MB</td>
+</tr>
+</tbody></table>
 <p>对于具有这种配置的文件系统，MDS服务器的最小内存是24GB RAM。但是，该示例显示，随着交互式客户机数量的增加和文件工作集的增加，为了获得最佳性能，需要额外的RAM。128GB或更多内存通常用于更好的性能。</p>
 </li>
 <li><p><strong>设计对象存储服务器</strong></p>
@@ -354,13 +424,92 @@ TB/TB=  (10^{12}\,B)/(2^{40}\,B)≅0.91</script><p>另外，根文件系统将�
 <p>与MDS一样，OSS使用内存缓存文件系统元数据和客户端持有的LDLM锁。除了上面为MDS描述的元数据内存需求外，OSS还需要为每个对象存储目标(OST) 在其IO服务线程运行时所占用的的1 mb RDMA I/O缓冲区，提供额外的内存。从OSS访问文件和从MDS访问文件所需要的内存大致相等(见表4)，但OSS中indoe、缓存锁所占用的内存负载，均匀分布在22个OSS节点上[4]。虽然OST的文件系统元数据比MDT少(由于inode更小、目录更少、没有扩展属性)，但是在这种配置中，每个OSS的OST存储空间要大得多(492 TB vs. 8 TB)。这意味着必须为OST元数据保留足够的RAM。</p>
 <p>表4计算了OSS节点所需的绝对最小RAM。这些计算考虑了故障转移配置，每个OSS节点上有18个主ost，每个OSS节点上有18个备份ost。当OSS不处理任何故障转移的OSTs时，额外的RAM用作读缓存。OST线程数默认为512，这接近于32个IO线程/ OST，在实践中可以很好地工作。在这种情况下，64 GB RAM是最小的，建议使用128 GB RAM以获得更好的性能。</p>
 <p>表4：OSS 内存计算</p>
-<p>| Memory Consumer                                        |            | Required Memory |<br>| ——————————————————————————— | ————— | ———————- |<br>| Operating system overhead                              |            | 1024 MB         |<br>| Ethernet/TCP send/receive buffers (1 MB X 512 threads) |            | 512 MB          |<br>| 400 MB journal X (18 + 18) OST devices                 |            | 14400 MB        |<br>| 1.5 MB RDMA per OST IO thread X 512 threads            |            | 768 MB          |<br>| OST file system metadata cache (0.05% of 492 TB)       |            | 25190 MB        |<br>| 800 MB data read cache X 18 OSTs                       |            | 14400 MB        |<br>| 2000 8-core clients X 100 files per core X 3 KB/file   | 4687 MB/40 | 118 MB          |<br>| 64 interactive clients X 10,000 files X 3 KB/file      | 1875 MB/40 | 47 MB           |<br>| 2 million file working set X 1.5 KB/file               | 2929 MB/40 | 74 MB           |<br>| Total                                                  |            | 56533 MB        |</p>
+<table>
+<thead>
+<tr>
+<th>Memory Consumer</th>
+<th></th>
+<th>Required Memory</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Operating system overhead</td>
+<td></td>
+<td>1024 MB</td>
+</tr>
+<tr>
+<td>Ethernet/TCP send/receive buffers (1 MB X 512 threads)</td>
+<td></td>
+<td>512 MB</td>
+</tr>
+<tr>
+<td>400 MB journal X (18 + 18) OST devices</td>
+<td></td>
+<td>14400 MB</td>
+</tr>
+<tr>
+<td>1.5 MB RDMA per OST IO thread X 512 threads</td>
+<td></td>
+<td>768 MB</td>
+</tr>
+<tr>
+<td>OST file system metadata cache (0.05% of 492 TB)</td>
+<td></td>
+<td>25190 MB</td>
+</tr>
+<tr>
+<td>800 MB data read cache X 18 OSTs</td>
+<td></td>
+<td>14400 MB</td>
+</tr>
+<tr>
+<td>2000 8-core clients X 100 files per core X 3 KB/file</td>
+<td>4687 MB/40</td>
+<td>118 MB</td>
+</tr>
+<tr>
+<td>64 interactive clients X 10,000 files X 3 KB/file</td>
+<td>1875 MB/40</td>
+<td>47 MB</td>
+</tr>
+<tr>
+<td>2 million file working set X 1.5 KB/file</td>
+<td>2929 MB/40</td>
+<td>74 MB</td>
+</tr>
+<tr>
+<td>Total</td>
+<td></td>
+<td>56533 MB</td>
+</tr>
+</tbody></table>
 </li>
 <li><p><strong>选择连接客户端的IO网卡</strong></p>
 <p>通常在存储服务器上提供一个Infiniband主机通道适配器(HCA)或一个10GB或1GB的以太网网卡，这将根据存储区域网络的类型选择前端所提供的网络连接。</p>
 <p>例如，如果OSS上的OSTs只需要交付1 GB/s带宽，那么10 GB以太网卡就足以满足Lustre客户端的连接需求。然而，如果OSS上的OSTs可以提供5 GB/s带宽，那么就需要一个FDR  Infiniband HCA满足Lustre客户端所需要的带宽。表5中的数字可以作为参考。</p>
 <p>表5：IO网卡带宽</p>
-<p>| IO Card          | Bit Rate | Theoretical Peak Bandwidth | Peak Bandwith as Real Measured |<br>| ———————— | ———— | ————————————— | ——————————————— |<br>| 1 FDR infiniband | 54 Gbps  | 6.75 GB/s                  | 6000 MB/s                      |<br>| 1 10 Gb Ethernet | 10 Gbps  | 1.25 GB/s                  | 1.1GB/s                        |</p>
+<table>
+<thead>
+<tr>
+<th>IO Card</th>
+<th>Bit Rate</th>
+<th>Theoretical Peak Bandwidth</th>
+<th>Peak Bandwith as Real Measured</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1 FDR infiniband</td>
+<td>54 Gbps</td>
+<td>6.75 GB/s</td>
+<td>6000 MB/s</td>
+</tr>
+<tr>
+<td>1 10 Gb Ethernet</td>
+<td>10 Gbps</td>
+<td>1.25 GB/s</td>
+<td>1.1GB/s</td>
+</tr>
+</tbody></table>
 <p>因为每个OSS需要从存储控制器中提供至少4.8 GB/s，所以FDR Infiniband端口将是最佳匹配</p>
 </li>
 <li><p><strong>集群网络</strong></p>
@@ -386,12 +535,8 @@ TB/TB=  (10^{12}\,B)/(2^{40}\,B)≅0.91</script><p>另外，根文件系统将�
 </ul>
 <p><img src="/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/9.jpg" alt="The complete Lustre storage system"></p>
 <p>63个磁盘柜中的每一个都包含60块4 TB, 7,200 RPM磁盘。每个磁盘柜中的磁盘被划分为6个RAID-6组，每个RAID-6组包含10个磁盘，其中8个磁盘可用于存储数据。每个RAID-6组作为一个LUN, LUN由Lustre OSS作为OST进行格式化。因此，每个磁盘柜包含6个对象存储目标。</p>
-<p>存储系统的容量计算为:</p>
-<script type="math/tex; mode=display">
-4×1012×10×8⁄10×0.9×0.95×6×63≅10.1\,PB</script><p>因此，该配置满足10PB可用空间的要求。</p>
-<p>每个后端磁盘外壳提供约3 GB/s的带宽;存储控制器将存储管道的带宽限制为6GB /s。因为Lustre将所有的OSS带宽线性聚合，并且可以达到硬件带宽的90%，所以设计系统的性能计算如下:</p>
-<script type="math/tex; mode=display">
-6\,GB⁄s×90\,\%×21\,storage controllers =113.4\,GB/s</script><p>因此，Lustre文件系统支持的总带宽为113.4GB/s，该带宽满足系统需要的聚合带块100GB/s。</p>
+<p>存储系统的容量计算为:<br>$$<br>4×1012×10×8⁄10×0.9×0.95×6×63≅10.1,PB<br>$$<br>因此，该配置满足10PB可用空间的要求。</p>
+<p>每个后端磁盘外壳提供约3 GB/s的带宽;存储控制器将存储管道的带宽限制为6GB /s。因为Lustre将所有的OSS带宽线性聚合，并且可以达到硬件带宽的90%，所以设计系统的性能计算如下:<br>$$<br>6,GB⁄s×90,%×21,storage controllers =113.4,GB/s<br>$$<br>因此，Lustre文件系统支持的总带宽为113.4GB/s，该带宽满足系统需要的聚合带块100GB/s。</p>
 </li>
 <li><p><strong>总结</strong></p>
 <p>设计存储系统的过程并不简单，因为考虑的点比较多。设计高性能存储系统以及解决本文中描述的常见问题的分步方法基于两种通用的设计方法:</p>
@@ -627,15 +772,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">网络虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">网络虚拟化</a>
               </li>
              
               <li class="article-tag-list-item">
