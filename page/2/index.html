@@ -142,6 +142,96 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-设计infiniband-2d-torus和Fat-tree结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/">设计infiniband 2d/3d torus结构</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2019-12-31T01:51:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="搭建一个3D-torus网络"><a href="#搭建一个3D-torus网络" class="headerlink" title="搭建一个3D torus网络"></a><strong>搭建一个3D torus网络</strong></h1><ul>
+<li><p>在两个维度上(x,y)有多少个计算节点？假设在水平方向分布N个计算节点，同理在垂直方向也分布N个计算节点。记住，一个理想的torus网络结构，在每个维度上分布相同数量的节点，否则网络会不均衡。你的2D torus网络需要连接NxN个计算节点。</p>
+<p>一个3D torus网络，在三个维度各连接NxNxN个节点，假设N=10，那么连接的节点数量将是 10x10x10=1000 节点。这个集群规模不算小。</p>
+<p>下面是3D torus拓扑结构图：</p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/1.jpg" alt></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/2.png" alt></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/3.png" alt></p></li></ul>
+        
+          <a class="article-more-a" href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">infiniband</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">2d torus</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">3d torus</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-torus%E5%92%8CFat-tree%E7%BB%93%E6%9E%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-安装Intel-Omni-path架构软件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -325,68 +415,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/12/27/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9FLustre%E7%AF%87/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-GPFS-4-2-安装教程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/26/GPFS-4-2-%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">GPFS_4.2 安装教程</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/26/GPFS-4-2-%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" class="archive-article-date">
-  	<time datetime="2019-12-26T06:55:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/26/GPFS-4-2-%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">展开全文 >></a>
         </p>
       
 
