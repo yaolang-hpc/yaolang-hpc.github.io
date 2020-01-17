@@ -6,16 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://yaolang-hpc.github.io">
-  <title>IBM LSF安装教程 | YaoL的博客</title>
+  <title>IBM LSF+PAC安装教程 | YaoL的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="IBM LSF安装教程">
+  <meta name="description" content="准备安装环境1、准备好LSF的安装包和授权文件  本次安装我们选择标准版本 包含的安装包有： lsf10.1_lsfinstall_linux_x86_64.tar.Z lsf10.1_lnx310-lib217-x86_64-520099.tar.Z lsf10.1_linux2.6-glibc2.3-x86_64.tar.Z pac10.2.0.8_standard_linux-x64.tar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IBM LSF+PAC安装教程">
 <meta property="og:url" content="https://yaolang-hpc.github.io/2020/01/17/IBM-LSF%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/index.html">
 <meta property="og:site_name" content="YaoL的博客">
+<meta property="og:description" content="准备安装环境1、准备好LSF的安装包和授权文件  本次安装我们选择标准版本 包含的安装包有： lsf10.1_lsfinstall_linux_x86_64.tar.Z lsf10.1_lnx310-lib217-x86_64-520099.tar.Z lsf10.1_linux2.6-glibc2.3-x86_64.tar.Z pac10.2.0.8_standard_linux-x64.tar">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-17T03:57:50.000Z">
-<meta property="article:modified_time" content="2020-01-17T03:57:50.562Z">
+<meta property="article:modified_time" content="2020-01-17T07:55:21.816Z">
 <meta property="article:author" content="Yao L">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="LSF">
+<meta property="article:tag" content="PAC">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="YaoL的博客" type="application/atom+xml">
@@ -149,7 +154,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      IBM LSF安装教程
+      IBM LSF+PAC安装教程
     </h1>
   
 
@@ -162,7 +167,48 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="准备安装环境"><a href="#准备安装环境" class="headerlink" title="准备安装环境"></a>准备安装环境</h2><p>1、准备好LSF的安装包和授权文件</p>
+<ul>
+<li><p>本次安装我们选择标准版本</p>
+<p>包含的安装包有：</p>
+<p>lsf10.1_lsfinstall_linux_x86_64.tar.Z</p>
+<p>lsf10.1_lnx310-lib217-x86_64-520099.tar.Z</p>
+<p>lsf10.1_linux2.6-glibc2.3-x86_64.tar.Z</p>
+<p>pac10.2.0.8_standard_linux-x64.tar.Z</p>
+</li>
+<li><p>解压修改配置文件</p>
+<ul>
+<li><p>zcat lsf10.1_lsfinstall_linux_x86_64.tar.Z | tar -xvf -</p>
+</li>
+<li><pre><code class="bash">zcat lsf10.1_lsfinstall_linux_x86_64.tar.Z | tar -xvf -
+mkdir -p /public/software/distribut 
+cp lsf10.1_lnx310-lib217-x86_64-520099.tar.Z lsf10.1_linux2.6-glibc2.3-x86_64.tar.Z /public/software/distribut
+<span class="built_in">cd</span> lsf10.1_lsfinstall/
+vim install.config
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">需要修改的参数</span><br><span class="line">LSF_TOP</span><br><span class="line">LSF_ADMINS</span><br><span class="line">LSF_CLUSTER_NAME</span><br><span class="line">LSF_MASTER_LIST</span><br><span class="line">LSF_ENTITLEMENT_FILE</span><br><span class="line">LSF_TARDIR</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;bash</span><br><span class="line">LSF_TOP&#x3D;&quot;&#x2F;public&#x2F;software&quot;  #设置安装路径</span><br><span class="line"># -----------------</span><br><span class="line"># Full path to the top-level installation directory &#123;REQUIRED&#125;</span><br><span class="line">#</span><br><span class="line"># The path to LSF_TOP must be shared and accessible to all hosts</span><br><span class="line"># in the cluster. It cannot be the root directory (&#x2F;).</span><br><span class="line"># The file system containing LSF_TOP must have enough disk space for</span><br><span class="line"># all host types (approximately 300 MB per host type).</span><br><span class="line">#</span><br><span class="line"># -----------------</span><br><span class="line">LSF_ADMINS&#x3D;&quot;lsfadmin&quot;  #设置lsf管理员</span><br><span class="line"># -----------------</span><br><span class="line"># List of LSF administrators &#123;REQUIRED&#125;</span><br><span class="line">#</span><br><span class="line"># The first user account name in the list is the primary LSF</span><br><span class="line"># administrator. It cannot be the root user account.</span><br><span class="line"># Typically, this account is named lsfadmin.</span><br><span class="line"># It owns the LSF configuration files and log files for job events.</span><br><span class="line"># It also has permission to reconfigure LSF and to control batch</span><br><span class="line"># jobs submitted by other users. It typically does not have</span><br><span class="line"># authority to start LSF daemons. Usually, only root has</span><br><span class="line"># permission to start LSF daemons.</span><br><span class="line"># All the LSF administrator accounts must exist on all hosts in the</span><br><span class="line"># cluster before you install LSF.</span><br><span class="line"># Secondary LSF administrators are optional.</span><br><span class="line">#</span><br><span class="line"># -----------------</span><br><span class="line">LSF_CLUSTER_NAME&#x3D;&quot;cluster1&quot; #设置集群名</span><br><span class="line"># -----------------</span><br><span class="line"># Name of the LSF cluster &#123;REQUIRED&#125;</span><br><span class="line">#</span><br><span class="line"># It must be 39 characters or less, and cannot contain any</span><br><span class="line"># white spaces. Do not use the name of any host, user, or user group</span><br><span class="line"># as the name of your cluster.</span><br><span class="line">#</span><br><span class="line">#</span><br><span class="line">#**********************************************************</span><br><span class="line">#          PART 2: PRIMARY PARAMETERS FOR NEW INSTALL</span><br><span class="line">#  (These parameters are ignored if they are already defined in the cluster.)</span><br><span class="line">#**********************************************************</span><br><span class="line">#</span><br><span class="line"># -----------------</span><br><span class="line">LSF_MASTER_LIST&#x3D;&quot;DDN01&quot; #设置server主机</span><br><span class="line"># -----------------</span><br><span class="line"># List of LSF server hosts to be master or master candidate in the</span><br><span class="line"># cluster &#123;REQUIRED when you install for the first time or during</span><br><span class="line"># upgrade if the parameter does not already exist.&#125;</span><br><span class="line">#</span><br><span class="line"># You must specify at least one valid server host to start the</span><br><span class="line"># cluster. The first host listed is the LSF master host.</span><br><span class="line">#</span><br><span class="line"># -----------------</span><br><span class="line">LSF_ENTITLEMENT_FILE&#x3D;&quot;&#x2F;public&#x2F;software&#x2F;distribut&#x2F;lsf_std_entitlement.dat&quot;</span><br><span class="line"># -----------------</span><br><span class="line"># You must specify a full path to the LSF entitlement file.</span><br><span class="line">#</span><br><span class="line"># -----------------</span><br><span class="line">LSF_TARDIR&#x3D;&quot;&#x2F;public&#x2F;software&#x2F;distribut&quot;</span><br></pre></td></tr></table></figure></code></pre>
+</li>
+</ul>
+</li>
+<li><p>安装lsf进行配置</p>
+<ul>
+<li><pre><code>./lsfinstall -f install.config
+. /public/software/lsf10.1/conf/profile.lsf
+[root@DDN01 log]# lsid
+IBM Spectrum LSF Standard 10.1.0.8, May 10 2019
+Copyright International Business Machines Corp. 1992, 2016.
+US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+My cluster name is cluster1
+My master name is mgt
+[root@DDN01 log]# bhosts
+HOST_NAME          STATUS       JL/U    MAX  NJOBS    RUN  SSUSP  USUSP    RSV
+mgt                ok              -      4      0      0      0      0      0
+cd /public/software/lsf10.1/10.1/install
+./hostsetup --top=&quot;/public/software/lsf10.1&quot; --boot=&quot;y&quot;   #设置开机启动
+sed &apos;$a\LSF_RSH=ssh&apos; lsf.conf   #更改通信方式</code></pre></li>
+</ul>
+</li>
+</ul>
+<h2 id="PAC软件安装配置"><a href="#PAC软件安装配置" class="headerlink" title="PAC软件安装配置"></a>PAC软件安装配置</h2>
       
 
       
@@ -170,6 +216,25 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LSF</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PAC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -425,6 +490,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">3d torus</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LSF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PAC</a>
               </li>
             
             <div class="clearfix"></div>
