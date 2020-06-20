@@ -16,7 +16,7 @@
 <meta property="og:description" content="系统环境准备本次搭建的集群系统包括2台服务器test1和test2 12345678910111213141516171819202122###test1[root@test1 ~]# cat &#x2F;etc&#x2F;redhat-release CentOS Linux release 7.6.1810 (Core) ###test2[root@test2 ~]# cat &#x2F;etc&#x2F;redhat-releas">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-16T12:46:29.000Z">
-<meta property="article:modified_time" content="2020-06-20T08:37:44.073Z">
+<meta property="article:modified_time" content="2020-06-20T08:39:50.053Z">
 <meta property="article:author" content="Yao L">
 <meta property="article:tag" content="torque">
 <meta property="article:tag" content="maui">
@@ -171,6 +171,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###test1</span></span><br><span class="line">[root@test1 ~]<span class="comment"># cat /etc/redhat-release </span></span><br><span class="line">CentOS Linux release 7.6.1810 (Core) </span><br><span class="line"></span><br><span class="line"><span class="comment">###test2</span></span><br><span class="line">[root@test2 ~]<span class="comment"># cat /etc/redhat-release </span></span><br><span class="line">CentOS Linux release 7.6.1810 (Core) </span><br><span class="line"></span><br><span class="line">[root@test1 ~]<span class="comment"># lscpu</span></span><br><span class="line">Architecture:          x86_64</span><br><span class="line">CPU op-mode(s):        32-bit, 64-bit</span><br><span class="line">Byte Order:            Little Endian</span><br><span class="line">CPU(s):                128</span><br><span class="line">On-line CPU(s) list:   0-127</span><br><span class="line">Thread(s) per core:    1</span><br><span class="line">Core(s) per socket:    64</span><br><span class="line">Socket(s):             2</span><br><span class="line">NUMA node(s):          8</span><br><span class="line">Vendor ID:             AuthenticAMD</span><br><span class="line">CPU family:            23</span><br><span class="line">Model:                 49</span><br><span class="line">Model name:            AMD EPYC 7702 64-Core Processor</span><br></pre></td></tr></table></figure>
 
 <h3 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h3><p><strong>安装系统必要的库函数</strong></p>
+<a id="more"></a>
+
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root]<span class="comment"># yum install libtool openssl-devel libxml2-devel boost-devel gcc gcc-c++</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>准备好安装包</strong></p>
