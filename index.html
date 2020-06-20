@@ -142,6 +142,106 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-利用torque-6-1-2-maui-3-3-1搭建pbs调度系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/16/%E5%88%A9%E7%94%A8torque-6-1-2-maui-3-3-1%E6%90%AD%E5%BB%BApbs%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">利用torque-6.1.2+maui-3.3.1搭建pbs调度系统</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/16/%E5%88%A9%E7%94%A8torque-6-1-2-maui-3-3-1%E6%90%AD%E5%BB%BApbs%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
+  	<time datetime="2020-06-16T12:46:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="系统环境准备"><a href="#系统环境准备" class="headerlink" title="系统环境准备"></a>系统环境准备</h3><p><strong>本次搭建的集群系统包括2台服务器test1和test2</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###test1</span></span><br><span class="line">[root@test1 ~]<span class="comment"># cat /etc/redhat-release </span></span><br><span class="line">CentOS Linux release 7.6.1810 (Core) </span><br><span class="line"></span><br><span class="line"><span class="comment">###test2</span></span><br><span class="line">[root@test2 ~]<span class="comment"># cat /etc/redhat-release </span></span><br><span class="line">CentOS Linux release 7.6.1810 (Core) </span><br><span class="line"></span><br><span class="line">[root@test1 ~]<span class="comment"># lscpu</span></span><br><span class="line">Architecture:          x86_64</span><br><span class="line">CPU op-mode(s):        32-bit, 64-bit</span><br><span class="line">Byte Order:            Little Endian</span><br><span class="line">CPU(s):                128</span><br><span class="line">On-line CPU(s) list:   0-127</span><br><span class="line">Thread(s) per core:    1</span><br><span class="line">Core(s) per socket:    64</span><br><span class="line">Socket(s):             2</span><br><span class="line">NUMA node(s):          8</span><br><span class="line">Vendor ID:             AuthenticAMD</span><br><span class="line">CPU family:            23</span><br><span class="line">Model:                 49</span><br><span class="line">Model name:            AMD EPYC 7702 64-Core Processor</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h3><p><strong>安装系统必要的库函数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root]<span class="comment"># yum install libtool openssl-devel libxml2-devel boost-devel gcc gcc-c++</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>准备好安装包</strong></p>
+<p>torque-6.1.2.zip</p>
+<p>maui-3.3.1.tar.gz</p>
+<h3 id="torque-6-1-2安装配置"><a href="#torque-6-1-2安装配置" class="headerlink" title="torque-6.1.2安装配置"></a>torque-6.1.2安装配置</h3><p>test1作为server节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">unzip torque-6.1.2.zip</span><br><span class="line"><span class="built_in">cd</span> torque-6.1.2</span><br><span class="line">./autogen.sh</span><br><span class="line">./configure --prefix=/opt/pbs_612 --<span class="built_in">enable</span>-cgroups  --with-scp --with-default-server=test1</span><br><span class="line">make -j8 <span class="comment">##编译</span></span><br><span class="line">make install <span class="comment">##安装</span></span><br><span class="line"></span><br><span class="line">make packages <span class="comment">##制作安装包</span></span><br><span class="line">torque-package-clients-linux-x86_64.sh</span><br><span class="line">torque-package-devel-linux-x86_64.sh</span><br><span class="line">torque-package-doc-linux-x86_64.sh</span><br><span class="line">torque-package-mom-linux-x86_64.sh</span><br><span class="line">torque-package-server-linux-x86_64.sh</span><br><span class="line">cp contrib/systemd/pbs_sched.service  /usr/lib/systemd/system</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /etc/profile.d/torque.sh <span class="comment">##加载环境变量</span></span><br><span class="line"> ./torque.setup root <span class="comment">##初始化数据库</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">##启动服务</span></span><br><span class="line"> systemctl <span class="built_in">enable</span> pbs_server</span><br><span class="line"> systemctl <span class="built_in">enable</span> pbs_mom</span><br><span class="line"> systemctl <span class="built_in">enable</span> pbs_sched</span><br><span class="line"> systemctl <span class="built_in">enable</span> trqauthd</span><br><span class="line"> </span><br><span class="line"> vim /var/spool/torque/server_priv/nodes <span class="comment">###添加计算节点</span></span><br><span class="line"> test1 np=128</span><br><span class="line"> test2 np=128</span><br><span class="line"> </span><br><span class="line"> <span class="comment">###指定服务端节点</span></span><br><span class="line"> vim /var/spool/torque/mom_priv/config</span><br><span class="line"> pbsserver head4</span><br><span class="line"> logevent 255</span><br><span class="line"> </span><br><span class="line"> <span class="comment">###启动服务</span></span><br><span class="line"> systemctl restart pbs_server</span><br><span class="line"> systemctl restart pbs_mom</span><br><span class="line"> systemctl restart pbs_sched</span><br><span class="line"> systemctl restart trqauthd</span><br><span class="line"> </span><br><span class="line"> qnodes <span class="comment">###查看节点状态或者pbsnodes -a</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>客户端节点安装</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">scp torque-package-clients-linux-x86_64.sh torque-package-mom-linux-x86_64.sh test2:~</span><br><span class="line"><span class="comment">###登录到test2节点进行安装</span></span><br><span class="line">./torque-package-clients-linux-x86_64.sh --install</span><br><span class="line">./torque-package-mom-linux-x86_64.sh --install</span><br><span class="line"></span><br><span class="line"><span class="comment">###配置服务端节点</span></span><br><span class="line">vim /var/spool/torque/mom_priv/config</span><br><span class="line">pbsserver test1</span><br><span class="line">logevent 255</span><br><span class="line"></span><br><span class="line"><span class="comment">###启动服务</span></span><br><span class="line">systemctl <span class="built_in">enable</span> pbs_mom</span><br><span class="line">systemctl <span class="built_in">enable</span> trqauthd</span><br><span class="line"> </span><br><span class="line">systemctl restart pbs_mom</span><br><span class="line">systemctl restart trqauthd</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装maui</strong></p>
+<p>torque默认情况下使用pbs_sched管理，但是调度策略过于简单，因此建议在服务节点上安装maui来进行作业调度，注意：在计算节点上无须安装maui</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf maui-3.3.1.tar.gz</span><br><span class="line"><span class="built_in">cd</span> maui-3.3.1</span><br><span class="line">./configure --prefix=/opt/pbs_612/maui_331 --with-pbs=/opt/pbs_612</span><br><span class="line">make -j8&amp;&amp;make install</span><br><span class="line">cp maui.cfg.dist /opt/pbs_612/maui_331/maui.cfg</span><br><span class="line">vim maui.cfg</span><br><span class="line">SERVERHOST            test1</span><br><span class="line"><span class="comment"># primary admin must be first in list</span></span><br><span class="line">ADMIN1                root</span><br><span class="line"><span class="comment"># Resource Manager Definition</span></span><br><span class="line">RMCFG[TEST1] TYPE=PBS@RMNMHOST@RMTYPE[0] PBS</span><br><span class="line"></span><br><span class="line">cp contrib/service-scripts/redhat.maui.d /etc/init.d/maui</span><br><span class="line">chmod +x /etc/init.d/maui</span><br><span class="line">vim /etc/init.d/maui</span><br><span class="line">MAUI_PREFIX=/opt/pbs_612/maui_331</span><br><span class="line">daemon --user root <span class="variable">$MAUI_PREFIX</span>/sbin/maui <span class="comment">###将用户名改为root</span></span><br><span class="line"></span><br><span class="line">/etc/init.d/maui start <span class="comment">###启动maui</span></span><br><span class="line"></span><br><span class="line">systemctl <span class="built_in">disable</span> pbs_sched</span><br><span class="line">systemctl stop maui   <span class="comment">###停止maui服务</span></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">torque</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">maui</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">scheduler</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/16/%E5%88%A9%E7%94%A8torque-6-1-2-maui-3-3-1%E6%90%AD%E5%BB%BApbs%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-iptables实现centos内网机器访问外网" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -308,7 +408,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start xcatd</span><br><span class="line">systemctl stop xcatd</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>xcat管理节点配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1.配置 networks table,删除不需要的网口，只保留管理网接口供dhcp使用</span><br><span class="line">tabedit networks</span><br><span class="line"></span><br><span class="line">2.配置passwd table,passwd table中记录的是无盘启动节点的用户名和密码</span><br><span class="line">tabedit passwd</span><br><span class="line"><span class="comment">#key,username,password,cryptmethod,authdomain,comments,disable</span></span><br><span class="line"><span class="string">"system"</span>,<span class="string">"root"</span>,<span class="string">"111111"</span>,,,,</span><br><span class="line"></span><br><span class="line">3.配置DNS服务</span><br><span class="line">hostname head4.sugon.com</span><br><span class="line">hostnamectl <span class="built_in">set</span>-hostname head4.sugon.com</span><br><span class="line"></span><br><span class="line">vim /etc/resolv.conf</span><br><span class="line">search sugon.com</span><br><span class="line">nameserver</span><br><span class="line"></span><br><span class="line">vim /etc/hosts</span><br><span class="line">10.10.10.46 head4 head4.sugon.com</span><br></pre></td></tr></table></figure>
 
 
 
@@ -340,6 +440,78 @@
 </li>
 <li><p>打包镜像</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">packimage centos7.6-x86_64-netboot-compute <span class="comment">#打包镜像</span></span><br><span class="line"></span><br><span class="line">Packing contents of /install/netboot/centos7.6/x86_64/compute/rootimg</span><br><span class="line">archive method:cpio</span><br><span class="line">compress method:gzip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>无盘系统进行镜像提取和恢复</p>
+<p>将节点硬盘OS镜像与恢复基本包括2类方法：</p>
+<p>1） 不识别硬盘文件系统，直接整体拷贝。可以采用dd直接复制整个硬盘，这种方法需要拷贝硬盘所有的块，速度很慢。</p>
+<p>2） 识别硬盘文件系统的每一个分区，只镜像和恢复有数据的部分。能够进行硬盘分区镜像的工具有很多，如：FSArchiver、partclone、sysimage等工具。不同的工具可以识别不同的文件系统。在本文种采用partclone工具，partclone能识别大部分文件系统，比较通用。</p>
+<p>3） 大部分分区克隆和镜像工具只能对文件系统分区进行操作，无法复制MBR，恢复硬盘分区后可以挂载各个分区，并重装grub2使硬盘可以启动。</p>
+</li>
+</ol>
+<p>本集群comput1为镜像提取节点，comput2~40为镜像恢复节点</p>
+<ul>
+<li><p>启动无盘节点</p>
+<p>可以通过ipmitool配置节点从网络启动，启动无盘系统。</p>
+<p><strong>注意：无盘系统只能通过Legancy方式启动，不能通过UEFI启动！需要确保BIOS配置为UEFI and Legancy模式或Legancy 模式。UEFI only无法启动无盘系统！</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ipmitool -H 10.10.20.1 -U admin -P admin chassis bootdev pxe</span><br><span class="line">ipmitool -H 10.10.20.1 -U admin -P admin power off</span><br><span class="line">ipmitool -H 10.10.20.1 -U admin -P admin power on</span><br></pre></td></tr></table></figure>
+
+<p>网络启动节点，可以正常进入无盘系统</p>
+</li>
+<li><p>制作无盘启动镜像</p>
+<ul>
+<li><p>在comput1进行镜像的提取</p>
+<p>parted -l /dev/sda</p>
+<p>legancy引导的mbr分区，格式如下</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​            <strong>注意：</strong></p>
+<p>​            legancy分区的Partition Table为msdos</p>
+<p>​            GPT分区的分区表为gpt</p>
+<p>​            BIOS采用Legancy启动方式，硬盘可以为msdos或gpt硬盘(推荐使用msdos，legancy采用gpt             启动需要做特殊处理)。</p>
+<p>​            BIOS采用UEFI启动方式，硬盘必须采用gpt方式。UEFI启动需要有一个uefi分区，分区为fat32            文件系统。</p>
+<ul>
+<li><p>克隆系统原有分区为安装标准镜像</p>
+<p>克隆分区前，先检测文件系统，以免克隆时报错，执行</p>
+<p>fsck /dev/sda1 fsck /dev/sda2</p>
+<p>然后开始克隆</p>
+<p>partclone.ext4 -d -c -s /dev/sda1 -o /root/sda1.img</p>
+<p>partclone.ext4 -d -c -s /dev/sda2 -o /dev/sda2</p>
+<p>交换分区的处理</p>
+<p>交换分区swap不需要克隆，但在克隆上面分区前，需要修改xcat-A系统中/etc/fstab文件中swap行，将此行的UUID号改为绝对路径/dev/nvme0n1p4（镜像恢复时，swap的UUID和所克隆的镜像UUID不一致）。对于UEFI引导的GPT分区，有一个/boot/efi分区，文件系统为fat32，用partclone.vfat克隆。镜像提取完成后，把/root/nvme0n1p1-3.img复制到xcat-server服务节点，方便后续节点镜像恢复。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sda1 /mnt</span><br><span class="line">vim /etc/fstab</span><br><span class="line">UUID=bccf823d-0f65-4806-8861-537dbf3b6423 /                       ext4    defaults        1 1</span><br><span class="line">UUID=8ecce756-26ad-46fd-9ecb-cd4cb4ab91d1 /boot                   ext4    defaults        1 2</span><br><span class="line">/dev/sda3     swap                    swap    defaults        0 0</span><br></pre></td></tr></table></figure>
+
+<p>交换分区swap不需要克隆，但在克隆上面分区前，需要修改comput1系统中/etc/fstab文件中swap行，将此行的UUID号改为绝对路径/dev/sda3（镜像恢复时，swap的UUID和所克隆的镜像UUID不一致）。对于UEFI引导的GPT分区，有一个/boot/efi分区，文件系统为fat32，用partclone.vfat克隆。镜像提取完成后，把/root/sda3.img复制到head4服务节点，方便后续节点镜像恢复。</p>
+</li>
+</ul>
+<ol start="8">
+<li><p>镜像恢复到comput2-40节点</p>
+<p>利用无盘方式启动comput2-40节点，进入无盘系统后，可以查看硬盘分区信息：</p>
+<p>parted -l /dev/sda</p>
+<p><img src="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/sda.png" alt="sda"></p>
+<p>将提取的镜像sda1.img sda2.img从comput1复制到无盘后的comout2-40节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mksquashfs sda* centos7.4_comput1_20200618.fs <span class="comment">##可以用该命令将备份的img镜像文件进行进一步压缩</span></span><br><span class="line">mount centos7.4_comput1_20200618.fs /media/ <span class="comment">###将文件进行挂载读取</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为了防止之前的硬盘上有文件系统，可以用parted工具将分区删除后重新对硬盘进行分区，再格式化。分区大小和文件系统可以参考镜像节点comput1，格式化分区</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">parted -s /dev/sda rm 1</span><br><span class="line">parted -s /dev/sda rm 2</span><br><span class="line">parted -s /dev/sda rm 3</span><br></pre></td></tr></table></figure>
+
+<p>msdos引导的分区命令（每个分区都要指定为主分区）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">parted -s /dev/sda mklabel msdos</span><br><span class="line">parted -s /dev/sda mkpart primary ext4 1049KB  525MB</span><br><span class="line">parted -s /dev/sda mkpart primary ext4 525MB  283GB</span><br><span class="line">parted -s /dev/sda mkpart primary  linux-swap 283GB  300GB</span><br><span class="line">mkfs.ext4 /dev/sda1 <span class="comment">#格式化分区</span></span><br><span class="line">mkfs.ext4 /dev/sda2 </span><br><span class="line">mkswap /dev/sda3</span><br></pre></td></tr></table></figure>
+
+<p>uefi引导的gpt分区</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">parted -s /dev/sda <span class="built_in">set</span> 1 boot on <span class="comment">##设置从efi分区引导</span></span><br><span class="line">parted -s /dev/sda mklabel gpt</span><br><span class="line">parted -s /dev/sda mkpart fat32 1049kB 1075MB</span><br><span class="line">parted -s /dev/sda mkpart ext4 1075MB 3222MB</span><br><span class="line">parted -s /dev/sda mkpart ext4 3222MB 239GB</span><br><span class="line">parted -s /dev/sda mkpart linux-swap 239GB  256GB</span><br><span class="line">mkfs.vfat /dev/sda1 <span class="comment">#格式化分区</span></span><br><span class="line">mkfs.ext4 /dev/sda2</span><br><span class="line">mkfs.ext4 /dev/sda3 </span><br><span class="line">mkswap /dev/sda4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>恢复文件系统</p>
+<p>格式化好各个分区后，采用partclone工具将镜像恢复到分区：</p>
+<p>msdos格式的分区恢复</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fsck /dev/sda1 <span class="comment">##检查分区是否完好</span></span><br><span class="line">fsck /dev/sda2</span><br><span class="line">fsck /dev/sda3</span><br><span class="line">partclone.ext4 -d -r -s /media/sda1.img -o /dev/sda1 <span class="comment">##从备份文件恢复分区系统</span></span><br><span class="line">partclone.ext4 -d -r -s /media/sda2.img -o /dev/sda2</span><br></pre></td></tr></table></figure>
+
+<p>uefi引导的gpt格式的分区恢复</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">partclone.vfat -d -r -s /root/nvme0n1p1.img -o /dev/sda1</span><br><span class="line">partclone.ext4 -d -r -s /root/nvme0n1p2.img -o /dev/sda2</span><br><span class="line">partclone.ext4 -d -r -s /root/nvme0n1p3.img -o /dev/sda3</span><br></pre></td></tr></table></figure>
+
+<p>针对bios legancy启动的mbr分区，需进行如下操作，恢复完分区文件系统后，将各个分区挂载到/mnt目录下，然后chroot，重装grub2</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sda2 /mnt </span><br><span class="line">mount /dev/sda1 /mnt/boot</span><br><span class="line">mount --<span class="built_in">bind</span> /dev /mnt/dev</span><br><span class="line">mount --<span class="built_in">bind</span> /proc /mnt/proc</span><br><span class="line">mount --<span class="built_in">bind</span> /sys /mnt/sys</span><br><span class="line">chroot /mnt grub2-mkconfig -o /boot/grub2/grub.cfg </span><br><span class="line">chroot /mnt grub2-install /dev/sda</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
@@ -375,100 +547,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-proc文件系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/19/proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">proc和sysfs文件系统简介</a>
-    </h1>
-  
-
-        
-        <a href="/2020/01/19/proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-  	<time datetime="2020-01-19T08:03:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="PROC文件系统"><a href="#PROC文件系统" class="headerlink" title="PROC文件系统"></a>PROC文件系统</h1><h2 id="proc文件系统简介"><a href="#proc文件系统简介" class="headerlink" title="proc文件系统简介"></a>proc文件系统简介</h2><p>proc文件系统全称 process information pseudo-filesystem</p>
-<ul>
-<li><p>描述：</p>
-<p>proc文件系统是一个虚拟文件系统，给内核数据结构提供一个访问接口。他通常挂在在/proc文件夹下。一般，系统启动后会自动挂载，但是也可以自行手动挂载，命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t proc proc /proc</span><br></pre></td></tr></table></figure>
-
-<p>proc文件系统中的文件大部分是只读的，少数文件是可写的，允许我们更改内核变量。</p>
-<p>/proc/sys/vm/drop_caches</p>
-<p>更改该文件内的数值可以清除缓存：</p>
-<p>释放pagecache，使用：</p>
-<p>echo 1  &gt; /proc/sys/vm/drop_caches</p>
-<p>释放目录缓存和索引，使用：</p>
-<p>echo 2 &gt; /proc/sys/vm/drop_caches</p>
-<p>释放页缓存，目录缓存和索引，使用：</p>
-<p>echo 3 &gt; /proc/sys/vm/drop_caches</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">FileSystem</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/19/proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
         </p>
       
 
@@ -715,6 +793,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pxe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">torque</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">maui</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">scheduler</a>
               </li>
             
             <div class="clearfix"></div>

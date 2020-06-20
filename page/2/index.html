@@ -142,6 +142,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-proc文件系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/19/proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">proc和sysfs文件系统简介</a>
+    </h1>
+  
+
+        
+        <a href="/2020/01/19/proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
+  	<time datetime="2020-01-19T08:03:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PROC文件系统"><a href="#PROC文件系统" class="headerlink" title="PROC文件系统"></a>PROC文件系统</h1><h2 id="proc文件系统简介"><a href="#proc文件系统简介" class="headerlink" title="proc文件系统简介"></a>proc文件系统简介</h2><p>proc文件系统全称 process information pseudo-filesystem</p>
+<ul>
+<li><p>描述：</p>
+<p>proc文件系统是一个虚拟文件系统，给内核数据结构提供一个访问接口。他通常挂在在/proc文件夹下。一般，系统启动后会自动挂载，但是也可以自行手动挂载，命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t proc proc /proc</span><br></pre></td></tr></table></figure>
+
+<p>proc文件系统中的文件大部分是只读的，少数文件是可写的，允许我们更改内核变量。</p>
+<p>/proc/sys/vm/drop_caches</p>
+<p>更改该文件内的数值可以清除缓存：</p>
+<p>释放pagecache，使用：</p>
+<p>echo 1  &gt; /proc/sys/vm/drop_caches</p>
+<p>释放目录缓存和索引，使用：</p>
+<p>echo 2 &gt; /proc/sys/vm/drop_caches</p>
+<p>释放页缓存，目录缓存和索引，使用：</p>
+<p>echo 3 &gt; /proc/sys/vm/drop_caches</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">FileSystem</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/19/proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-kubernetes分离式高可用部署" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -237,68 +331,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/01/19/IB%E5%9C%A8kubernetes%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%B5%8B%E8%AF%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-docker容器网络测试" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/19/docker%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95/">docker容器网络测试</a>
-    </h1>
-  
-
-        
-        <a href="/2020/01/19/docker%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95/" class="archive-article-date">
-  	<time datetime="2020-01-19T06:23:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/19/docker%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95/">展开全文 >></a>
         </p>
       
 
@@ -545,6 +577,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pxe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">torque</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">maui</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">scheduler</a>
               </li>
             
             <div class="clearfix"></div>
