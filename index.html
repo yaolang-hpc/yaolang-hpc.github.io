@@ -162,13 +162,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="基于DHCP、PXE的kickstart自动安装简介"><a href="#基于DHCP、PXE的kickstart自动安装简介" class="headerlink" title="基于DHCP、PXE的kickstart自动安装简介"></a>基于DHCP、PXE的kickstart自动安装简介</h4><ol>
-<li><p>基于DHCP、PXE的kickstart自动安装简介</p>
+        <h4 id="基于DHCP、PXE的kickstart自动安装简介"><a href="#基于DHCP、PXE的kickstart自动安装简介" class="headerlink" title="基于DHCP、PXE的kickstart自动安装简介"></a>基于DHCP、PXE的kickstart自动安装简介</h4><p>基于DHCP、PXE的kickstart自动安装简介</p>
 <p>通常，在安装操作系统的过程需大量的人机交互过程，为减少交互过程，为提高安装效率，<a href="http://www.redhat.com/" target="_blank" rel="noopener">Red Hat Linux</a>开始支持称为kickstart的功能，只需事先定义好一个kickstart自动应答配置文件（通常存放在安装服务器上），并让安装程序知道该配置文件的位置，在安装过程中安装程序就可以自己从该文件中读取安装配置，这样就避免了繁琐的人机交互，实现无人值守的自动化安装。安装好一机器，安装程序都会创建一个kickstart配置文件/root/anaconda-ks.cfg，记录真实安装配置。<a href="http://www.centos.org/" target="_blank" rel="noopener">CentOS</a>作为Red Hat Enterprise Linux(RHEL)的衍生版也支持此功能。</p>
 <p>PXE(Pre-boot Execution Environment)是由Intel设计的协议，它可以使计算机通过网络启动。PXE协议分为client和server两端，PXE client在网卡的ROM中，当计算机引导时，BIOS把PXE client调入内存执行，并显示出命令菜单，经用户选择后，PXE client将放置在远端的操作系统通过网络下载到本地运行。PXE在其启动过程中，客户端请求服务器分配IP地址，之后PXE Client使用TFTP Client通过TFTP(Trivial File Transfer Protocol)协议下载启动安装程序所需的文件。</p>
 <p>PXE网络安装：客户机通过支持PXE的网卡向网络中发送请求DHCP信息的广播请求IP地址等信息，DHCP服务器给客户端提供IP地址和其它信息（TFTP服务器、启动文件等），之后请求并下载安装需要的文件。</p>
-</li>
-</ol>
 <p><img src="/2020/07/01/%E5%9F%BA%E4%BA%8EDHCP%E3%80%81PXE%E5%92%8Ckickstart%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AECentos7-6/pxe.jpg" alt="pxe"></p>
 <ol start="2">
 <li>测试集群简介</li>
