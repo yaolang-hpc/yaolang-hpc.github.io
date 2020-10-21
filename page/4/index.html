@@ -140,49 +140,274 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-  <% if (page.total > 1){ %>
-    <nav id="page-nav">
-      <%- paginator({
-        prev_text: "&laquo; Prev",
-        next_text: "Next &raquo;"
-      }) %>
-    </nav>
-  <% } %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
+            
+  
+    <article id="post-LSF调度系统架构详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/18/LSF%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/">LSF调度系统架构详解</a>
+    </h1>
+  
+
+        
+        <a href="/2020/01/18/LSF%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2020-01-18T07:21:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>LSF<strong>架构图详解</strong></p>
+<p><img src="/2020/01/18/LSF%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/Arch.jpg" alt></p>
+</li>
+<li><p><strong>提交作业的运行流程：</strong></p>
+<p><img src="/2020/01/18/LSF%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/LSF-Process.png" alt></p></li></ul>
+        
+          <a class="article-more-a" href="/2020/01/18/LSF%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Arch</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Config</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/18/LSF%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
-    </div></section>
-  <% } %>
+        
+        
+    </div>
+</aside>
 
-    <% if (page.total > 1){ %>
+
+
+
+  
+    <article id="post-IBM-LSF安装教程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/17/IBM-LSF%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">IBM LSF+PAC安装教程</a>
+    </h1>
+  
+
+        
+        <a href="/2020/01/17/IBM-LSF%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2020-01-17T03:57:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="LSF的安装"><a href="#LSF的安装" class="headerlink" title="LSF的安装"></a>LSF的安装</h2><p>1、准备好LSF的安装包和授权文件</p>
+<ul>
+<li><p>本次安装我们选择标准版本</p>
+<p>包含的安装包有：</p>
+<p>lsf10.1_lsfinstall_linux_x86_64.tar.Z</p>
+<p>lsf10.1_lnx310-lib217-x86_64-520099.tar.Z</p>
+<p>lsf10.1_linux2.6-glibc2.3-x86_64.tar.Z</p>
+<p>pac10.2.0.8_standard_linux-x64.tar.Z</p></li></ul>
+        
+          <a class="article-more-a" href="/2020/01/17/IBM-LSF%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LSF</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PAC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/17/IBM-LSF%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-设计infiniband-Fat-Tree结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/02/%E8%AE%BE%E8%AE%A1infiniband-Fat-Tree%E7%BB%93%E6%9E%84/">设计infiniband Fat-Tree结构</a>
+    </h1>
+  
+
+        
+        <a href="/2020/01/02/%E8%AE%BE%E8%AE%A1infiniband-Fat-Tree%E7%BB%93%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2020-01-02T03:40:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Infiniband胖树结构设计"><a href="#Infiniband胖树结构设计" class="headerlink" title="Infiniband胖树结构设计"></a>Infiniband胖树结构设计</h3><p>高性能计算(HPC)通过跨节点的高级并行计算方式，能够更高效地执行计算密集型任务，如气候研究、分子建模、物理模拟、密码分析、地球物理建模、汽车和航空航天设计、金融建模、数据挖掘等。高性能仿真需要高效的计算平台。决定仿真的执行时间取决于许多因素，例如CPU/GPU内核的数量及其利用率、互连性能、效率和可伸缩性。高效的高性能计算系统需要在数千个多处理器节点之间建立高带宽、低延迟的连接，以及高速存储系统。</p>
+        
+          <a class="article-more-a" href="/2020/01/02/%E8%AE%BE%E8%AE%A1infiniband-Fat-Tree%E7%BB%93%E6%9E%84/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Fat-Tree</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">全线速</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">阻塞</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/02/%E8%AE%BE%E8%AE%A1infiniband-Fat-Tree%E7%BB%93%E6%9E%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
     <nav id="page-nav">
-      <%- paginator({
-        prev_text: "&laquo; Prev",
-        next_text: "Next &raquo;"
-      }) %>
+      <a class="extend prev" rel="prev" href="/page/3/">&lt; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/">Next &gt;</a>
     </nav>
-  <% } %>
+  
 
-<% } %>
 
 
           </div>

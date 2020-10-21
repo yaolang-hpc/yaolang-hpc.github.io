@@ -140,49 +140,95 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-  <% if (page.total > 1){ %>
-    <nav id="page-nav">
-      <%- paginator({
-        prev_text: "&laquo; Prev",
-        next_text: "Next &raquo;"
-      }) %>
-    </nav>
-  <% } %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
+            
+  
+    <article id="post-Shadowsocks" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/24/Shadowsocks/">Shadowsocks梯子搭建教程</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/24/Shadowsocks/" class="archive-article-date">
+  	<time datetime="2019-12-24T09:34:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-购买VPS"><a href="#1-购买VPS" class="headerlink" title="1. 购买VPS"></a>1. 购买VPS</h2><p>国外：链接：<a href="https://www.vultr.com/" target="_blank" rel="noopener">vultr</a>，最便宜的2.5$一个月，但是一般没货，一般购买3.5$一个月，新用户会有充值10$送50$的活动。但是国内目前封帐号比较厉害，一般只能换数据中心解决。</p>
+<p>国内：链接：<a href="https://www.ucloud.cn/" target="_blank" rel="noopener">ucloud</a>，通过优惠卷等活动，香港服务器一年费用110元，主要是稳定，目前还没有封过ip，有需要的朋友可以去去看看。</p>
+        
+          <a class="article-more-a" href="/2019/12/24/Shadowsocks/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vps</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">shadowsocks</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/24/Shadowsocks/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
-    </div></section>
-  <% } %>
+        
+        
+    </div>
+</aside>
 
-    <% if (page.total > 1){ %>
+
+
+
+  
+  
     <nav id="page-nav">
-      <%- paginator({
-        prev_text: "&laquo; Prev",
-        next_text: "Next &raquo;"
-      }) %>
+      <a class="extend prev" rel="prev" href="/page/6/">&lt; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
     </nav>
-  <% } %>
+  
 
-<% } %>
 
 
           </div>
