@@ -140,269 +140,49 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-利用xcat-Murder-P2P软件进行大规模集群系统恢复" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/">利用xcat+Murder_P2P软件进行大规模集群系统恢复</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/" class="archive-article-date">
-  	<time datetime="2020-06-06T09:36:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="xcat软件简介"><a href="#xcat软件简介" class="headerlink" title="xcat软件简介"></a>xcat软件简介</h3><ul>
-<li><p>xCAT (Extreme Cloud Administration Toolkit)是一个开源的可扩展的高级集群管理和配置工具，允许使用者通过一个单点控制和管理一个集群系统。xCAT最先是为IBM xSeries系列Linux Cluster做的第三方软件。它在简化集群管理的同时，还使集群能够方便地实现快速扩展，从而提高了系统管理员的工作效率。</p>
-<p>xCAT软件包基本上全部由一系列有用的perl脚本构成，所以使用者修改代码后不需要重新再编译和安装，而是可以很方便地根据自己的需求直接修改脚本来定制出自己需要的xCAT软件。</p>
-<p>xCAT是基于客户机/服务器架构的应用程序，客户端和服务器端的通信主要是由管理节点上运行的xCAT daemon（xcatd）来控制的，可以说运行于管理节点上的xCAT daemon（xcatd）就是整个xCAT软件正常工作的心脏。当管理节点上的xCAT daemon（xcatd）接收到计算节点发送过来的用XML封装的的命令时，它将通过ACL（Access Control Lists）来判定发送者是否有权限执行这些命令。此外，xCAT daemon（xcatd）在安装配置计算节点和各个节点重新启动的时候还会收集各个节点发来的状态和资源信息。整个系统架构如下图所示：</p>
-<p><img src="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/Xcat-arch.png" alt="xcat-arch"></p>
-<p><strong>xCAT管理节点（xCAT管理节点）：</strong></p>
-<ol>
-<li>安装了xCAT软件的服务器，并用作在整个群集上执行系统管理的单点服务器。在此节点上，数据库配置为存储xCAT节点定义。启用网络服务（dhcp，tftp，http等）以在操作系统部署中响应。</li>
-</ol>
-<p><strong>服务节点：</strong></p>
-<p>一台或多台定义的“从”服务器在管理节点下运行，以帮助系统管理以减少使用单个管理节点时的负载（cpu，网络带宽）。在管理非常大的群集时，此概念是必需的。</p>
-<p><strong>计算节点：</strong></p>
-<p>计算节点是xCAT管理的目标服务器。</p>
-<p><strong>网络服务（dhcp，tftp，http等）：</strong></p>
-<p>通过网络执行操作系统部署所需的各种网络服务。xCAT将自动启动并配置网络服务，而无需系统管理员的任何干预。</p>
-<p>xCAT包含多种集群管理和部署功能，主要包括：批量安装OS、批量部署无盘系统、节点配置信息管理和同步、批量管理节点并行执行命令等。此文档中使用的主要功能是采用xCAT批量启动无盘系统，并且在无盘系统中进行节点硬盘镜像与恢复，通过此方法可以快速进行硬盘镜像恢复，部署操作系统。</p></li></ul>
-        
-          <a class="article-more-a" href="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">xcat</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Murderp2p</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pxe</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-proc文件系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/19/proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">proc和sysfs文件系统简介</a>
-    </h1>
-  
-
-        
-        <a href="/2020/01/19/proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-  	<time datetime="2020-01-19T08:03:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="PROC文件系统"><a href="#PROC文件系统" class="headerlink" title="PROC文件系统"></a>PROC文件系统</h1><h2 id="proc文件系统简介"><a href="#proc文件系统简介" class="headerlink" title="proc文件系统简介"></a>proc文件系统简介</h2><p>proc文件系统全称 process information pseudo-filesystem</p>
-<ul>
-<li><p>描述：</p>
-<p>proc文件系统是一个虚拟文件系统，给内核数据结构提供一个访问接口。他通常挂在在/proc文件夹下。一般，系统启动后会自动挂载，但是也可以自行手动挂载，命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t proc proc /proc</span><br></pre></td></tr></table></figure>
-
-<p>proc文件系统中的文件大部分是只读的，少数文件是可写的，允许我们更改内核变量。</p>
-<p>/proc/sys/vm/drop_caches</p>
-<p>更改该文件内的数值可以清除缓存：</p>
-<p>释放pagecache，使用：</p>
-<p>echo 1  &gt; /proc/sys/vm/drop_caches</p>
-<p>释放目录缓存和索引，使用：</p>
-<p>echo 2 &gt; /proc/sys/vm/drop_caches</p>
-<p>释放页缓存，目录缓存和索引，使用：</p>
-<p>echo 3 &gt; /proc/sys/vm/drop_caches</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">FileSystem</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/19/proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-kubernetes分离式高可用部署" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/19/kubernetes%E5%88%86%E7%A6%BB%E5%BC%8F%E9%AB%98%E5%8F%AF%E7%94%A8%E9%83%A8%E7%BD%B2/">kubernetes分离式高可用部署</a>
-    </h1>
-  
-
-        
-        <a href="/2020/01/19/kubernetes%E5%88%86%E7%A6%BB%E5%BC%8F%E9%AB%98%E5%8F%AF%E7%94%A8%E9%83%A8%E7%BD%B2/" class="archive-article-date">
-  	<time datetime="2020-01-19T06:26:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/19/kubernetes%E5%88%86%E7%A6%BB%E5%BC%8F%E9%AB%98%E5%8F%AF%E7%94%A8%E9%83%A8%E7%BD%B2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
+            <% if (pagination == 2){ %>
+  <% page.posts.each(function(post){ %>
+    <%- partial('article', {post: post, index: true}) %>
+  <% }) %>
+  <% if (page.total > 1){ %>
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
+      <%- paginator({
+        prev_text: "&laquo; Prev",
+        next_text: "Next &raquo;"
+      }) %>
     </nav>
-  
+  <% } %>
+<% } else { %>
+  <% var last; %>
+  <% page.posts.each(function(post, i){ %>
+    <% var year = post.date.year(); %>
+    <% if (last != year){ %>
+      <% if (last != null){ %>
+        </div></section>
+      <% } %>
+      <% last = year; %>
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
+        </div>
+        <div class="archives">
+    <% } %>
+    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
+  <% }) %>
+  <% if (page.posts.length){ %>
+    </div></section>
+  <% } %>
 
+    <% if (page.total > 1){ %>
+    <nav id="page-nav">
+      <%- paginator({
+        prev_text: "&laquo; Prev",
+        next_text: "Next &raquo;"
+      }) %>
+    </nav>
+  <% } %>
+
+<% } %>
 
 
           </div>
