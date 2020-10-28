@@ -22,11 +22,12 @@
 <meta property="og:image" content="https://yaolang-hpc.github.io/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/pre-mem.png">
 <meta property="og:image" content="https://yaolang-hpc.github.io/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/pre-bw.png">
 <meta property="og:image" content="https://yaolang-hpc.github.io/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-avx2.png">
+<meta property="og:image" content="https://yaolang-hpc.github.io/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-cpu.png">
 <meta property="og:image" content="https://yaolang-hpc.github.io/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-mem_use.png">
 <meta property="og:image" content="https://yaolang-hpc.github.io/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-io.png">
 <meta property="og:image" content="https://yaolang-hpc.github.io/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/netdata-io.png">
 <meta property="article:published_time" content="2020-10-26T11:58:04.000Z">
-<meta property="article:modified_time" content="2020-10-28T09:32:10.380Z">
+<meta property="article:modified_time" content="2020-10-28T09:58:11.452Z">
 <meta property="article:author" content="Yao L">
 <meta property="article:tag" content="netdata">
 <meta property="article:tag" content="influxdb">
@@ -210,14 +211,15 @@
 <p>从图中可以看出在前处理阶段，磁盘整体IO压力不大，没有IO性能瓶颈</p>
 <p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/pre-bw.png" alt="disk"></p>
 <p>分析阶段：</p>
-<p>从监控图中可看出，分析阶段使用AVX2指令集进行分析计算，对于更先进的AVX512指令集使用率依然为0，表明商业软件对先进指令集的开发使用滞后于CPU的发展速度</p>
+<p>从监控图中可看出，分析阶段使用AVX2指令集进行分析计算，Intel Xeon Gold 6226R AVX2理论双精度浮点计算性能为1.4848TFLOPS，从图中可以看出在峰值计算阶段，实际可以达到1.311TFOPS，使用效率可以达到88.3%，表明abaqus隐式求解器属于计算密集型应用。在计算过程中CPU主频基本维持在3.1GHz左右。但是对于6226R支持的AVX512指令集使用率为0，表明商业软件对先进指令集的开发使用滞后于CPU的发展。</p>
 <p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-avx2.png" alt="avx2"></p>
-<p>由于abaqus线性静力学分析采用隐式求解器进行求解，因此在求解过程中需要进行线性方程组的迭代求解，对内存的消耗比较大</p>
+<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-cpu.png" alt="cpu"></p>
+<p>由于abaqus线性静力学分析采用隐式求解器进行求解，因此在求解过程中需要进行大量线性方程组的迭代求解，对内存的消耗比较大，本次服务器内存通道满配12*16GB=192GB，从图中可以看出，在计算高峰阶段内存的使用率可以达到145G，内存使用率为76%，表明abaqus隐式求解器为访存密集型求解器。</p>
 <p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-mem_use.png" alt="mem"></p>
-<p>在io带宽方面发现先行静力学分析存在IO性能平静，本次计算使用6Gb SSD固态硬盘，z最大读写速率除去开销在520MB/s左右，从图中可以看出，在求解过程中，磁盘写速率直接达到100%，IO利用率也达到100%，表明abaqus静力学分析对磁盘写入性能要求很高，后续准备换成PCIe U.2接口的SSD固态进行测试写入带宽应该可以达到3~4GB/s。</p>
+<p>在io带宽方面发现先行静力学分析存在IO性能平静，本次计算使用6Gb SSD固态硬盘，最大读写速率除去开销在520MB/s左右，从图中可以看出，在求解过程中，磁盘写速率直接达到100%，IO利用率也达到100%，表明abaqus静力学分析对磁盘写入性能要求很高，后续准备换成PCIe U.2接口的SSD固态进行测试写入带宽应该可以达到3~4GB/s。</p>
 <p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-io.png" alt="io"></p>
 <p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/netdata-io.png" alt="io"></p>
-<p>总结：abaqus standard模块为读写密集型、访存密集型应用，对于磁盘和内存大小和读写带宽均有较高要求，因此建议服务器配置大内存，存储采用高性能SSD本地磁盘，或者分布式并行存储。</p>
+<p>总结：abaqus standard模块为计算密集型、读写密集型、访存密集型应用，对于CPU、磁盘和内存大小和读写带宽均有较高要求，因此建议服务器配置高性能CPU、采用大内存，存储使用高性能SSD本地磁盘，或者分布式并行存储。</p>
 
       
 
