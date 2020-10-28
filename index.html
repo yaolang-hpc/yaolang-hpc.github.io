@@ -140,278 +140,49 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-利用netdata-grafana进行CAE软件性能分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">利用netdata+grafana进行CAE软件性能分析</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" class="archive-article-date">
-  	<time datetime="2020-10-26T11:58:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="netdata的安装"><a href="#netdata的安装" class="headerlink" title="netdata的安装"></a>netdata的安装</h3><p>Netdata是一款Linux性能实时监测工具。</p>
-<p>Netdata是一个高度优化的Linux守护进程，它为Linux系统，应用程序，SNMP服务等提供实时的性能监测。</p>
-<p>它用可视化的手段，将被监测者最细微的细节，展现了出来。这样，你便可以清晰地了解你的系统和应用程序此时的状况。</p>
-<p>本次使用的是针对netdata定制开发了插件，可以监控CPU指令集，Infiniband带宽等信息。</p>
-<p>在slave节点的安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">cat netedata.conf</span><br><span class="line">[global]</span><br><span class="line">        run as user &#x3D; root</span><br><span class="line">        history &#x3D; 3996</span><br><span class="line">        hostname &#x3D; gv134</span><br><span class="line">        memory mode &#x3D; none</span><br><span class="line">[web]</span><br><span class="line">        bind to &#x3D; *</span><br><span class="line">        web files owner &#x3D; root</span><br><span class="line">        web files group &#x3D; root</span><br><span class="line">        mode &#x3D; none</span><br><span class="line">cat stream.conf</span><br><span class="line"></span><br><span class="line"># 1. ON SLAVE NETDATA - THE ONE THAT WILL BE SENDING METRICS</span><br><span class="line"></span><br><span class="line">[stream]</span><br><span class="line">    # Enable this on slaves, to have them send metrics.</span><br><span class="line">    enabled &#x3D; yes</span><br><span class="line">    destination &#x3D; node228:19999</span><br><span class="line">    # The API_KEY to use (as the sender)</span><br><span class="line">    api key &#x3D; 833289f0-616b-4412-ac1d-cfce09a381a3</span><br><span class="line"></span><br><span class="line">    # The timeout to connect and send metrics</span><br><span class="line">    timeout seconds &#x3D; 60</span><br><span class="line"></span><br><span class="line">    # If the destination line above does not specify a port, use this</span><br><span class="line">    default port &#x3D; 19999</span><br><span class="line"></span><br><span class="line">    # filter the charts to be streamed</span><br><span class="line">    send charts matching &#x3D; *</span><br><span class="line"></span><br><span class="line">    # The buffer to use for sending metrics.</span><br><span class="line">    # 1MB is good for 10-20 seconds of data, so increase this if you expect latencies.</span><br><span class="line">    # The buffer is flushed on reconnects (this will not prevent gaps at the charts).</span><br><span class="line">    buffer size bytes &#x3D; 1048576</span><br><span class="line"></span><br><span class="line">    # If the connection fails, or it disconnects,</span><br><span class="line">    # retry after that many seconds.</span><br><span class="line">    reconnect delay seconds &#x3D; 5</span><br><span class="line"></span><br><span class="line">    # Sync the clock of the charts for that many iterations, when starting.</span><br><span class="line">    initial clock resync iterations &#x3D; 60</span><br></pre></td></tr></table></figure>
-
-<p>在master节点的安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">        # process scheduling policy &#x3D; keep</span><br><span class="line">        # OOM score &#x3D; keep</span><br><span class="line">        run as user &#x3D; root</span><br><span class="line">        history &#x3D; 3996</span><br><span class="line">        glibc malloc arena max for plugins &#x3D; 1</span><br><span class="line">        glibc malloc arena max for netdata &#x3D; 1</span><br><span class="line">        hostname &#x3D; node228</span><br><span class="line">        update every &#x3D; 1</span><br><span class="line">        config directory &#x3D; &#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;etc&#x2F;netdata</span><br><span class="line">        stock config directory &#x3D; &#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;lib&#x2F;netdata&#x2F;conf.d</span><br><span class="line">        log directory &#x3D; &#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;var&#x2F;log&#x2F;netdata</span><br><span class="line">        web files directory &#x3D; &#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;share&#x2F;netdata&#x2F;web</span><br><span class="line">        cache directory &#x3D; &#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;var&#x2F;cache&#x2F;netdata</span><br><span class="line">        lib directory &#x3D; &#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;var&#x2F;lib&#x2F;netdata</span><br><span class="line">        home directory &#x3D; &#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;var&#x2F;cache&#x2F;netdata</span><br><span class="line">        plugins directory &#x3D; &quot;&#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;libexec&#x2F;netdata&#x2F;plugins.d&quot; &quot;&#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;etc&#x2F;netdata&#x2F;custom-plugins.d&quot;</span><br><span class="line">        memory mode &#x3D; save</span><br><span class="line">        host access prefix &#x3D;</span><br><span class="line">        memory deduplication (ksm) &#x3D; yes</span><br><span class="line">        TZ environment variable &#x3D; :&#x2F;etc&#x2F;localtime</span><br><span class="line">        timezone &#x3D; Asia&#x2F;Shanghai</span><br><span class="line">        debug flags &#x3D; 0x0000000000000000</span><br><span class="line">        debug log &#x3D; &#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;var&#x2F;log&#x2F;netdata&#x2F;debug.log</span><br><span class="line">        error log &#x3D; &#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;var&#x2F;log&#x2F;netdata&#x2F;error.log</span><br><span class="line">access log &#x3D; &#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;var&#x2F;log&#x2F;netdata&#x2F;access.log</span><br><span class="line">        facility log &#x3D; daemon</span><br><span class="line">        errors flood protection period &#x3D; 1200</span><br><span class="line">        errors to trigger flood protection &#x3D; 200</span><br><span class="line">        pthread stack size &#x3D; 8388608</span><br><span class="line">        cleanup obsolete charts after seconds &#x3D; 3600</span><br><span class="line">        gap when lost iterations above &#x3D; 1</span><br><span class="line">        cleanup orphan hosts after seconds &#x3D; 3600</span><br><span class="line">        delete obsolete charts files &#x3D; yes</span><br><span class="line">        delete orphan hosts files &#x3D; yes</span><br><span class="line">        enable zero metrics &#x3D; no</span><br><span class="line">[web]</span><br><span class="line">        bind to &#x3D; *</span><br><span class="line">        web files owner &#x3D; root</span><br><span class="line">        web files group &#x3D; root</span><br></pre></td></tr></table></figure>
-
-<p>通过10.0.50.228:19999登录</p>
-<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/netdata.png" alt="netdata"></p>
-<h3 id="influxdb数据库安装"><a href="#influxdb数据库安装" class="headerlink" title="influxdb数据库安装"></a>influxdb数据库安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">yum install -y influxdb-1.5.4.x86_64.rpm</span><br><span class="line"></span><br><span class="line">cat &#x2F;etc&#x2F;influxdb&#x2F;influxdb.conf</span><br><span class="line">[[opentsdb]]</span><br><span class="line">  enabled &#x3D; true</span><br><span class="line">  bind-address &#x3D; &quot;:4242&quot;</span><br><span class="line">  database &#x3D; &quot;clusmon&quot;</span><br><span class="line">  retention-policy &#x3D; &quot;&quot;</span><br><span class="line">  consistency-level &#x3D; &quot;one&quot;</span><br><span class="line">  tls-enabled &#x3D; false</span><br><span class="line">  certificate&#x3D; &quot;&#x2F;etc&#x2F;ssl&#x2F;influxdb.pem&quot;</span><br><span class="line">  </span><br><span class="line">  cat &#x2F;opt&#x2F;clusmon&#x2F;netdata&#x2F;etc&#x2F;netdata&#x2F;netdata.conf </span><br><span class="line">  [backend]</span><br><span class="line">        host tags &#x3D;</span><br><span class="line">        enabled &#x3D; yes</span><br><span class="line">        data source &#x3D; average</span><br><span class="line">        type &#x3D; clusmon</span><br><span class="line">        destination &#x3D; localhost:4242</span><br><span class="line">        prefix &#x3D; clusmon</span><br><span class="line">        hostname &#x3D; node228</span><br><span class="line">        update every &#x3D; 10</span><br><span class="line">        buffer on failures &#x3D; 10</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装grafana"><a href="#安装grafana" class="headerlink" title="安装grafana"></a>安装grafana</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y grafana-5.1.3-1.x86_64.rpm</span><br></pre></td></tr></table></figure>
-
-<p>登录grafana 10.0.50.228:3000配置数据库</p>
-<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/grafana.png" alt="grafana.png"></p>
-<h3 id="CAE软件Abaqus-2018性能分析"><a href="#CAE软件Abaqus-2018性能分析" class="headerlink" title="CAE软件Abaqus_2018性能分析"></a>CAE软件Abaqus_2018性能分析</h3><p>本次算例为240万网格受均布载荷的悬臂梁：</p>
-<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/Beam.png" alt="Beam"></p>
-<p>采用单节点SMP的方式运行，命令行如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;public&#x2F;software&#x2F;Abaqus_2018&#x2F;DassaultSystemes&#x2F;SIMULIA&#x2F;Commands&#x2F;abq2018 analysis input&#x3D;Beam.inp job&#x3D;Beam cpus&#x3D;48 scratch&#x3D;.&#x2F; standard_parallel&#x3D;all interactive</span><br></pre></td></tr></table></figure>
-
-<p>前处理阶段：</p>
-<p>此时CPU资源消耗较少，使用的指令集为双精度Scalar指令集</p>
-<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/pre-scalar.png" alt="scalar"></p>
-<p>由于不涉及到线性方程组的迭代求解，此时内存占用较小</p>
-<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/pre-mem.png" alt="mem"></p>
-<p>从图中可以看出在前处理阶段，磁盘整体IO压力不大，没有IO性能瓶颈</p>
-<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/pre-bw.png" alt="disk"></p>
-<p>分析阶段：</p>
-<p>从监控图中可看出，分析阶段使用AVX2指令集进行分析计算，Intel Xeon Gold 6226R AVX2理论双精度浮点计算性能为1.4848TFLOPS，从图中可以看出在峰值计算阶段，实际可以达到1.311TFOPS，使用效率可以达到88.3%，表明abaqus隐式求解器属于计算密集型应用。在计算过程中CPU主频基本维持在3.1GHz左右。但是对于6226R支持的AVX512指令集使用率为0，表明商业软件对先进指令集的开发使用滞后于CPU的发展。</p>
-<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-avx2.png" alt="avx2"></p>
-<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-cpu.png" alt="cpu"></p>
-<p>由于abaqus线性静力学分析采用隐式求解器进行求解，因此在求解过程中需要进行大量线性方程组的迭代求解，对内存的消耗比较大，本次服务器内存通道满配12*16GB=192GB，从图中可以看出，在计算高峰阶段内存的使用率可以达到145G，内存使用率为76%，表明abaqus隐式求解器为访存密集型求解器。</p>
-<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-mem_use.png" alt="mem"></p>
-<p>在io带宽方面发现先行静力学分析存在IO性能平静，本次计算使用6Gb SSD固态硬盘，最大读写速率除去开销在520MB/s左右，从图中可以看出，在求解过程中，磁盘写速率直接达到100%，IO利用率也达到100%，表明abaqus静力学分析对磁盘写入性能要求很高，后续准备换成PCIe U.2接口的SSD固态进行测试写入带宽应该可以达到3~4GB/s。</p>
-<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis-io.png" alt="io"></p>
-<p><img src="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/netdata-io.png" alt="io"></p>
-<p>总结：abaqus standard模块为计算密集型、读写密集型、访存密集型应用，对于CPU、磁盘和内存大小和读写带宽均有较高要求，因此建议服务器配置高性能CPU、采用大内存，存储使用高性能SSD本地磁盘，或者分布式并行存储。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">netdata</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">influxdb</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">grafana</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Abaqus</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-性能调优工具利器-perf" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/21/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7%E5%88%A9%E5%99%A8-perf/">性能调优工具利器-perf</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/21/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7%E5%88%A9%E5%99%A8-perf/" class="archive-article-date">
-  	<time datetime="2020-10-21T09:13:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">perf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/21/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7%E5%88%A9%E5%99%A8-perf/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-HPC集群设计理念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/08/HPC%E9%9B%86%E7%BE%A4%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5/">HPC集群设计理念</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/08/HPC%E9%9B%86%E7%BE%A4%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5/" class="archive-article-date">
-  	<time datetime="2020-09-08T05:27:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/08/HPC%E9%9B%86%E7%BE%A4%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
+            <% if (pagination == 2){ %>
+  <% page.posts.each(function(post){ %>
+    <%- partial('article', {post: post, index: true}) %>
+  <% }) %>
+  <% if (page.total > 1){ %>
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &gt;</a>
+      <%- paginator({
+        prev_text: "&laquo; Prev",
+        next_text: "Next &raquo;"
+      }) %>
     </nav>
-  
+  <% } %>
+<% } else { %>
+  <% var last; %>
+  <% page.posts.each(function(post, i){ %>
+    <% var year = post.date.year(); %>
+    <% if (last != year){ %>
+      <% if (last != null){ %>
+        </div></section>
+      <% } %>
+      <% last = year; %>
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
+        </div>
+        <div class="archives">
+    <% } %>
+    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
+  <% }) %>
+  <% if (page.posts.length){ %>
+    </div></section>
+  <% } %>
 
+    <% if (page.total > 1){ %>
+    <nav id="page-nav">
+      <%- paginator({
+        prev_text: "&laquo; Prev",
+        next_text: "Next &raquo;"
+      }) %>
+    </nav>
+  <% } %>
+
+<% } %>
 
 
           </div>
