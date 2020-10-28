@@ -140,286 +140,49 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-HPC集群设计理念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/08/HPC%E9%9B%86%E7%BE%A4%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5/">HPC集群设计理念</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/08/HPC%E9%9B%86%E7%BE%A4%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5/" class="archive-article-date">
-  	<time datetime="2020-09-08T05:27:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/08/HPC%E9%9B%86%E7%BE%A4%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-基于DHCP、PXE和kickstart自动安装设置Centos7-6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/01/%E5%9F%BA%E4%BA%8EDHCP%E3%80%81PXE%E5%92%8Ckickstart%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AECentos7-6/">基于DHCP、PXE和kickstart自动安装设置Centos7.6</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/01/%E5%9F%BA%E4%BA%8EDHCP%E3%80%81PXE%E5%92%8Ckickstart%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AECentos7-6/" class="archive-article-date">
-  	<time datetime="2020-07-01T09:00:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="基于DHCP、PXE的kickstart自动安装简介"><a href="#基于DHCP、PXE的kickstart自动安装简介" class="headerlink" title="基于DHCP、PXE的kickstart自动安装简介"></a>基于DHCP、PXE的kickstart自动安装简介</h4><p>基于DHCP、PXE的kickstart自动安装简介</p>
-<p>通常，在安装操作系统的过程需大量的人机交互过程，为减少交互过程，为提高安装效率，<a href="http://www.redhat.com/" target="_blank" rel="noopener">Red Hat Linux</a>开始支持称为kickstart的功能，只需事先定义好一个kickstart自动应答配置文件（通常存放在安装服务器上），并让安装程序知道该配置文件的位置，在安装过程中安装程序就可以自己从该文件中读取安装配置，这样就避免了繁琐的人机交互，实现无人值守的自动化安装。安装好一机器，安装程序都会创建一个kickstart配置文件/root/anaconda-ks.cfg，记录真实安装配置。<a href="http://www.centos.org/" target="_blank" rel="noopener">CentOS</a>作为Red Hat Enterprise Linux(RHEL)的衍生版也支持此功能。</p>
-<p>PXE(Pre-boot Execution Environment)是由Intel设计的协议，它可以使计算机通过网络启动。PXE协议分为client和server两端，PXE client在网卡的ROM中，当计算机引导时，BIOS把PXE client调入内存执行，并显示出命令菜单，经用户选择后，PXE client将放置在远端的操作系统通过网络下载到本地运行。PXE在其启动过程中，客户端请求服务器分配IP地址，之后PXE Client使用TFTP Client通过TFTP(Trivial File Transfer Protocol)协议下载启动安装程序所需的文件。</p>
-<p>PXE网络安装：客户机通过支持PXE的网卡向网络中发送请求DHCP信息的广播请求IP地址等信息，DHCP服务器给客户端提供IP地址和其它信息（TFTP服务器、启动文件等），之后请求并下载安装需要的文件。</p>
-<p><img src="/2020/07/01/%E5%9F%BA%E4%BA%8EDHCP%E3%80%81PXE%E5%92%8Ckickstart%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AECentos7-6/pxe.jpg" alt="pxe"></p>
-<ol start="2">
-<li>测试集群简介</li>
-</ol>
-<ul>
-<li><p>服务端：</p>
-<ul>
-<li>IP：11.2.104.1</li>
-<li>系统：centos7.6</li>
-</ul>
-</li>
-<li><p>客户端：</p>
-<ul>
-<li>IP：11.2.104.3</li>
-<li>系统：centos7.6</li>
-</ul>
-</li>
-</ul>
-<ol start="3">
-<li><p>安装pxe装系统所需要的软件</p>
-<p>yum -y install dhcp nfs-utils tftp-server</p>
-</li>
-<li><p>配置tftp：</p>
-<p>tftp提供dhcp获取IP后所需要下载的pxelinux.0和default、efidefault等文件的服务。修改配置文件/etc/xinetd.d/tftp：</p>
-</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/xinetd.d/tftp</span><br><span class="line">service tftp</span><br><span class="line">&#123;</span><br><span class="line">        socket_type = dgram</span><br><span class="line">        protocol = udp</span><br><span class="line">        <span class="built_in">wait</span> = yes</span><br><span class="line">        user = root</span><br><span class="line">        server = /usr/sbin/in.tftpd</span><br><span class="line">        server_args = -s /install/tftpboot   &lt;==重点在这里！改成这样即可</span><br><span class="line">        <span class="built_in">disable</span> = no    &lt;===这里改为no</span><br><span class="line">        per_source = 11</span><br><span class="line">        cps = 100 2</span><br><span class="line">        flags = IPv4</span><br><span class="line">&#125;</span><br><span class="line">重启xineted服务：</span><br><span class="line"><span class="comment">#systemctl restart xineted</span></span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li><p>准备启动文件</p>
-<p>syslinux:</p>
-<p>cp /usr/share/syslinux/menu.c32 /install/tftpboot/</p>
-<p>cp /usr/share/syslinux/vesamenu.c32 /install/tftpboot/</p>
-<p>cp /usr/share/syslinux/pxelinux.0 /install/tftpboot/</p>
-<p>mkdir -p /install/tftpboot/pxelinux.cfg</p>
-<p>cp /mnt/isolinux/{vmlinuz,initrd.img} /install/tftpboot</p></li></ol>
-        
-          <a class="article-more-a" href="/2020/07/01/%E5%9F%BA%E4%BA%8EDHCP%E3%80%81PXE%E5%92%8Ckickstart%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AECentos7-6/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PXE</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">DHCP</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">kickstart</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/01/%E5%9F%BA%E4%BA%8EDHCP%E3%80%81PXE%E5%92%8Ckickstart%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AECentos7-6/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-利用torque-6-1-2-maui-3-3-1搭建pbs调度系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/16/%E5%88%A9%E7%94%A8torque-6-1-2-maui-3-3-1%E6%90%AD%E5%BB%BApbs%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">利用torque-6.1.2+maui-3.3.1搭建pbs调度系统</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/16/%E5%88%A9%E7%94%A8torque-6-1-2-maui-3-3-1%E6%90%AD%E5%BB%BApbs%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-  	<time datetime="2020-06-16T12:46:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="系统环境准备"><a href="#系统环境准备" class="headerlink" title="系统环境准备"></a>系统环境准备</h3><p><strong>本次搭建的集群系统包括2台服务器test1和test2</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###test1</span></span><br><span class="line">[root@test1 ~]<span class="comment"># cat /etc/redhat-release </span></span><br><span class="line">CentOS Linux release 7.6.1810 (Core) </span><br><span class="line"></span><br><span class="line"><span class="comment">###test2</span></span><br><span class="line">[root@test2 ~]<span class="comment"># cat /etc/redhat-release </span></span><br><span class="line">CentOS Linux release 7.6.1810 (Core) </span><br><span class="line"></span><br><span class="line">[root@test1 ~]<span class="comment"># lscpu</span></span><br><span class="line">Architecture:          x86_64</span><br><span class="line">CPU op-mode(s):        32-bit, 64-bit</span><br><span class="line">Byte Order:            Little Endian</span><br><span class="line">CPU(s):                128</span><br><span class="line">On-line CPU(s) list:   0-127</span><br><span class="line">Thread(s) per core:    1</span><br><span class="line">Core(s) per socket:    64</span><br><span class="line">Socket(s):             2</span><br><span class="line">NUMA node(s):          8</span><br><span class="line">Vendor ID:             AuthenticAMD</span><br><span class="line">CPU family:            23</span><br><span class="line">Model:                 49</span><br><span class="line">Model name:            AMD EPYC 7702 64-Core Processor</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h3><p><strong>安装系统必要的库函数</strong></p>
-        
-          <a class="article-more-a" href="/2020/06/16/%E5%88%A9%E7%94%A8torque-6-1-2-maui-3-3-1%E6%90%AD%E5%BB%BApbs%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">torque</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">maui</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">scheduler</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/16/%E5%88%A9%E7%94%A8torque-6-1-2-maui-3-3-1%E6%90%AD%E5%BB%BApbs%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
+            <% if (pagination == 2){ %>
+  <% page.posts.each(function(post){ %>
+    <%- partial('article', {post: post, index: true}) %>
+  <% }) %>
+  <% if (page.total > 1){ %>
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &gt;</a>
+      <%- paginator({
+        prev_text: "&laquo; Prev",
+        next_text: "Next &raquo;"
+      }) %>
     </nav>
-  
+  <% } %>
+<% } else { %>
+  <% var last; %>
+  <% page.posts.each(function(post, i){ %>
+    <% var year = post.date.year(); %>
+    <% if (last != year){ %>
+      <% if (last != null){ %>
+        </div></section>
+      <% } %>
+      <% last = year; %>
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
+        </div>
+        <div class="archives">
+    <% } %>
+    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
+  <% }) %>
+  <% if (page.posts.length){ %>
+    </div></section>
+  <% } %>
 
+    <% if (page.total > 1){ %>
+    <nav id="page-nav">
+      <%- paginator({
+        prev_text: "&laquo; Prev",
+        next_text: "Next &raquo;"
+      }) %>
+    </nav>
+  <% } %>
+
+<% } %>
 
 
           </div>
@@ -655,6 +418,30 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kickstart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">netdata</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">influxdb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">grafana</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Abaqus</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">perf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
             
             <div class="clearfix"></div>
