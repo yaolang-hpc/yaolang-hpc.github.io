@@ -140,49 +140,135 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-  <% if (page.total > 1){ %>
-    <nav id="page-nav">
-      <%- paginator({
-        prev_text: "&lt; Prev",
-        next_text: "Next &gt;"
-      }) %>
-    </nav>
-  <% } %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
+            
+  
+  
+    
+    
+      
+      
       <section class="archives-wrap">
         <div class="archive-year-wrap">
-          <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
+          <a href="/archives/2019" class="archive-year">2019</a>
         </div>
         <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/12/26/GPFS-4-2-%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2019-12-26T06:55:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-26</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/12/26/GPFS-4-2-%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">GPFS_4.2 安装教程</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/12/26/Linux%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/" class="archive-article-date">
+  	<time datetime="2019-12-26T02:32:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-26</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/12/26/Linux%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/">Linux性能测试工具一览表</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/12/25/Linux%E4%B8%8A%E7%9A%84%E7%9C%9F%E5%AE%9E%E7%BD%91%E7%BB%9C%E5%92%8C%E8%99%9A%E6%8B%9F%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84/" class="archive-article-date">
+  	<time datetime="2019-12-25T06:40:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-25</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/12/25/Linux%E4%B8%8A%E7%9A%84%E7%9C%9F%E5%AE%9E%E7%BD%91%E7%BB%9C%E5%92%8C%E8%99%9A%E6%8B%9F%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84/">Linux上的真实网络和虚拟网络映射</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">网络虚拟化</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
     </div></section>
-  <% } %>
+  
 
-    <% if (page.total > 1){ %>
+    
     <nav id="page-nav">
-      <%- paginator({
-        prev_text: "&lt; Prev",
-        next_text: "Next &gt;"
-      }) %>
+      <a class="extend prev" rel="prev" href="/archives/2019/12/">&amp;laquo; Prev</a><a class="page-number" href="/archives/2019/12/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2019/12/page/3/">3</a><a class="extend next" rel="next" href="/archives/2019/12/page/3/">Next &amp;raquo;</a>
     </nav>
-  <% } %>
+  
 
-<% } %>
+
 
           </div>
         </div>
