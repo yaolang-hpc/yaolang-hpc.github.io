@@ -140,70 +140,49 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
-    
-    
-      
-      
+            <% if (pagination == 2){ %>
+  <% page.posts.each(function(post){ %>
+    <%- partial('article', {post: post, index: true}) %>
+  <% }) %>
+  <% if (page.total > 1){ %>
+    <nav id="page-nav">
+      <%- paginator({
+        prev_text: "&lt; Prev",
+        next_text: "Next &gt;"
+      }) %>
+    </nav>
+  <% } %>
+<% } else { %>
+  <% var last; %>
+  <% page.posts.each(function(post, i){ %>
+    <% var year = post.date.year(); %>
+    <% if (last != year){ %>
+      <% if (last != null){ %>
+        </div></section>
+      <% } %>
+      <% last = year; %>
       <section class="archives-wrap">
         <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
+          <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
         </div>
         <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/01/%E5%9F%BA%E4%BA%8EDHCP%E3%80%81PXE%E5%92%8Ckickstart%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AECentos7-6/" class="archive-article-date">
-  	<time datetime="2020-07-01T09:00:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/01/%E5%9F%BA%E4%BA%8EDHCP%E3%80%81PXE%E5%92%8Ckickstart%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AECentos7-6/">基于DHCP、PXE和kickstart自动安装设置Centos7.6</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PXE</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">DHCP</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">kickstart</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
+    <% } %>
+    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
+  <% }) %>
+  <% if (page.posts.length){ %>
     </div></section>
-  
+  <% } %>
 
-    
+    <% if (page.total > 1){ %>
+    <nav id="page-nav">
+      <%- paginator({
+        prev_text: "&lt; Prev",
+        next_text: "Next &gt;"
+      }) %>
+    </nav>
+  <% } %>
 
-
+<% } %>
 
           </div>
         </div>
@@ -463,6 +442,18 @@ MathJax.Hub.Queue(function() {
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">kvm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">bridge</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -607,15 +598,6 @@ MathJax.Hub.Queue(function() {
             <div class="pswp__caption">
                 <div class="pswp__caption__center"></div>
             </div>
-
-        </div>
-
-    </div>
-
-</div>
-  </div>
-</body>
-</html>        </div>
 
         </div>
 
