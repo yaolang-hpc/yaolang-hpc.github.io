@@ -140,49 +140,298 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-  <% if (page.total > 1){ %>
-    <nav id="page-nav">
-      <%- paginator({
-        prev_text: "&lt; Prev",
-        next_text: "Next &gt;"
-      }) %>
-    </nav>
-  <% } %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
+            
+  
+    <article id="post-利用torque-6-1-2-maui-3-3-1搭建pbs调度系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/16/%E5%88%A9%E7%94%A8torque-6-1-2-maui-3-3-1%E6%90%AD%E5%BB%BApbs%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">利用torque-6.1.2+maui-3.3.1搭建pbs调度系统</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/16/%E5%88%A9%E7%94%A8torque-6-1-2-maui-3-3-1%E6%90%AD%E5%BB%BApbs%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
+  	<time datetime="2020-06-16T12:46:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="系统环境准备"><a href="#系统环境准备" class="headerlink" title="系统环境准备"></a>系统环境准备</h3><p><strong>本次搭建的集群系统包括2台服务器test1和test2</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###test1</span></span><br><span class="line">[root@test1 ~]<span class="comment"># cat /etc/redhat-release </span></span><br><span class="line">CentOS Linux release 7.6.1810 (Core) </span><br><span class="line"></span><br><span class="line"><span class="comment">###test2</span></span><br><span class="line">[root@test2 ~]<span class="comment"># cat /etc/redhat-release </span></span><br><span class="line">CentOS Linux release 7.6.1810 (Core) </span><br><span class="line"></span><br><span class="line">[root@test1 ~]<span class="comment"># lscpu</span></span><br><span class="line">Architecture:          x86_64</span><br><span class="line">CPU op-mode(s):        32-bit, 64-bit</span><br><span class="line">Byte Order:            Little Endian</span><br><span class="line">CPU(s):                128</span><br><span class="line">On-line CPU(s) list:   0-127</span><br><span class="line">Thread(s) per core:    1</span><br><span class="line">Core(s) per socket:    64</span><br><span class="line">Socket(s):             2</span><br><span class="line">NUMA node(s):          8</span><br><span class="line">Vendor ID:             AuthenticAMD</span><br><span class="line">CPU family:            23</span><br><span class="line">Model:                 49</span><br><span class="line">Model name:            AMD EPYC 7702 64-Core Processor</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h3><p><strong>安装系统必要的库函数</strong></p>
+        
+          <a class="article-more-a" href="/2020/06/16/%E5%88%A9%E7%94%A8torque-6-1-2-maui-3-3-1%E6%90%AD%E5%BB%BApbs%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">torque</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">maui</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">scheduler</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/16/%E5%88%A9%E7%94%A8torque-6-1-2-maui-3-3-1%E6%90%AD%E5%BB%BApbs%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
-    </div></section>
-  <% } %>
+        
+        
+    </div>
+</aside>
 
-    <% if (page.total > 1){ %>
+
+
+
+  
+    <article id="post-iptables实现centos内网机器访问外网" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/16/iptables%E5%AE%9E%E7%8E%B0centos%E5%86%85%E7%BD%91%E6%9C%BA%E5%99%A8%E8%AE%BF%E9%97%AE%E5%A4%96%E7%BD%91/">iptables实现centos内网机器访问外网</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/16/iptables%E5%AE%9E%E7%8E%B0centos%E5%86%85%E7%BD%91%E6%9C%BA%E5%99%A8%E8%AE%BF%E9%97%AE%E5%A4%96%E7%BD%91/" class="archive-article-date">
+  	<time datetime="2020-06-16T12:20:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="集群环境描述"><a href="#集群环境描述" class="headerlink" title="集群环境描述"></a>集群环境描述</h3><ol>
+<li><p>外网机器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">外网ip 166.111.38.131</span><br><span class="line">内网ip 192.168.11.222</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>外网机器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">centos7.6系统</span><br><span class="line">内网ip1 192.168.11.98</span><br><span class="line">内网ip2 192.168.11.99</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h3><p>在带外网的机器上设置iptables规则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.设置iptables转发规则</span><br><span class="line">iptables -t nat -A POSTROUTING -s 192.168.11.0/24 --to 166.111.38.131 -j SNAT </span><br><span class="line">2.在外网机器上打开转发功能</span><br><span class="line">sysctl -a | grep <span class="string">"net.ipv4.ip_forward"</span> <span class="comment">#查看是否开启转发规则，值为1为打开</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.ip_forward = 1"</span> &gt;/etc/sysctl.conf</span><br><span class="line">sysctl -p <span class="comment">#使配置生效</span></span><br></pre></td></tr></table></figure>
+
+<p>在内网机器上将网关指向外网的内网ip 192.168.11.222</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###test1机器</span></span><br><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-enp33s0f1</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">NAME=enp33s0f1</span><br><span class="line">UUID=04c1412a-f44d-4c09-8c40-44d9716220fc</span><br><span class="line">DEVICE=enp33s0f1</span><br><span class="line">ONBOOT=yes</span><br><span class="line">IPADDR=192.168.11.98</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.11.222</span><br><span class="line"></span><br><span class="line">systemctl restart network</span><br><span class="line"></span><br><span class="line"><span class="comment">###test2机器</span></span><br><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-enp33s0f1</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">NAME=enp33s0f1</span><br><span class="line">UUID=3dae4422-d081-45d7-b359-dfd50bfd87e7</span><br><span class="line">DEVICE=enp33s0f1</span><br><span class="line">ONBOOT=yes</span><br><span class="line">IPADDR=192.168.11.99</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.11.222</span><br><span class="line">systemctl restart network</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###test1</span></span><br><span class="line">[root@test1 ~]<span class="comment"># ping baidu.com</span></span><br><span class="line">PING baidu.com (39.156.69.79) 56(84) bytes of data.</span><br><span class="line">64 bytes from 39.156.69.79 (39.156.69.79): icmp_seq=1 ttl=47 time=43.7 ms</span><br><span class="line">64 bytes from 39.156.69.79 (39.156.69.79): icmp_seq=2 ttl=47 time=43.5 ms</span><br><span class="line">64 bytes from 39.156.69.79 (39.156.69.79): icmp_seq=3 ttl=47 time=43.6 ms</span><br><span class="line">64 bytes from 39.156.69.79 (39.156.69.79): icmp_seq=4 ttl=47 time=43.6 ms</span><br><span class="line"></span><br><span class="line"><span class="comment">###test2</span></span><br><span class="line">[root@test2 ~]<span class="comment"># ping baidu.com</span></span><br><span class="line">PING baidu.com (220.181.38.148) 56(84) bytes of data.</span><br><span class="line">64 bytes from 220.181.38.148 (220.181.38.148): icmp_seq=1 ttl=46 time=29.9 ms</span><br><span class="line">64 bytes from 220.181.38.148 (220.181.38.148): icmp_seq=2 ttl=46 time=20.5 ms</span><br><span class="line">64 bytes from 220.181.38.148 (220.181.38.148): icmp_seq=3 ttl=46 time=20.0 ms</span><br><span class="line">64 bytes from 220.181.38.148 (220.181.38.148): icmp_seq=4 ttl=46 time=20.1 ms</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iptables</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">nat</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">centos</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/16/iptables%E5%AE%9E%E7%8E%B0centos%E5%86%85%E7%BD%91%E6%9C%BA%E5%99%A8%E8%AE%BF%E9%97%AE%E5%A4%96%E7%BD%91/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-利用xcat-Murder-P2P软件进行大规模集群系统恢复" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/">利用xcat+Murder_P2P软件进行大规模集群系统恢复</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/" class="archive-article-date">
+  	<time datetime="2020-06-06T09:36:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="xcat软件简介"><a href="#xcat软件简介" class="headerlink" title="xcat软件简介"></a>xcat软件简介</h3><ul>
+<li><p>xCAT (Extreme Cloud Administration Toolkit)是一个开源的可扩展的高级集群管理和配置工具，允许使用者通过一个单点控制和管理一个集群系统。xCAT最先是为IBM xSeries系列Linux Cluster做的第三方软件。它在简化集群管理的同时，还使集群能够方便地实现快速扩展，从而提高了系统管理员的工作效率。</p>
+<p>xCAT软件包基本上全部由一系列有用的perl脚本构成，所以使用者修改代码后不需要重新再编译和安装，而是可以很方便地根据自己的需求直接修改脚本来定制出自己需要的xCAT软件。</p>
+<p>xCAT是基于客户机/服务器架构的应用程序，客户端和服务器端的通信主要是由管理节点上运行的xCAT daemon（xcatd）来控制的，可以说运行于管理节点上的xCAT daemon（xcatd）就是整个xCAT软件正常工作的心脏。当管理节点上的xCAT daemon（xcatd）接收到计算节点发送过来的用XML封装的的命令时，它将通过ACL（Access Control Lists）来判定发送者是否有权限执行这些命令。此外，xCAT daemon（xcatd）在安装配置计算节点和各个节点重新启动的时候还会收集各个节点发来的状态和资源信息。整个系统架构如下图所示：</p>
+<p><img src="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/Xcat-arch.png" alt="xcat-arch"></p>
+<p><strong>xCAT管理节点（xCAT管理节点）：</strong></p>
+<ol>
+<li>安装了xCAT软件的服务器，并用作在整个群集上执行系统管理的单点服务器。在此节点上，数据库配置为存储xCAT节点定义。启用网络服务（dhcp，tftp，http等）以在操作系统部署中响应。</li>
+</ol>
+<p><strong>服务节点：</strong></p>
+<p>一台或多台定义的“从”服务器在管理节点下运行，以帮助系统管理以减少使用单个管理节点时的负载（cpu，网络带宽）。在管理非常大的群集时，此概念是必需的。</p>
+<p><strong>计算节点：</strong></p>
+<p>计算节点是xCAT管理的目标服务器。</p>
+<p><strong>网络服务（dhcp，tftp，http等）：</strong></p>
+<p>通过网络执行操作系统部署所需的各种网络服务。xCAT将自动启动并配置网络服务，而无需系统管理员的任何干预。</p>
+<p>xCAT包含多种集群管理和部署功能，主要包括：批量安装OS、批量部署无盘系统、节点配置信息管理和同步、批量管理节点并行执行命令等。此文档中使用的主要功能是采用xCAT批量启动无盘系统，并且在无盘系统中进行节点硬盘镜像与恢复，通过此方法可以快速进行硬盘镜像恢复，部署操作系统。</p></li></ul>
+        
+          <a class="article-more-a" href="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">xcat</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Murderp2p</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pxe</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/06/%E5%88%A9%E7%94%A8xcat-Murder-P2P%E8%BD%AF%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%9B%86%E7%BE%A4%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
     <nav id="page-nav">
-      <%- paginator({
-        prev_text: "&lt; Prev",
-        next_text: "Next &gt;"
-      }) %>
+      <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">Next &amp;raquo;</a>
     </nav>
-  <% } %>
+  
 
-<% } %>
 
 
           </div>

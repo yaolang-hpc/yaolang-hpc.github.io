@@ -140,49 +140,269 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-  <% if (page.total > 1){ %>
-    <nav id="page-nav">
-      <%- paginator({
-        prev_text: "&lt; Prev",
-        next_text: "Next &gt;"
-      }) %>
-    </nav>
-  <% } %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
+            
+  
+    <article id="post-利用KVM虚拟机部署Lustre文件系统二" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/04/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BA%8C/">利用KVM虚拟机部署Lustre文件系统二</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/04/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BA%8C/" class="archive-article-date">
+  	<time datetime="2020-11-04T08:35:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/04/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BA%8C/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
-    </div></section>
-  <% } %>
+        
+        
+    </div>
+</aside>
 
-    <% if (page.total > 1){ %>
+
+
+
+  
+    <article id="post-利用KVM虚拟机部署Lustre文件系统一" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/29/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%80/">利用KVM虚拟机部署Lustre文件系统一</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/29/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%80/" class="archive-article-date">
+  	<time datetime="2020-10-29T01:56:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Centos7-6安装KVM"><a href="#Centos7-6安装KVM" class="headerlink" title="Centos7.6安装KVM"></a>Centos7.6安装KVM</h3><h4 id="通过-yum安装-kvm-基础包和管理工具"><a href="#通过-yum安装-kvm-基础包和管理工具" class="headerlink" title="通过 yum安装 kvm 基础包和管理工具"></a>通过 yum安装 kvm 基础包和管理工具</h4><p>KVM 是基于 x86 虚拟化扩展(Intel VT 或者 AMD-V) 技术的虚拟机软件，所以查看 CPU 是否支持 VT 技术，就可以判断是否支持KVM。有返回结果，如果结果中有vmx（Intel）或svm(AMD)字样，就说明CPU的支持的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat &#x2F;proc&#x2F;cpuinfo | egrep &#39;vmx|svm&#39;</span><br><span class="line">flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch epb cat_l3 cdp_l3 intel_pt tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm cqm rdt_a rdseed adx smap xsaveopt cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local dtherm ida arat pln pts</span><br></pre></td></tr></table></figure>
+
+<p>kvm相关安装包及其作用:</p>
+<ul>
+<li><code>qemu-kvm</code> 主要的KVM程序包</li>
+<li><code>python-virtinst</code> 创建虚拟机所需要的命令行工具和程序库</li>
+<li><code>virt-manager</code> GUI虚拟机管理工具</li>
+<li><code>virt-top</code> 虚拟机统计命令</li>
+<li><code>virt-viewer</code> GUI连接程序，连接到已配置好的虚拟机</li>
+<li><code>libvirt</code> C语言工具包，提供libvirt服务</li>
+<li><code>libvirt-client</code> 为虚拟客户机提供的C语言工具包</li>
+<li><code>virt-install</code> 基于libvirt服务的虚拟机创建命令</li>
+<li><code>bridge-utils</code> 创建和管理桥接设备的工具</li>
+</ul>
+        
+          <a class="article-more-a" href="/2020/10/29/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%80/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">nat</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">kvm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">network</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">bridge</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/29/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%80/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-利用netdata-grafana进行CAE软件性能分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">利用netdata+grafana进行CAE软件性能分析</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" class="archive-article-date">
+  	<time datetime="2020-10-26T11:58:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="netdata的安装"><a href="#netdata的安装" class="headerlink" title="netdata的安装"></a>netdata的安装</h3><p>Netdata是一款Linux性能实时监测工具。</p>
+<p>Netdata是一个高度优化的Linux守护进程，它为Linux系统，应用程序，SNMP服务等提供实时的性能监测。</p>
+<p>它用可视化的手段，将被监测者最细微的细节，展现了出来。这样，你便可以清晰地了解你的系统和应用程序此时的状况。</p>
+<p>本次使用的是针对netdata定制开发了插件，可以监控CPU指令集，Infiniband带宽等信息。</p>
+        
+          <a class="article-more-a" href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">netdata</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">influxdb</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">grafana</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Abaqus</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
     <nav id="page-nav">
-      <%- paginator({
-        prev_text: "&lt; Prev",
-        next_text: "Next &gt;"
-      }) %>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
-  <% } %>
+  
 
-<% } %>
 
 
           </div>
