@@ -142,6 +142,187 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-设计infiniband-2d-3d-torus结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/">设计infiniband 2d/3d torus结构</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2019-12-31T01:51:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="搭建一个3D-torus网络"><a href="#搭建一个3D-torus网络" class="headerlink" title="搭建一个3D torus网络"></a><strong>搭建一个3D torus网络</strong></h1><ul>
+<li><p>在两个维度上(x,y)有多少个计算节点？假设在水平方向分布N个计算节点，同理在垂直方向也分布N个计算节点。记住，一个理想的torus网络结构，在每个维度上分布相同数量的节点，否则网络会不均衡。你的2D torus网络需要连接NxN个计算节点。</p>
+<p>一个3D torus网络，在三个维度各连接NxNxN个节点，假设N=10，那么连接的节点数量将是 10x10x10=1000 节点。这个集群规模不算小。</p>
+<p>下面是3D torus拓扑结构图：</p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/1.jpg" alt></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/2.png" alt></p>
+<p><img src="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/3.png" alt></p></li></ul>
+        
+          <a class="article-more-a" href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">infiniband</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">2d torus</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">3d torus</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/31/%E8%AE%BE%E8%AE%A1infiniband-2d-3d-torus%E7%BB%93%E6%9E%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-安装Intel-Omni-path架构软件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/30/%E5%AE%89%E8%A3%85Intel-Omni-path%E6%9E%B6%E6%9E%84%E8%BD%AF%E4%BB%B6/">安装Intel Omni-path架构软件</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/30/%E5%AE%89%E8%A3%85Intel-Omni-path%E6%9E%B6%E6%9E%84%E8%BD%AF%E4%BB%B6/" class="archive-article-date">
+  	<time datetime="2019-12-30T01:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p><strong>介绍Intel Omni-Path架构</strong></p>
+<p>英特尔OPA是最新一代英特尔高性能网络交换结构技术。它增加了增强高性能计算性能、可伸缩性和服务质量的新功能。Intel OPA组件包括Intel OP HFI，它提供了网络交换结构、连接大量可伸缩端点的交换机、铜线和光缆，以及一个可识别所有节点、提供集中管理和监控的fabric Manager (FM)。Intel OP HFI是Intel OPA接口卡，提供主机到交换机的连接。Intel OP HFI还可以直接连接到另一个HFI(背对背连接)。</p>
+<p>本文主要讨论如何安装Intel OP HFI，配置IP over Fabric，以及如何使用预构建的程序测试Fabric。本例中使用了两个系统，每个系统都配备了Intel®Xeon®E5处理器。两个系统都运行Red Hat Enterprise Linux* 7.2，并配备了通过千兆以太网路由器连接的千兆以太网适配器。</p>
+</li>
+<li><p><strong>Intel Omni-Path主机网络交换卡</strong></p>
+<p>Intel OP HFI是一种标准的PCIe*卡，它与路由器或其他HFI接口相连。Intel OP HFI目前有两种型号:支持100Gbps的PCIe x16和支持56Gbps的PCIe x8。它被设计为低延迟/高带宽，可以配置0到8个虚拟通道外加一个管理通道。MTU大小可以配置为2、4、6、8或10 KB。</p>
+<p>下图所示的照片就是OP HFI PCIe x16接口的网卡：</p>
+<p><img src="/2019/12/30/%E5%AE%89%E8%A3%85Intel-Omni-path%E6%9E%B6%E6%9E%84%E8%BD%AF%E4%BB%B6/1.jpg" alt="OPA Interface Card"></p>
+<p>硬件安装</p>
+<p>使用两台运行redhat 7.2操作系统，搭载intel E5至强处理器服务器。每台均配备了千兆以太网卡，并通过路由器相连。IP地址分别为10.23.3.27和10.23.3.148。我们将在每台服务器安装Intel OP HFI PCIe x16网卡，并通过Intel OPA线缆进行背对背连接。</p>
+<p>首先关闭机器，安装Intel OP HFI网卡，通过Intel OPA 线缆连接网卡，并开机。确认Intel OP HFI上的绿灯正常亮起。这表明Intel OP HFI链状态已被激活。</p></li></ul>
+        
+          <a class="article-more-a" href="/2019/12/30/%E5%AE%89%E8%A3%85Intel-Omni-path%E6%9E%B6%E6%9E%84%E8%BD%AF%E4%BB%B6/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">infiniband</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OPA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/30/%E5%AE%89%E8%A3%85Intel-Omni-path%E6%9E%B6%E6%9E%84%E8%BD%AF%E4%BB%B6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-搭建一个高性能存储系统Lustre篇" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -263,156 +444,9 @@
 
 
   
-    <article id="post-GPFS-4-2-安装教程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/26/GPFS-4-2-%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">GPFS_4.2 安装教程</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/26/GPFS-4-2-%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" class="archive-article-date">
-  	<time datetime="2019-12-26T06:55:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/26/GPFS-4-2-%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Linux性能测试工具一览表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/26/Linux%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/">Linux性能测试工具一览表</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/26/Linux%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/" class="archive-article-date">
-  	<time datetime="2019-12-26T02:32:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>整体性能测试工具</li>
-</ul>
-<p><img src="/2019/12/26/Linux%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/1.png" alt="Linux性能测试工具一览表"></p>
-<ul>
-<li><p>静态性能测试工具</p></li></ul>
-        
-          <a class="article-more-a" href="/2019/12/26/Linux%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/26/Linux%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/6/">&lt; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/">Next &gt;</a>
+      <a class="extend prev" rel="prev" href="/page/6/">&lt; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/">Next &gt;</a>
     </nav>
   
 
@@ -425,7 +459,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 Yao L
+    		&copy; 2021 Yao L
     	</div>
       	<div class="footer-right">
       		<a href="https://github.com/yaolang-hpc" target="_blank">YaoL Blog</a> by Yao L
@@ -703,6 +737,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">ost</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CLI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OPENLDAP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Centos7.6</a>
               </li>
             
             <div class="clearfix"></div>

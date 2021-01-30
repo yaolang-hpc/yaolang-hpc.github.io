@@ -142,6 +142,203 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Centos7-6集群实现OPENLDAP认证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/30/Centos7-6%E9%9B%86%E7%BE%A4%E5%AE%9E%E7%8E%B0OPENLDAP%E8%AE%A4%E8%AF%81/">Centos7.6集群实现OPENLDAP认证</a>
+    </h1>
+  
+
+        
+        <a href="/2021/01/30/Centos7-6%E9%9B%86%E7%BE%A4%E5%AE%9E%E7%8E%B0OPENLDAP%E8%AE%A4%E8%AF%81/" class="archive-article-date">
+  	<time datetime="2021-01-30T05:23:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-Centos7-6集群实现OPENLDAP认证"><a href="#1-Centos7-6集群实现OPENLDAP认证" class="headerlink" title="1 Centos7.6集群实现OPENLDAP认证"></a>1 Centos7.6集群实现OPENLDAP认证</h3><h4 id="1-1-LDAP简介"><a href="#1-1-LDAP简介" class="headerlink" title="1.1 LDAP简介"></a>1.1 LDAP简介</h4><p>LDAP 全称轻量级目录访问协议（英文：Lightweight Directory Access Protocol），是一个运行在 TCP/IP 上的目录访问协议。目录是一个特殊的数据库，它的数据经常被查询，但是不经常更新。其专门针对读取、浏览和搜索操作进行了特定的优化。目录一般用来包含描述性的，基于属性的信息并支持精细复杂的过滤能力。比如 DNS 协议便是一种最被广泛使用的目录服务。</p>
+<p>LDAP 中的信息按照目录信息树结构组织，树中的一个节点称之为条目（Entry），条目包含了该节点的属性及属性值。条目都可以通过识别名dn来全局的唯一确定，可以类比于关系型数据库中的主键。比如dn为uid=test,ou=People,dc=sugon,dc=com的条目表示在组织中一个名字叫做test的员工，其中uid=test也被称作相对区别名rdn。</p>
+<p>一个条目的属性通过LDAP元数据模型（Scheme）中的对象类（objectClass）所定义，下面的表格列举了对象类inetOrgPerson（Internet Organizational Person）中的一些必填属性和可选属性。</p>
+<table>
+<thead>
+<tr>
+<th><strong>属性名</strong></th>
+<th><strong>是否必填</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cn</td>
+<td>是</td>
+<td>该条目被人所熟知的通用名（Common Name）</td>
+</tr>
+<tr>
+<td>sn</td>
+<td>是</td>
+<td>该条目的姓氏</td>
+</tr>
+<tr>
+<td>o</td>
+<td>否</td>
+<td>该条目所属的组织名（Organization Name）</td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>否</td>
+<td>该条目的手机号码</td>
+</tr>
+<tr>
+<td>description</td>
+<td>否</td>
+<td>该条目的描述信息</td>
+</tr>
+</tbody></table>
+<p>下面是一个典型的LDAP目录树结构，其中每个节点表示一个条目。在下一节中我们将按照这个结构来配置一个简单的LDAP 服务。</p>
+        
+          <a class="article-more-a" href="/2021/01/30/Centos7-6%E9%9B%86%E7%BE%A4%E5%AE%9E%E7%8E%B0OPENLDAP%E8%AE%A4%E8%AF%81/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OPENLDAP</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Centos7.6</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/30/Centos7-6%E9%9B%86%E7%BE%A4%E5%AE%9E%E7%8E%B0OPENLDAP%E8%AE%A4%E8%AF%81/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-思科路由器学习专题1-路由基础命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/10/%E6%80%9D%E7%A7%91%E8%B7%AF%E7%94%B1%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%981-%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">思科路由器学习专题1_路由基础命令</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/10/%E6%80%9D%E7%A7%91%E8%B7%AF%E7%94%B1%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%981-%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="archive-article-date">
+  	<time datetime="2020-11-10T01:52:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本系列文章大部分实验都采用Cisco模拟器EVE进行模拟实验</p>
+<p>本例实验拓扑图如下：</p>
+<p><img src="/2020/11/10/%E6%80%9D%E7%A7%91%E8%B7%AF%E7%94%B1%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%981-%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/topology.png" alt="topology"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Cisco</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CLI</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/10/%E6%80%9D%E7%A7%91%E8%B7%AF%E7%94%B1%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%981-%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-利用KVM虚拟机部署Lustre文件系统二" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -234,202 +431,9 @@
 
 
   
-    <article id="post-利用KVM虚拟机部署Lustre文件系统一" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/29/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%80/">利用KVM虚拟机部署Lustre文件系统一</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/29/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%80/" class="archive-article-date">
-  	<time datetime="2020-10-29T01:56:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Centos7-6安装KVM"><a href="#Centos7-6安装KVM" class="headerlink" title="Centos7.6安装KVM"></a>Centos7.6安装KVM</h3><h4 id="通过-yum安装-kvm-基础包和管理工具"><a href="#通过-yum安装-kvm-基础包和管理工具" class="headerlink" title="通过 yum安装 kvm 基础包和管理工具"></a>通过 yum安装 kvm 基础包和管理工具</h4><p>KVM 是基于 x86 虚拟化扩展(Intel VT 或者 AMD-V) 技术的虚拟机软件，所以查看 CPU 是否支持 VT 技术，就可以判断是否支持KVM。有返回结果，如果结果中有vmx（Intel）或svm(AMD)字样，就说明CPU的支持的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat &#x2F;proc&#x2F;cpuinfo | egrep &#39;vmx|svm&#39;</span><br><span class="line">flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch epb cat_l3 cdp_l3 intel_pt tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm cqm rdt_a rdseed adx smap xsaveopt cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local dtherm ida arat pln pts</span><br></pre></td></tr></table></figure>
-
-<p>kvm相关安装包及其作用:</p>
-<ul>
-<li><code>qemu-kvm</code> 主要的KVM程序包</li>
-<li><code>python-virtinst</code> 创建虚拟机所需要的命令行工具和程序库</li>
-<li><code>virt-manager</code> GUI虚拟机管理工具</li>
-<li><code>virt-top</code> 虚拟机统计命令</li>
-<li><code>virt-viewer</code> GUI连接程序，连接到已配置好的虚拟机</li>
-<li><code>libvirt</code> C语言工具包，提供libvirt服务</li>
-<li><code>libvirt-client</code> 为虚拟客户机提供的C语言工具包</li>
-<li><code>virt-install</code> 基于libvirt服务的虚拟机创建命令</li>
-<li><code>bridge-utils</code> 创建和管理桥接设备的工具</li>
-</ul>
-        
-          <a class="article-more-a" href="/2020/10/29/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%80/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">nat</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">kvm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">network</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">bridge</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/29/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%80/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-利用netdata-grafana进行CAE软件性能分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">利用netdata+grafana进行CAE软件性能分析</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" class="archive-article-date">
-  	<time datetime="2020-10-26T11:58:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="netdata的安装"><a href="#netdata的安装" class="headerlink" title="netdata的安装"></a>netdata的安装</h3><p>Netdata是一款Linux性能实时监测工具。</p>
-<p>Netdata是一个高度优化的Linux守护进程，它为Linux系统，应用程序，SNMP服务等提供实时的性能监测。</p>
-<p>它用可视化的手段，将被监测者最细微的细节，展现了出来。这样，你便可以清晰地了解你的系统和应用程序此时的状况。</p>
-<p>本次使用的是针对netdata定制开发了插件，可以监控CPU指令集，Infiniband带宽等信息。</p>
-        
-          <a class="article-more-a" href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">netdata</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">influxdb</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">grafana</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Abaqus</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &gt;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/">Next &gt;</a>
     </nav>
   
 
@@ -442,7 +446,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 Yao L
+    		&copy; 2021 Yao L
     	</div>
       	<div class="footer-right">
       		<a href="https://github.com/yaolang-hpc" target="_blank">YaoL Blog</a> by Yao L
@@ -720,6 +724,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">ost</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CLI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OPENLDAP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Centos7.6</a>
               </li>
             
             <div class="clearfix"></div>
