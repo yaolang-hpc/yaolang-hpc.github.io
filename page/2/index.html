@@ -142,6 +142,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-利用KVM虚拟机部署Lustre文件系统二" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/04/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BA%8C/">利用KVM虚拟机部署Lustre文件系统二</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/04/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BA%8C/" class="archive-article-date">
+  	<time datetime="2020-11-04T08:35:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Lustre文件系统的安装"><a href="#Lustre文件系统的安装" class="headerlink" title="Lustre文件系统的安装"></a>Lustre文件系统的安装</h3><p>在第一步完成虚拟机的搭建后，现在开始着手安装lustre文件系统</p>
+<p>四台虚拟机的配置信息如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">系统： Centos7.6</span><br><span class="line">ip地址：11.2.100.101 mgt</span><br><span class="line">       11.2.100.103 node1</span><br><span class="line">       11.2.100.104 node2</span><br><span class="line">       11.2.100.105 client</span><br></pre></td></tr></table></figure>
+
+<h4 id="构建本地Lustre-repo库"><a href="#构建本地Lustre-repo库" class="headerlink" title="构建本地Lustre repo库"></a>构建本地Lustre repo库</h4><p>该小节严格遵循 <a href="http://wiki.lustre.org/Installing_the_Lustre_Software#Using_YUM_to_Manage_Local_Software_Provisioning" target="_blank" rel="noopener">Using YUM to Manage Local Software Provisioning</a> 的步骤来完成本地repo库的搭建。基本原理就是在repo主机上起一个web服务器，把从官方源上拷贝过来的Lustre安装包放到web服务目录中；mgt/node1/node2/client这四个节点安装Lustre时就可以直接使用repo主机的web服务提供的repo了，从而更方便地统一部署安装Lustre了。</p>
+        
+          <a class="article-more-a" href="/2020/11/04/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BA%8C/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">lustre</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">mds</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">mgt</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ost</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/04/%E5%88%A9%E7%94%A8KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2Lustre%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BA%8C/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-利用KVM虚拟机部署Lustre文件系统一" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -306,83 +398,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/10/26/%E5%88%A9%E7%94%A8netdata-grafana%E8%BF%9B%E8%A1%8CCAE%E8%BD%AF%E4%BB%B6%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-性能调优工具利器-perf" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/21/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7%E5%88%A9%E5%99%A8-perf/">性能调优工具利器-perf</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/21/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7%E5%88%A9%E5%99%A8-perf/" class="archive-article-date">
-  	<time datetime="2020-10-21T09:13:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">perf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/21/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7%E5%88%A9%E5%99%A8-perf/">展开全文 >></a>
         </p>
       
 
@@ -721,6 +736,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Centos7.6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SLURM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Munge</a>
               </li>
             
             <div class="clearfix"></div>
